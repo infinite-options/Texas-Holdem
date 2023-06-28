@@ -4,30 +4,70 @@ import LoJackHandChart from '../decisions/LoJackHandChart';
 import DealerHandChart from '../decisions/DealerHandChart';
 import SmallBlindHandChart from '../decisions/SmallBlindHandChart';
 import BigBlindHandChart from '../decisions/BigBlindHandChart';
-
+import UnderTheGunHandChart from '../decisions/UnderTheGunHandChart';
+import UnderTheGunHandChart1 from '../decisions/UnderTheGunHandChart1';
+import UnderTheGunHandChart2 from '../decisions/UnderTheGunHandChart2';
+import CutOffHandChart from '../decisions/CutOffHandChart';
 const Deck = () => {
   const [selectedCards, setSelectedCards] = useState([]);
 
   const getRandomCards = () => {
     // Replace this with your deck of cards data
     const deckOfCards = [
-      { id: 1, name: 'A♥' },
-      { id: 2, name: 'A♦' },
-      { id: 3, name: 'A♣' },
-      { id: 4, name: 'A♠' },
-      { id: 5, name: 'K♥' },
-      { id: 6, name: 'K♦' },
-      { id: 7, name: 'K♣' },
-      { id: 8, name: 'K♠' },
-      { id: 9, name: 'Q♥' },
-      { id: 10, name: 'Q♦' },
-      { id: 11, name: 'Q♣' },
-      { id: 12, name: 'Q♠' },
-      { id: 13, name: 'J♥' },
-      { id: 14, name: 'J♦' },
-      { id: 15, name: 'J♣' },
-      { id: 16, name: 'J♠' },
+      { id: 1, name: "A♥" },
+      { id: 2, name: "A♦" },
+      { id: 3, name: "A♣" },
+      { id: 4, name: "A♠" },
+      { id: 5, name: "K♥" },
+      { id: 6, name: "K♦" },
+      { id: 7, name: "K♣" },
+      { id: 8, name: "K♠" },
+      { id: 9, name: "Q♥" },
+      { id: 10, name: "Q♦" },
+      { id: 11, name: "Q♣" },
+      { id: 12, name: "Q♠" },
+      { id: 13, name: "J♥" },
+      { id: 14, name: "J♦" },
+      { id: 15, name: "J♣" },
+      { id: 16, name: "J♠" },
+      { id: 17, name: "T♥" },
+      { id: 18, name: "T♦" },
+      { id: 19, name: "T♣" },
+      { id: 20, name: "T♠" },
+      { id: 21, name: "9♥" },
+      { id: 22, name: "9♦" },
+      { id: 23, name: "9♣" },
+      { id: 24, name: "9♠" },
+      { id: 25, name: "8♥" },
+      { id: 26, name: "8♦" },
+      { id: 27, name: "8♣" },
+      { id: 28, name: "8♠" },
+      { id: 29, name: "7♥" },
+      { id: 30, name: "7♦" },
+      { id: 31, name: "7♣" },
+      { id: 32, name: "7♠" },
+      { id: 33, name: "6♥" },
+      { id: 34, name: "6♦" },
+      { id: 35, name: "6♣" },
+      { id: 36, name: "6♠" },
+      { id: 37, name: "5♥" },
+      { id: 38, name: "5♦" },
+      { id: 39, name: "5♣" },
+      { id: 40, name: "5♠" },
+      { id: 41, name: "4♥" },
+      { id: 42, name: "4♦" },
+      { id: 43, name: "4♣" },
+      { id: 44, name: "4♠" },
+      { id: 45, name: "3♥" },
+      { id: 46, name: "3♦" },
+      { id: 47, name: "3♣" },
+      { id: 48, name: "3♠" },
+      { id: 49, name: "2♥" },
+      { id: 50, name: "2♦" },
+      { id: 51, name: "2♣" },
+      { id: 52, name: "2♠" },
     ];
+
 
     const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
     const selected = shuffledDeck.slice(0, 2);
@@ -54,20 +94,31 @@ const Deck = () => {
     <div>
       <button onClick={getRandomCards}>Get Cards</button>
       <div>{renderCards()}</div>
-      {selectedCards.length>0?(<div>
-        <h4>Texas Hold'em Poker - Dealer</h4>
-      <DealerHandChart hand={selectedCards} />
-      <h4>Texas Hold'em Poker - Small Blind</h4>
-      <SmallBlindHandChart hand={selectedCards} />
-      <h4>Texas Hold'em Poker - Big Blind</h4>
-      <BigBlindHandChart hand={selectedCards} />
-      <h4>Texas Hold'em Poker - HiJack</h4>
-      <HiJackHandChart hand={selectedCards} />
-      <h4>Texas Hold'em Poker - LoJack</h4>
-      <LoJackHandChart hand={selectedCards} />
-
-      </div>):(<div></div>)}
-      </div>
+      {selectedCards.length > 0 ? (
+        <div>
+          <h4>Texas Hold'em Poker - Dealer</h4>
+          <DealerHandChart hand={selectedCards} />
+          <h4>Texas Hold'em Poker - Small Blind</h4>
+          <SmallBlindHandChart hand={selectedCards} />
+          <h4>Texas Hold'em Poker - Big Blind</h4>
+          <BigBlindHandChart hand={selectedCards} />
+          <h4>Texas Hold'em Poker - UnderTheGun</h4>
+          <UnderTheGunHandChart hand={selectedCards} />
+          <h4>Texas Hold'em Poker - UnderTheGun1</h4>
+          <UnderTheGunHandChart1 hand={selectedCards} />
+          <h4>Texas Hold'em Poker - UnderTheGun2</h4>
+          <UnderTheGunHandChart2 hand={selectedCards} />
+          <h4>Texas Hold'em Poker - HiJack</h4>
+          <HiJackHandChart hand={selectedCards} />
+          <h4>Texas Hold'em Poker - LoJack</h4>
+          <LoJackHandChart hand={selectedCards} />
+          <h4>Texas Hold'em Poker - CutOff</h4>
+          <CutOffHandChart hand={selectedCards} />
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </div>
   );
 };
 

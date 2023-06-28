@@ -1,14 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Table from "./components/table/Table";
+import "./App.css";
+import Matrix from "./components/matrix/Matrix";
 
-import Deck from './components/handle/Deck';
+import Deck from "./components/handle/Deck";
 
-function App() {
+const App = () => {
   return (
     <div>
-      <Deck></Deck>
+      <div>
+        <Deck></Deck>
+      </div>
+      <Matrix />
+      {/* <h3>HiJack Table</h3>
+      <Table /> */}
     </div>
   );
-}
+};
 
 export default App;
