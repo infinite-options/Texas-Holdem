@@ -1,16 +1,24 @@
 import DrawingCard from "../Components/DrawingCard";
 import Prediction from "../Components/Prediction";
 import { useState } from "react";
-import utg from "../Engine/UTG";
+import UTG from "../Engine/UTG";
 import UTGp1 from "../Engine/UTGp1";
 import UTGp2 from "../Engine/UTGp2";
-import lojack from "../Engine/Lojack";
-import hijack from "../Engine/Hijack";
-import cutoff from "../Engine/Cutoff";
-import button from "../Engine/Button";
+import Lojack from "../Engine/Lojack";
+import Hijack from "../Engine/Hijack";
+import Cutoff from "../Engine/Cutoff";
+import Button from "../Engine/Button";
 
 export default function Main() {
     const [hands, setHands] = useState();
+    const [utg] = useState(UTG);
+    const [utgp1] = useState(UTGp1);
+    const [utgp2] = useState(UTGp2);
+    const [lojack] = useState(Lojack);
+    const [hijack] = useState(Hijack);
+    const [cutoff] = useState(Cutoff);
+    const [button] = useState(Button);
+
     
     return (
         <>
@@ -26,11 +34,11 @@ export default function Main() {
                 />
                 <Prediction 
                     hands={[hands, setHands]}
-                    position={["UTG+1", UTGp1]}
+                    position={["UTG+1", utgp1]}
                 />
                 <Prediction 
                     hands={[hands, setHands]}
-                    position={["UTG+2", UTGp2]}
+                    position={["UTG+2", utgp2]}
                 />
                 <Prediction 
                     hands={[hands, setHands]}
