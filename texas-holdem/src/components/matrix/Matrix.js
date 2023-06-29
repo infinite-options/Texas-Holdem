@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Matrix.css";
+//import axios from "axios";
 
 const labels = [
   "A",
@@ -77,7 +78,15 @@ const Matrix = () => {
         .map(([key, value]) => `"${key}" : "${value}"`)
         .join(",\n")
     );
-
+    // Make an API request to save the log data
+  //   axios
+  //     .post("http://localhost:5000/api/logs", logData)
+  //     .then((response) => {
+  //       console.log("Log data saved successfully:", response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error saving log data:", error);
+  //     });
   }, [selected]);
 
   return (

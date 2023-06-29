@@ -7,6 +7,17 @@ import BigBlindHandChart from '../decisions/BigBlindHandChart';
 import UnderTheGunHandChart from '../decisions/UnderTheGunHandChart';
 import UnderTheGunHandChart1 from '../decisions/UnderTheGunHandChart1';
 import UnderTheGunHandChart2 from '../decisions/UnderTheGunHandChart2';
+import utgImg from '../../images/UTG.png';
+import BtnImg from '../../images/BTN.png';
+import LjImg from '../../images/LJ.png';
+import Utg1img from '../../images/UTG1.png';
+import Utg2img from '../../images/UTG2.png';
+import Sbimg from '../../images/SB.png';
+import HjImg from '../../images/HJ.png';
+import CoImg from '../../images/CO.png';
+
+
+
 import CutOffHandChart from '../decisions/CutOffHandChart';
 const Deck = () => {
   const [selectedCards, setSelectedCards] = useState([]);
@@ -98,22 +109,31 @@ const Deck = () => {
         <div>
           <h4>Texas Hold'em Poker - Dealer</h4>
           <DealerHandChart hand={selectedCards} />
+          <img src={BtnImg} alt="BTN" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - Small Blind</h4>
           <SmallBlindHandChart hand={selectedCards} />
+          <img src={Sbimg} alt="SB" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - Big Blind</h4>
           <BigBlindHandChart hand={selectedCards} />
+          <img src={Sbimg} alt="SB" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - UnderTheGun</h4>
           <UnderTheGunHandChart hand={selectedCards} />
+          <img src={utgImg} alt="UTG" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - UnderTheGun1</h4>
           <UnderTheGunHandChart1 hand={selectedCards} />
+          <img src={Utg1img} alt="UTG1" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - UnderTheGun2</h4>
           <UnderTheGunHandChart2 hand={selectedCards} />
+          <img src={Utg2img} alt="UTG2" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - HiJack</h4>
           <HiJackHandChart hand={selectedCards} />
+          <img src={HjImg} alt="HJ" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - LoJack</h4>
           <LoJackHandChart hand={selectedCards} />
+          <img src={LjImg} alt="LJ" style={{ width: '400px' }} />
           <h4>Texas Hold'em Poker - CutOff</h4>
           <CutOffHandChart hand={selectedCards} />
+          <img src={CoImg} alt="CO" style={{ width: '400px' }} />
         </div>
       ) : (
         <div></div>
