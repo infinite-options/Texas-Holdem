@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function PlayerInfo(props) {
     const [input, setInput] = useState("");
-    const setUsername = () => props.setUsername;
+    const [setUsername] = props.setUser;
 
     return(
         <div>
@@ -12,7 +12,7 @@ export default function PlayerInfo(props) {
                     Username: <input name="username" value={input} onChange={(e) => setInput(e.target.value)}/>
                 </label>
             </div>
-            <button onClick={setUsername(input)}>Load my tables</button>
+            <button onClick={()=>setUsername(input)}>Load my tables</button>
             <hr />
         </div>
     );

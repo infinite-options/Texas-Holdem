@@ -1,12 +1,10 @@
-import Position from "./Profile/Position";
+import Position from  "./profileComponents/Position";
 import { createUTG, createUTGp1, createUTGp2, createLojack, createHijack, createCutoff, createButton } from "../preset/Preset";
 import { useEffect, useState } from "react";
-import axios from 'axios';
-import { URL_ENDPOINT } from "../../constants/API";
 
 export default function Profile(props) {
-    const username = props.user;
-    const [fetchData, setFetchData] = useState({});
+    const [username, fetchData] = props.data;
+    const [ hands ] = props.hands;
     const [table_ufg, setTable_ufg] = useState(createUTG());
     const [table_ufgp1, setTable_ufgp1] = useState(createUTGp1());
     const [table_ufgp2, setTable_ufgp2] = useState(createUTGp2());
@@ -15,51 +13,44 @@ export default function Profile(props) {
     const [table_co, setTable_co] = useState(createCutoff());
     const [table_but, setTable_but] = useState(createButton());
 
-    function getFetchData() {
-         axios.get(URL_ENDPOINT+'/preflop').then((res=> {
-            setFetchData(res.data);
+    useEffect(()=> {
+        function setTable(pos, setState, standardTable) {
             if(fetchData.length > 0) {
+                let isExist = false;
                 fetchData.map((preflop) => {
-                    if(preflop.player_type === username) {
-                        switch (preflop.position) {
-                            case 'ufg':
-                                setTable_ufg(preflop.preflop_table);
-                                break;
-                            case 'ufgp1':
-                                setTable_ufgp1(preflop.preflop_table);
-                                break;
-                            case 'ufgp2':
-                                setTable_ufgp2(preflop.preflop_table);
-                                break;
-                            case 'lj':
-                                setTable_lj(preflop.preflop_table);
-                                break;
-                            case 'hj':
-                                setTable_hj(preflop.preflop_table);
-                                break;
-                            case 'but':
-                                setTable_co(preflop.preflop_table);
-                                break;
-                            case 'but':
-                                setTable_but(preflop.preflop_table);
-                                break;
-                        }
+                    if(preflop.player_type === username && preflop.position === pos) {
+                        console.log(typeof(preflop.preflop_table));
+                        //setState(JSON.parse(preflop.preflop_table));
+                        isExist = true;
                     }
                 });
-            }            
-        }));
-    }
-
-    useEffect(()=> {
-        getFetchData();
-    }, []);
-
-    
+                if(!isExist) {
+                    setState(standardTable());
+                }
+            }                
+        }
+        setTable('ufg', setTable_ufg, createUTG);
+        setTable('ufgp1', setTable_ufgp1, createUTGp1);
+        setTable('ufgp2', setTable_ufgp2, createUTGp2);
+        setTable('lj', setTable_lj, createLojack);
+        setTable('hj', setTable_hj, createHijack);
+        setTable('co', setTable_co, createCutoff);
+        setTable('but', setTable_but, createButton);
+        
+    }, [fetchData, username]);
 
     return(
         <div>
-            <Position data={[username, 'position', table_ufg]}/>
-
+            <div>
+                <h2>Player: {username === "" ? "Type username" : username}</h2>
+            </div>
+            <Position data={[username, 'ufg', table_ufg, setTable_ufg]} hands={[hands]}/>
+            <Position data={[username, 'ufgp1', table_ufgp1, setTable_ufgp1]} hands={[hands]}/>
+            <Position data={[username, 'ufgp2', table_ufgp2, setTable_ufgp2]} hands={[hands]}/>
+            <Position data={[username, 'lj', table_lj, setTable_lj]} hands={[hands]}/>
+            <Position data={[username, 'hj', table_hj, setTable_hj]} hands={[hands]}/>
+            <Position data={[username, 'co', table_co, setTable_co]} hands={[hands]}/>
+            <Position data={[username, 'but', table_but, setTable_but]} hands={[hands]}/>
         </div>
     );
 }

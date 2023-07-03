@@ -13,26 +13,26 @@ export function getRankIndex(rank_c) {
 
 export const VALUE = {FOLD: 'FOLD', RAISE: 'RAISE'}
 
-export const keyset = () => {
-    const set = [];
+export const keys = () => {
+    const keyArr = Array.from({ length: rank.length }, () => new Array(rank.length));
     for (let i = 0; i < rank.length; i++) {
         const rank1 = rank[i];
         for (let j = 0; j < rank.length; j++) {
             const rank2 = rank[j];
-            if(j > i) {
-                set.push(rank1+rank2+SUIT.SUIT);
-            } else {
-                set.push(rank2+rank1+SUIT.OFFSUIT);
-            }
+            let key = j > i ? rank1+rank2+SUIT.SUIT : rank2+rank1+SUIT.OFFSUIT;
+            keyArr[i][j] = key;
         }
     }
-    return set;
+    return keyArr;
 };
+const keyArr = keys();
 
 export function createTable() {
     const jsonObj = {};
-    for (let i = 0; i < keyset.length; i++) {
-        jsonObj[keyset[i]] = VALUE.FOLD;  
+    for (let i = 0; i < keyArr.length; i++) {
+        for (let j = 0; j < keyArr.length; j++) {
+            jsonObj[keyArr[i][j]] = VALUE.FOLD; 
+        }        
     }      
     return jsonObj;
 };
