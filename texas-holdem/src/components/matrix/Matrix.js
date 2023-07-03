@@ -73,11 +73,13 @@ const Matrix = () => {
         strategy[key] = isSelected ? "RAISE" : "FOLD";
       });
     });
+    /*
     console.log(
       Object.entries(strategy)
         .map(([key, value]) => `"${key}" : "${value}"`)
         .join(",\n")
-    );
+    );*/
+    
     // Make an API request to save the log data
   //   axios
   //     .post("http://localhost:5000/api/logs", logData)
