@@ -1,5 +1,5 @@
 import Position from  "./profileComponents/Position";
-import { createUTG, createUTGp1, createUTGp2, createLojack, createHijack, createCutoff, createButton } from "../preset/Preset";
+import { createUTG, createUTGp1, createUTGp2, createLojack, createHijack, createCutoff, createButton, mergeTables, createTable } from "../preset/Preset";
 import { useEffect, useState } from "react";
 
 export default function Profile(props) {
@@ -19,9 +19,15 @@ export default function Profile(props) {
                 let isExist = false;
                 fetchData.map((preflop) => {
                     if(preflop.player_type === username && preflop.position === pos) {
-                        console.log(typeof(preflop.preflop_table));
-                        //setState(JSON.parse(preflop.preflop_table));
-                        isExist = true;
+                        let playerTable;
+                        try {
+                            playerTable = JSON.parse(preflop.preflop_table);
+                            setState(mergeTables(playerTable, createTable()));
+                            isExist = true;
+                        } catch (error) {
+                            console.log("Wrong table format. \n" + error.message);
+                        } 
+                        
                     }
                 });
                 if(!isExist) {

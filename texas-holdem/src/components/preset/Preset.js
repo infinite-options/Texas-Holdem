@@ -175,3 +175,17 @@ export function createButton() {
     setValueDiagonal(table, 'T', '8', '7', SUIT.OFFSUIT, VALUE.RAISE);
     return table;
 }
+
+export function mergeTables(table1, table2) {
+    const base = createTable();
+    const keyset = keys();
+    for (let i = 0; i < keyset.length; i++) {
+        for (let j = 0; j < keyset[i].length; j++) {
+            const key = keyset[i][j];
+            const value1 = table1[key] === undefined ? VALUE.FOLD : table1[key].toUpperCase();
+            const value2 = table2[key] === undefined ? VALUE.FOLD : table2[key].toUpperCase();
+            base[key] = value1 === VALUE.RAISE || value2 === VALUE.RAISE ? VALUE.RAISE : VALUE.FOLD;
+        }
+    }
+    return base;
+}

@@ -68,7 +68,7 @@ export default function CardSelect(props) {
       setSelectedCards(hand);
       const card1 = hand[0].name.charAt(0);
       const card2 = hand[1].name.charAt(0);
-      const suit = hand[0].name.charAt(1) === hand[1].name.charAt(0) ? SUIT.SUIT : SUIT.OFFSUIT;
+      const suit = hand[0].name.charAt(1) === hand[1].name.charAt(1) ? SUIT.SUIT : SUIT.OFFSUIT;
 
       const handKey = getRankIndex(card1) < getRankIndex(card2) ? card1+card2+suit : card2+card1+suit;      
       
