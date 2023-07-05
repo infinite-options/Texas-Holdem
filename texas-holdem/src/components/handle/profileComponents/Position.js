@@ -9,6 +9,8 @@ export default function Position(props) {
     const [ hands ] = props.hands;
     const [action, setAction] = useState(hands === "" ? "Draw cards" : table[hands]);
 
+    console.log(username);
+
     function updateAction() {
         setAction(hands === "" ? "Draw cards" : table[hands]);
     }
@@ -42,10 +44,10 @@ export default function Position(props) {
     }
 
     function createPost() {
-        axios.post(URL_ENDPOINT+'/preflop_post', {   
-            "player_type" : username,
-            "position" : position,
-            "preflop_table" : JSON.stringify(table),
+        axios.post(URL_ENDPOINT+'/preflop', {   
+            player_type : username,
+            position : position,
+            preflop_table : JSON.stringify(table),
         }
         ).then((res=> {
             console.log(res);

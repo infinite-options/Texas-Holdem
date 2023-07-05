@@ -19,6 +19,7 @@ const App = () => {
     axios.get(URL_ENDPOINT+'/preflop').then((res=> {
       setFetchData(res.data);
       console.log("APP: data initialized.");
+      console.log(res.data);
     }));
   }, []);
   

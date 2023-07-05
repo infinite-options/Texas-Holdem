@@ -22,6 +22,7 @@ export default function Profile(props) {
                         let playerTable;
                         try {
                             playerTable = JSON.parse(preflop.preflop_table);
+                            console.log(playerTable);
                             setState(mergeTables(playerTable, createTable()));
                             isExist = true;
                         } catch (error) {
