@@ -1,4 +1,5 @@
 export const rank = ['A', 'K', 'Q', 'J', 'T', '9','8','7','6','5','4','3','2'];
+export const shape = ['♥', '♦', '♣', '♠'];
 
 export const SUIT = {SUIT: 's', OFFSUIT:'o'};
 
@@ -188,4 +189,28 @@ export function mergeTables(table1, table2) {
         }
     }
     return base;
+}
+
+export const deck = () => {
+    const cards = [];
+    for (let i = 0; i < rank.length; i++) {
+        const r = rank[i];
+        for (let j = 0; j < shape.length; j++) {
+            const s = shape[j];
+            cards.push(r+s);
+        }
+    }
+    return cards;
+}
+
+export const shuffledDeck = () => {
+    const cards = deck();
+    for (let i = 0; i < cards.length; i++) {
+        let temp = cards[i];
+        const ran_i = Math.floor(Math.random()*cards.length);
+        temp = cards[ran_i];
+        cards[ran_i] = cards[i];
+        cards[i] = temp;
+    }
+    return cards;
 }
