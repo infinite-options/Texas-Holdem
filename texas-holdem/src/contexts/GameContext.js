@@ -12,7 +12,7 @@ const GameContextProvider = ({ children }) => {
     const [players, setPlayers] = useState([]);
     const [deck, setDeck] = useState(shuffledDeck());
     
-    console.log(deck);
+    //console.log(deck);
     const contextValue = useMemo(() => (
       {game_data : [fetchData], 
         game_states: [gameState, setGameState], 

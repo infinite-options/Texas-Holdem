@@ -28,9 +28,10 @@ export default function Lobby() {
     const [player6, setPlayer6] = useState("");
     const [player7, setPlayer7] = useState("");
     const [player8, setPlayer8] = useState("");
+    const [player9, setPlayer9] = useState("");
 
     function savePlayerLists() {
-        setPlayers([player1, player2, player3, player4, player5, player6, player7, player8]);
+        setPlayers([player1, player2, player3, player4, player5, player6, player7, player8, player9]);
         setGameState(GAME_STATE.PREPLOP);
     }
 
@@ -45,6 +46,7 @@ export default function Lobby() {
             <PlayerInput data={[6, player6, setPlayer6]}/>
             <PlayerInput data={[7, player7, setPlayer7]}/>
             <PlayerInput data={[8, player8, setPlayer8]}/>
+            <PlayerInput data={[9, player9, setPlayer9]}/>
             <button onClick={()=>savePlayerLists()}>Save</button>
         </div>
     );
