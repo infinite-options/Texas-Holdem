@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { URL_ENDPOINT } from "../../constants/API";
-import { createButton, createCutoff, createHijack, createLojack, createUTG, createUTGp1, createUTGp2 } from "../preset/Preset";
+import { POSITION, createButton, createCutoff, createHijack, createLojack, createSmallBlind, createUTG, createUTGp1, createUTGp2 } from "../preset/Preset";
 import Table from "./Table";
 import axios from 'axios';
 
 export default function Position(props) {
-    const [username, position, table, setTable_ufg] = props.data;
+    const [username, position, table, setTable] = props.data;
     const [ hands ] = props.hands;
     const [action, setAction] = useState(hands === "" ? "Draw cards" : table[hands]);
 
@@ -15,26 +15,32 @@ export default function Position(props) {
 
     function getStandard(pos) {
         switch (pos) {
-            case 'ufg':
-                setTable_ufg(createUTG());
+            case POSITION.UTG:
+                setTable(createUTG());
                 break;
-            case 'ufgp1':
-                setTable_ufg(createUTGp1());
+            case POSITION.UTGp1:
+                setTable(createUTGp1());
                 break;
-            case 'ufgp2':
-                setTable_ufg(createUTGp2());
+            case POSITION.UTGp2:
+                setTable(createUTGp2());
                 break;
-            case 'lj':
-                setTable_ufg(createLojack());
+            case POSITION.LOJACK:
+                setTable(createLojack());
                 break;
-            case 'hj':
-                setTable_ufg(createHijack());
+            case POSITION.HIJACK:
+                setTable(createHijack());
                 break;
-            case 'co':
-                setTable_ufg(createCutoff());
+            case POSITION.CUTOFF:
+                setTable(createCutoff());
                 break;
-            case 'but':
-                setTable_ufg(createButton());
+            case POSITION.BUTTON:
+                setTable(createButton());
+                break;
+            case POSITION.SMALL_BLIND:
+                setTable(createSmallBlind());
+                break;
+            case POSITION.BIG_BLIND:
+                setTable(createSmallBlind());
                 break;
             default:
                 break;
@@ -58,26 +64,32 @@ export default function Position(props) {
     function getTitle() {
         let title;
         switch (position) {
-            case 'ufg':
+            case POSITION.UTG:
                 title = 'Under The Gun';
                 break;
-            case 'ufgp1':
+            case POSITION.UTGp1:
                 title = 'Under The Gun +1';
                 break;
-            case 'ufgp2':
+            case POSITION.UTGp2:
                 title = 'Under The Gun +2';
                 break;
-            case 'lj':
+            case POSITION.LOJACK:
                 title = 'Lojack';
                 break;
-            case 'hj':
+            case POSITION.HIJACK:
                 title = 'Hijack';
                 break;
-            case 'co':
+            case POSITION.CUTOFF:
                 title = 'Cutoff';
                 break;
-            case 'but':
+            case POSITION.BUTTON:
                 title = 'Button';
+                break;
+            case POSITION.SMALL_BLIND:
+                title = 'Small Blind';
+                break;
+            case POSITION.BIG_BLIND:
+                title = 'Big Blind';
                 break;
             default:
                 break;

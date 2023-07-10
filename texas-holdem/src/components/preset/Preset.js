@@ -3,6 +3,18 @@ export const shape = ['♥', '♦', '♣', '♠'];
 
 export const SUIT = {SUIT: 's', OFFSUIT:'o'};
 
+export const POSITION = {
+    SMALL_BLIND:'sb', 
+    BIG_BLIND:'bb', 
+    UTG:'utg', 
+    UTGp1:'utgp1', 
+    UTGp2:'utgp2', 
+    LOJACK:'lj',
+    HIJACK:'hj',
+    CUTOFF:'co',
+    BUTTON:'but'
+};
+
 export function getRankIndex(rank_c) {
     for (let i = 0; i < rank.length; i++) {
         if(rank[i] === rank_c) {
@@ -51,7 +63,7 @@ function setValueDiagonal(table, rank1, rank2_from, rank2_to, suit, value) {
     const indexRank1 = getRankIndex(rank1);
     const indexRank2_from = getRankIndex(rank2_from); 
     const indexRank2_to = getRankIndex(rank2_to); 
-    for (let i = 0; i < indexRank2_to-indexRank2_from; i++) {
+    for (let i = 0; i <= indexRank2_to-indexRank2_from; i++) {
         const key = rank[indexRank1+i]+rank[indexRank2_from+i]+suit;
         table[key] = value;
     }
@@ -174,6 +186,35 @@ export function createButton() {
     setValueByRange(table, 'J', 'T', '8', SUIT.OFFSUIT, VALUE.RAISE);
     setValueDiagonal(table, 'T', '9', '6', SUIT.OFFSUIT, VALUE.RAISE);
     setValueDiagonal(table, 'T', '8', '7', SUIT.OFFSUIT, VALUE.RAISE);
+    return table;
+}
+
+export function createSmallBlind() {
+    const table = createTable();
+    setValueDiagonal(table, 'A', 'A', '2', SUIT.OFFSUIT, VALUE.RAISE);
+
+    setValueByRange(table, 'A', 'K', '2', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, 'K', 'Q', '2', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, 'Q', 'J', '2', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, 'J', 'T', '2', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, 'T', '9', '4', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, '9', '8', '4', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, '8', '7', '4', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, '7', '6', '4', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, '6', '5', '3', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, '5', '4', '3', SUIT.SUIT, VALUE.RAISE);
+    setValueByRange(table, '4', '3', '3', SUIT.SUIT, VALUE.RAISE);
+
+    setValueByRange(table, 'A', 'K', '2', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, 'K', 'Q', '2', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, 'Q', 'J', '2', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, 'J', 'T', '6', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, 'T', '9', '6', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, '9', '8', '6', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, '8', '7', '6', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, '7', '6', '6', SUIT.OFFSUIT, VALUE.RAISE);
+    setValueByRange(table, '6', '5', '5', SUIT.OFFSUIT, VALUE.RAISE);
+
     return table;
 }
 

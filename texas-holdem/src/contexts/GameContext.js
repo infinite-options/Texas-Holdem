@@ -11,14 +11,16 @@ const GameContextProvider = ({ children }) => {
     const [gameState, setGameState] = useState(GAME_STATE.SETUP);
     const [players, setPlayers] = useState([]);
     const [deck, setDeck] = useState(shuffledDeck());
+    const [positionOffset, setPositionOffset] = useState(0);
     
     //console.log(deck);
     const contextValue = useMemo(() => (
       {game_data : [fetchData], 
         game_states: [gameState, setGameState], 
         game_players:[players, setPlayers], 
-        game_decks:[deck, setDeck]
-      }), [fetchData, gameState, players, deck]);
+        game_decks:[deck, setDeck],
+        game_offset:[positionOffset, setPositionOffset],
+      }), [fetchData, gameState, players, deck, positionOffset]);
 
     useEffect(()=>{
         axios.get(URL_ENDPOINT+'/preflop').then((res=> {
