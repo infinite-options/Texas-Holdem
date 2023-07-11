@@ -13,12 +13,9 @@ export default function Preflop(props) {
     const [deck, setDeck] = game_decks;   
     const [positionOffset, setPositionOffset] = game_offset;
 
-    function redraw() {
-        setDeck(shuffledDeck());
-    }
-
-    function increamentOffset() {
+    function deal() {
         setPositionOffset(positionOffset+1);
+        setDeck(shuffledDeck());
     }
     function positionIndex(i, offset) {
         return (i+offset)%9;
@@ -27,8 +24,9 @@ export default function Preflop(props) {
     return(
         <div>
             <h1>Preflop</h1>
-            <button onClick={()=>redraw()}>Redraw</button>
-            <button onClick={()=>increamentOffset()}>Hand over dealer button</button>
+            <label>
+                Move the button and deal out new cards: <button onClick={()=>deal()}>Deal</button>
+            </label>
             
             <div className="grid-col-3">
                 <Player data={[players[positionIndex(0,positionOffset)], POSITION.SMALL_BLIND]} hand={[deck[0], deck[9]]}/>
