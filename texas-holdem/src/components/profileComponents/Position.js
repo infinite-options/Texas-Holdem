@@ -103,14 +103,11 @@ export default function Position(props) {
     
     return (
         <div>
-            <div>
-                <h2> {getTitle()} </h2>
-                <p>Action: {action}</p>
-                <Table table={[position, table]} updateAction={updateAction}/>
-                <button onClick={()=> createPost()}>Save</button>
-                <button onClick={()=> getStandard(position)}>Reset</button>
-            </div>
-            
+            <h2> {getTitle()} </h2>
+            <p>Action: {action}</p>
+            <Table table={[position, table]} updateAction={updateAction}/>
+            <button onClick={()=> createPost()}>Save</button>
+            <button onClick={()=> getStandard(position)}>Reset</button>
         </div>
     );
 }
