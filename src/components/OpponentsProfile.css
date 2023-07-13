@@ -1,0 +1,221 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+
+.profile-page{
+  width: 24.375rem;
+  height: 57.75rem;
+  background: grey;
+  border: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  width: 24.375rem;
+  height: 4.125rem;
+  flex-shrink: 0;
+  background: white;
+  display: flex;
+  padding: 1.44rem 0 0;
+  margin-top: 2.44rem;
+  box-sizing: border-box;
+}
+
+.close-button {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  color: black;
+  fill: black;
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.card {
+  width: 21.75rem;
+  height: 6.3125rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background:  linear-gradient(
+    to right,
+    #F3AA45 0%,
+    #F3AA45 50%,
+    white 50%,
+    white 100%
+  );
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: top;
+  margin-top: 1.44rem;
+}
+  
+.card-span {
+  color: #233329;
+  font-family: Outfit;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.04125rem;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+
+.profile-page {
+   width: 24.375rem;
+  height: 57.75rem;
+  background: white;
+  border: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  width: 24.375rem;
+  height: 4.125rem;
+  flex-shrink: 0;
+  background: white;
+  display: flex;
+  padding: 1.44rem 0 0;
+  margin-top: 2.44rem;
+  box-sizing: border-box;
+}
+
+.close-button {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  color: black;
+  fill: black;
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.card {
+  width: 21.75rem;
+  height: 6.3125rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: linear-gradient(
+    to right,
+    #F3AA45 0%,
+    #F3AA45 50%,
+    white 50%,
+    white 100%
+  );
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-left: 0.9rem;
+  padding: 0 0.5rem;
+}
+
+.card-line {
+  display: flex;
+  justify-content: space-between;
+  /* padding: 0 1rem; */
+}
+
+.card-span {
+  color: #233329;
+  font-family: Outfit;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.04125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-span.white {
+  text-align: left;
+}
+
+.hands-text {
+  color: #233329;
+  font-family: Outfit;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.045rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  /* text-align: center; */
+}
+
+.image-container {
+  width: 21.6875rem;
+  height: 21.75rem;
+  flex-shrink: 0;
+  background: url("../images/Screenshot.png"), lightgray 50% / cover no-repeat;
+  margin-left: 1rem;
+  /* margin-top: 1rem; */
+}
+
+.image-2 {
+  width: 12.5rem;
+  height: 12.5rem;
+  flex-shrink: 0;
+  background: url('../images/Piechart.png') center / cover no-repeat;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.legend-container {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+
+.flippable-button {
+  width: 8rem;
+  height: 6.25rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #E28D7E;
+  box-shadow: 0px 4px 4px 0px #2A2E31;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 15rem;
+}
+
+.flippable-button-text {
+  color: #FFF;
+  text-align: center;
+  font-family: Outfit;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5625rem;
+  letter-spacing: 0.04125rem;
+}
+
+.flippable-button.flipped {
+  background: #FFF;
+  box-shadow: 0px 4px 4px 0px #468EF6;
+}
+
+.flippable-button.flipped .flippable-button-text {
+  color: #000;
+}
