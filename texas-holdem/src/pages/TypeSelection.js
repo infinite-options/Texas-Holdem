@@ -20,10 +20,10 @@ export default function TypeSelection() {
                     
                 </div>
 
-                <PlayerTypeSelector box={["Tight-", "aggressive", "#7ACEA8"]}/>
-                <PlayerTypeSelector box={["Loose-", "aggressive", "#7A94C9"]}/>
-                <PlayerTypeSelector box={["Tight-", "passive", "#E28D7E"]}/>
-                <PlayerTypeSelector box={["Loose-", "passive", "#84827F"]}/>
+                <PlayerTypeSelector box={["Tight-aggressive", "#7ACEA8"]}/>
+                <PlayerTypeSelector box={["Loose-aggressive", "#7A94C9"]}/>
+                <PlayerTypeSelector box={["Tight-passive", "#E28D7E"]}/>
+                <PlayerTypeSelector box={["Loose-passive", "#84827F"]}/>
 
                 <ConfrimButton />
             </div>

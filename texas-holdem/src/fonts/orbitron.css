@@ -6,3 +6,5 @@
     font-family: 'Orbitron';
     font-weight: 900;
 }
+
+button { font-family: inherit }

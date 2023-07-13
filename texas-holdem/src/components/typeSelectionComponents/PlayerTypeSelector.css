@@ -6,6 +6,7 @@
 .flex-reverse-container {
     display: flex;
     flex-direction: row-reverse;
+    margin-left: auto;
 
     align-items: center;
 }

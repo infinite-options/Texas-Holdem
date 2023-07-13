@@ -3,8 +3,11 @@ import "../../fonts/orbitron.css";
 import { useState } from "react";
 
 export default function PlayerTypeSelector(props) {
-    const [text1, text2, color] = props.box;
+    const [playerType, color] = props.box;
     const [count, setCount] = useState(0);
+    const dashIndex = playerType.indexOf('-')+1;
+    const text1 = playerType.slice(0, dashIndex);
+    const text2 = playerType.slice(dashIndex);
 
     function increament() {
         setCount(count+1);

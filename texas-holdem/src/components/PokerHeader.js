@@ -13,6 +13,8 @@ export default function PokerHeader(props) {
                 <span style={{"margin-left":"5px"}}/>
                 <Link to="/contact">Contact </Link>
                 <span style={{"margin-left":"5px"}}/>
+                <Link to="/contact2">ContactOverlay </Link>
+                <span style={{"margin-left":"5px"}}/>
                 <hr/>
             </div>
 

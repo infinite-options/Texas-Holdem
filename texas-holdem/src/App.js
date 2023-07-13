@@ -6,6 +6,7 @@ import EngineTest from "./pages/EngineTest";
 import { GameContextProvider } from "./contexts/GameContext";
 import TypeSelection from "./pages/TypeSelection";
 import ContactPage from "./pages/ContactPage";
+import ContactPage2 from "./pages/ContactPage2";
 
 const App = () => {
   
@@ -17,6 +18,7 @@ const App = () => {
               <Route path="/" element={<EngineTest />} />
               <Route path="type" element={<TypeSelection />} />
               <Route path="contact" element={<ContactPage />} />
+              <Route path="contact2" element={<ContactPage2 />} />
             </Routes>
       </GameContextProvider>
     </div>
