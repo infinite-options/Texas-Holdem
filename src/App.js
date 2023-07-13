@@ -1,4 +1,3 @@
-import "./AppDisplay.css";
 import { Routes, Route } from "react-router-dom";
 import EngineTest from "./pages/EngineTest";
 import { GameContextProvider } from "./contexts/GameContext";
@@ -10,7 +9,7 @@ import Navbar from "./components/navbarComponents/Navbar";
 const App = () => {
   
   return (
-    <div className="app-container">
+    <div>
       <GameContextProvider>
         <Navbar />
           <Routes>

@@ -2,6 +2,7 @@ import "../fonts/orbitron.css";
 import PlayerTypeSelector from "../components/typeSelectionComponents/PlayerTypeSelector";
 import ConfrimButton from "../components/typeSelectionComponents/ConfirmButton";
 import PokerHeader from "../components/pokerHeaderComponents/PokerHeader";
+import "./Pages.css";
 
 export default function TypeSelection() {
     return(
