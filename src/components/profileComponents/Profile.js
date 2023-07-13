@@ -1,4 +1,4 @@
-import Position from  "./profileComponents/Position";
+import Position from  "./Position";
 import { createUTG, createUTGp1, createUTGp2, createLojack, createHijack, createCutoff, createButton, mergeTables, createTable } from "./preset/Preset";
 import { useEffect, useState } from "react";
 

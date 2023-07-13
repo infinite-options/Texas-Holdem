@@ -1,5 +1,5 @@
-import Lobby from "../components/Lobby";
-import Preflop from "../components/Preflop";
+import Lobby from "../components/engineComponents/Lobby";
+import Preflop from "../components/engineComponents/Preflop";
 
 export default function EngineTest() {
     return(

@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect, useMemo } from "react";
 import axios from 'axios';
 import { URL_ENDPOINT } from "../constants/API";
-import { GAME_STATE } from "../components/preset/GamePhase";
-import { shuffledDeck } from "../components/preset/Preset";
+import { GAME_STATE } from "../preset/GamePhase";
+import { shuffledDeck } from "../preset/Preset";
 
 const GameContext = createContext();
 

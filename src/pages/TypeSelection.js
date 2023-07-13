@@ -1,10 +1,12 @@
 import "../fonts/orbitron.css";
 import PlayerTypeSelector from "../components/typeSelectionComponents/PlayerTypeSelector";
 import ConfrimButton from "../components/typeSelectionComponents/ConfirmButton";
+import PokerHeader from "../components/pokerHeaderComponents/PokerHeader";
 
 export default function TypeSelection() {
     return(
         <div className="app-container">
+            <PokerHeader />
             <div className="poker-base-font">
                 <div style={{"font-size": "22px", "font-weight":"bold", "margin" : "15px"}}
                 >                    

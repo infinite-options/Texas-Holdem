@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { URL_ENDPOINT } from "../../constants/API";
-import { POSITION, createButton, createCutoff, createHijack, createLojack, createSmallBlind, createUTG, createUTGp1, createUTGp2 } from "../preset/Preset";
+import { POSITION, createButton, createCutoff, createHijack, createLojack, createSmallBlind, createUTG, createUTGp1, createUTGp2 } from "../../preset/Preset";
 import Table from "./Table";
 import axios from 'axios';
 

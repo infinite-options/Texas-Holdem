@@ -1,15 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { GameContext } from "../contexts/GameContext";
+import { useContext } from "react";
+import { GameContext } from "../../contexts/GameContext";
 import Player from "./Player";
-import { POSITION, shuffledDeck } from "./preset/Preset";
+import { POSITION, shuffledDeck } from "../../preset/Preset";
 
 import './Preflop.css';
 
-export default function Preflop(props) {
-    const {game_data, game_states, game_players, game_decks, game_offset} = useContext(GameContext);
-    const [fetchData] = game_data
-    const [gameState, setGameState] = game_states;
-    const [players, setPlayers] = game_players;
+export default function Preflop() {
+    const {game_players, game_decks, game_offset} = useContext(GameContext);
+    const [players, ] = game_players;
     const [deck, setDeck] = game_decks;   
     const [positionOffset, setPositionOffset] = game_offset;
 

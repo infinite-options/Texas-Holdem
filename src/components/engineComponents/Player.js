@@ -1,7 +1,7 @@
-import { SUIT, createHijack, createTable, getRankIndex, mergeTables, shuffledDeck} from "./preset/Preset";
-import Position from  "./profileComponents/Position";
+import { SUIT, createTable, getRankIndex, mergeTables} from "../../preset/Preset";
+import Position from  "../profileComponents/Position";
 import { useContext, useEffect, useState } from "react";
-import { GameContext } from "../contexts/GameContext";
+import { GameContext } from "../../contexts/GameContext";
 
 function getHand(draw1, draw2) {
     const rank1 = draw1.charAt(0);
@@ -17,11 +17,8 @@ export default function Player(props) {
     const [playerName, position] = props.data;
     const [card1, card2] = props.hand;
     const hand = getHand(card1, card2);
-    const {game_data, game_states, game_players, game_decks} = useContext(GameContext);
+    const {game_data} = useContext(GameContext);
     const [fetchData] = game_data;
-    const [gameState, setGameState] = game_states;
-    const [players, setPlayers] = game_players;
-    const [deck, setDeck] = game_decks;
     
     const [table, setTable] = useState(createTable());
 
@@ -30,10 +27,9 @@ export default function Player(props) {
             if(fetchData.length > 0) {
                 let isExist = false;
                 fetchData.map((preflop) => {
-                    if(preflop.player_type === playerName && preflop.position === pos) {    
-                        let playerTable;
+                    if(preflop.player_type === playerName && preflop.position === pos) { 
                         try {
-                            playerTable = JSON.parse(preflop.preflop_table);
+                            let playerTable = JSON.parse(preflop.preflop_table);
                             setState(mergeTables(playerTable, createTable()));
                             isExist = true;
                         } catch (error) {
@@ -41,6 +37,7 @@ export default function Player(props) {
                         } 
                         
                     }
+                    return null;
                 });
                 if(!isExist) {
                     setState(standardTable());
@@ -48,7 +45,7 @@ export default function Player(props) {
             }                
         }
         fetchTable(position, setTable, createTable);
-    }, [fetchData,playerName]);
+    }, [fetchData, playerName, position]);
 
     return(
         <div>

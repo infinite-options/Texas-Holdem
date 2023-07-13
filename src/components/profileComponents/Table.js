@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { VALUE, keys } from "../preset/Preset";
+import { VALUE, keys } from "../../preset/Preset";
 
 import "./Table.css";
 

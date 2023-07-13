@@ -1,11 +1,13 @@
 import PlayerStyle from "../components/contactComponents/PlayerStyle";
 import ReturnButton from "../components/contactComponents/ReturnButton";
+import PokerHeader from "../components/pokerHeaderComponents/PokerHeader";
 import "../fonts/orbitron.css";
 import "../components/contactComponents/Contact.css"
 
 export default function ContactPage() {
     return(
         <div className="poker-900-weight-font">
+            <PokerHeader />
             <div className="contact-title">
                 Choose Player Style
             </div>

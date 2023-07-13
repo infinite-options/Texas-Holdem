@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { GameContext } from "../contexts/GameContext";
-import { GAME_STATE } from "./preset/GamePhase";
+import { GameContext } from "../../contexts/GameContext";
+import { GAME_STATE } from "../../preset/GamePhase";
 
 function PlayerInput(props) {
     const [playerNum, player, setPlayer] = props.data;
