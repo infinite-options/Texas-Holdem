@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../contexts/GameContext";
-import { GAME_STATE } from "../../preset/GamePhase";
 
 function PlayerInput(props) {
     const [playerNum, player, setPlayer] = props.data;
@@ -16,8 +15,7 @@ function PlayerInput(props) {
 
 // Have all player setup.
 export default function Lobby() {
-    const {game_states, game_players, game_offset} = useContext(GameContext);
-    const [, setGameState] = game_states;
+    const {game_players, game_offset} = useContext(GameContext);
     const [, setPlayers] = game_players;
     const [, setPositionOffset] = game_offset;
 
@@ -33,7 +31,6 @@ export default function Lobby() {
 
     function savePlayerLists() {
         setPlayers([player1, player2, player3, player4, player5, player6, player7, player8, player9]);
-        setGameState(GAME_STATE.PREPLOP);
         setPositionOffset(0);
     }
 
