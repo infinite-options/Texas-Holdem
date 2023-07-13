@@ -1,25 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import styled from 'styled-components';
+import ChangePosition from './components/ChangePosition';
+import React from 'react';
+import Main from './components/Main';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const greenRound = {
+  width: '349.938px',
+  height: '229.439px',
+  transform: 'rotate(-90.363deg)',
+  flexShrink: 0,
+  borderRadius: '1000px',
+  border: '1px solid #F3AA45',
+  background: 'linear-gradient(271deg, #233329 0%, #63D471 100%)',
 }
+
+const App = () => {
+  return (
+    <React.Fragment>
+     <ChangePosition></ChangePosition>
+      <Main></Main>
+   </React.Fragment>
+  );
+};
 
 export default App;
