@@ -1,14 +1,47 @@
 import PlayerProfile from "./PlayerProfile";
 import "./Contact.css";
+import ContactOverlay from "./ContactOverlay";
+import { useState } from "react";
+import { Modal } from "react-overlays";
+import { styled } from "styled-components";
+
+const Backdrop = styled("div")`
+  position: fixed;
+  z-index: 1040;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  opacity: 0.5;
+`;
+
+// we use some pseudo random coords so nested modals
+// don't sit right on top of each other.
+const PoistionedModal = styled(Modal)`
+  position: fixed;
+  width: 360px;
+  z-index: 1040;
+  top: 20%;
+  left: 15px;
+`;
 
 export default function PlayerStyle(props) {
     const [playerName, playerType, color] = props.data;
+    const [setPlayerType, i] = props.modifier;
     const sliceIndex = playerType.indexOf('-')+1;
     const playerType1 = playerType.slice(0, sliceIndex);
     const playerType2 = playerType.slice(sliceIndex);
 
+    const [show, setShow] = useState(false);
+    const renderBackdrop = (props) => <Backdrop {...props} />;
+
     function showOverlay() {
-        
+        setShow(true);
+    }
+
+    function closeOverlay() {
+        setShow(false);
     }
 
     return(
@@ -28,6 +61,17 @@ export default function PlayerStyle(props) {
                         {playerType2}
                     </div>
                 </div>
+            </div>
+            
+            <div>
+                <PoistionedModal
+                    show={show}
+                    onHide={() => setShow(false)}
+                    renderBackdrop={renderBackdrop}
+                    aria-labelledby="modal-label"
+                >
+                    <ContactOverlay data={[playerName, setPlayerType, i]} close={closeOverlay}/>
+                </PoistionedModal>
             </div>
         </div>
     );
