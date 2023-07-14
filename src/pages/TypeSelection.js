@@ -3,8 +3,15 @@ import PlayerTypeSelector from "../components/typeSelectionComponents/PlayerType
 import ConfrimButton from "../components/typeSelectionComponents/ConfirmButton";
 import PokerHeader from "../components/pokerHeaderComponents/PokerHeader";
 import "./Pages.css";
+import { useState } from "react";
 
 export default function TypeSelection() {
+    const [output, ] = useState({
+        tightAggressive: 0,
+        tightPassive: 0,
+        looseAggressive: 0,
+        loosePassive: 0
+    });
     return(
         <div className="app-container">
             <PokerHeader />
@@ -23,10 +30,10 @@ export default function TypeSelection() {
                     
                 </div>
 
-                <PlayerTypeSelector box={["Tight-aggressive", "#7ACEA8"]}/>
-                <PlayerTypeSelector box={["Loose-aggressive", "#7A94C9"]}/>
-                <PlayerTypeSelector box={["Tight-passive", "#E28D7E"]}/>
-                <PlayerTypeSelector box={["Loose-passive", "#84827F"]}/>
+                <PlayerTypeSelector box={["Tight-aggressive", "#7ACEA8"]} output={output}/>
+                <PlayerTypeSelector box={["Loose-aggressive", "#7A94C9"]} output={output}/>
+                <PlayerTypeSelector box={["Tight-passive", "#E28D7E"]} output={output}/>
+                <PlayerTypeSelector box={["Loose-passive", "#84827F"]} output={output}/>
 
                 <ConfrimButton />
             </div>

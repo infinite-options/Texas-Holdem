@@ -4,16 +4,46 @@ import { useState } from "react";
 
 export default function PlayerTypeSelector(props) {
     const [playerType, color] = props.box;
+    const output = props.output;
     const [count, setCount] = useState(0);
     const dashIndex = playerType.indexOf('-')+1;
     const text1 = playerType.slice(0, dashIndex);
     const text2 = playerType.slice(dashIndex);
 
+    function updateOutput(count) {
+        switch (playerType) {
+            case "Tight-aggressive":
+                output.tightAggressive = count;
+                break;
+            case "Loose-aggressive":
+                output.looseAggressive = count;
+                break;
+            case "Tight-passive":
+                output.tightPassive = count;
+                break;
+            case "Loose-passive":
+                output.loosePassive = count;
+                break;
+            default:
+                break;
+        }
+    }
+
+    function isCountIncrementable() {
+        const max = 5;
+        const num = output.tightAggressive + output.looseAggressive + output.tightPassive + output.loosePassive;
+        return num < max;
+    }
+
     function increament() {
-        setCount(count+1);
+        if(isCountIncrementable()) {
+            updateOutput(count+1);
+            setCount(count+1);
+        }
     }
     function decrement() {
         if(count > 0) {
+            updateOutput(count-1);
             setCount(count-1);
         }
     }
