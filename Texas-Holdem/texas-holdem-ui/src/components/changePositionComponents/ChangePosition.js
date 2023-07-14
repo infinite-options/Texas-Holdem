@@ -1,13 +1,13 @@
 import React from 'react';
 import './ChangePosition.css';
 
-import Rectangle15Image from '../assets/images/ChangePosition_Rectangle_15.png';
-import Ellipse4Image from '../assets/images/ChangePosition_Ellipse_9.png';
-import Ellipse5Image from '../assets/images/ChangePosition_Ellipse_5.png';
-import Ellipse9Image from '../assets/images/ChangePosition_Ellipse_9.png';
-import Ellipse10Image from '../assets/images/ChangePosition_Ellipse_10.png';
-import Ellipse11Image from '../assets/images/ChangePosition_Ellipse_11.png';
-import Ellipse12Image from '../assets/images/ChangePosition_Ellipse_12.png';
+import Rectangle15Image from '../../assets/images/ChangePosition_Rectangle_15.png';
+import Ellipse4Image from '../../assets/images/ChangePosition_Ellipse_9.png';
+import Ellipse5Image from '../../assets/images/ChangePosition_Ellipse_5.png';
+import Ellipse9Image from '../../assets/images/ChangePosition_Ellipse_9.png';
+import Ellipse10Image from '../../assets/images/ChangePosition_Ellipse_10.png';
+import Ellipse11Image from '../../assets/images/ChangePosition_Ellipse_11.png';
+import Ellipse12Image from '../../assets/images/ChangePosition_Ellipse_12.png';
 
 import {styled} from '@mui/material/styles';
 const greenRound = {

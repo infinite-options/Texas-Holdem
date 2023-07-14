@@ -3,23 +3,24 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Rectangle15Image from '../assets/images/ChangePosition_Rectangle_15.png';
-import Ellipse12Image from '../assets/images/Main_Ellipse_12.png';
-import Ellipse14Image from '../assets/images/Main_Ellipse_14.png';
-import Ellipse15Image from '../assets/images/Main_Ellipse_15.png';
-import Ellipse4Image from '../assets/images/Main_Ellipse_4.png';
-import Ellipse5Image from '../assets/images/Main_Ellipse_5.png';
-import Ellipse9Image from '../assets/images/Main_Ellipse_9.png';
-import Ellipse10Image from '../assets/images/Main_Ellipse_10.png';
-import Ellipse11Image from '../assets/images/Main_Ellipse_11.png';
-import ArrowSquareUpImage from '../assets/images/Main_arrow_square_up.svg';
-import Ellipse13Image from '../assets/images/Main_Ellipse_13.png';
-import PlaySquareImage from '../assets/images/Main_play_square.svg';
+import Rectangle15Image from '../../assets/images/ChangePosition_Rectangle_15.png';
+import Ellipse12Image from '../../assets/images/Main_Ellipse_12.png';
+import Ellipse14Image from '../../assets/images/Main_Ellipse_14.png';
+import Ellipse15Image from '../../assets/images/Main_Ellipse_15.png';
+import Ellipse4Image from '../../assets/images/Main_Ellipse_4.png';
+import Ellipse5Image from '../../assets/images/Main_Ellipse_5.png';
+import Ellipse9Image from '../../assets/images/Main_Ellipse_9.png';
+import Ellipse10Image from '../../assets/images/Main_Ellipse_10.png';
+import Ellipse11Image from '../../assets/images/Main_Ellipse_11.png';
+import ArrowSquareUpImage from '../../assets/images/Main_arrow_square_up.svg';
+import Ellipse13Image from '../../assets/images/Main_Ellipse_13.png';
+import PlaySquareImage from '../../assets/images/Main_play_square.svg';
+import MenuImg from '../../assets/images/Menu_img.png';
 import './Main.css';
 import {
   styled
 } from '@mui/material/styles';
-import OpponentProfile from './OpponentProfile';
+
 
 // import Menu01 from '../components/Menu01/Menu01';
 
@@ -95,13 +96,13 @@ const Rectangle8 = styled("div")({
   top: `23px`,
 });
 
-// const Menu01 = styled(Menu01)({
-//   width: `28px`,
-//   height: `28px`,
-//   position: `absolute`,
-//   left: `345px`,
-//   top: `41px`,
-// });
+const Menu01 = styled("img")({
+  width: `28px`,
+  height: `28px`,
+  position: `absolute`,
+  left: `345px`,
+  top: `41px`,
+});
 
 const Poker = styled("div")({
   textAlign: `left`,
@@ -788,6 +789,9 @@ function Main() {
                                       } });
   };
 
+  const handleMenuClick = () => {
+    navigate('/profile');
+  };
   const handleDealClick = () => {
 
     console.log("---------------------Switching Deal Click---------------------------");
@@ -861,7 +865,9 @@ function Main() {
       {/* Background of poker */}
       <Rectangle8>
       </Rectangle8>
-      {/* <Menu01/> */}
+      <button onClick={handleMenuClick}>
+      <Menu01 src={MenuImg} loading='lazy'/>
+      </button>
       <Poker>
         {`POKER`}
       </Poker>

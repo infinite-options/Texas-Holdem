@@ -1,0 +1,17 @@
+.header-container {
+    /*Background color*/
+    background: #2A2E31;
+
+    /*Background position*/
+    margin-top: 23px;
+    min-height: 66px;
+
+    /*Text position*/
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    
+    /*Text properties*/
+    color: #FFFFFF;
+    font-size: 24px;
+}

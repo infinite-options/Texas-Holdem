@@ -1,0 +1,6 @@
+.grid-col-3 {
+    display: grid;
+    grid-template-columns: auto auto auto ;
+    gap: 10px;
+    padding: 10px;
+}

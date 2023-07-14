@@ -1,0 +1,14 @@
+.confirm-button {
+    margin: 14px;
+    background-color: #52A352;
+    color: white;
+    width: 360px;
+    height: 80px;
+
+    border: 0;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    
+    box-shadow: 0px 4px 4px #F3AA45;
+}
