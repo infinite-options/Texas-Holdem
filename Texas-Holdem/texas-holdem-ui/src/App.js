@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import ChangePosition from './components/ChangePosition';
 import React from 'react';
 import Main from './components/Main';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import OpponentProfile from './components/OpponentProfile';
+import CounterComponent from './components/CounterComponent';
 
 const greenRound = {
   width: '349.938px',
@@ -18,8 +21,15 @@ const greenRound = {
 const App = () => {
   return (
     <React.Fragment>
-     <ChangePosition></ChangePosition>
-      <Main></Main>
+    <BrowserRouter>
+      <Routes>
+      <Route path="/" element={<Main />}></Route>
+            <Route path="change-position" element={<ChangePosition />} />
+            <Route path="opponent" element={<OpponentProfile/>} />
+          
+      </Routes>
+      </BrowserRouter>
+      {/* <CounterComponent></CounterComponent> */}
    </React.Fragment>
   );
 };

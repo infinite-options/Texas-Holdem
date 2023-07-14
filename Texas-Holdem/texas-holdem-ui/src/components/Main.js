@@ -1,4 +1,8 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Rectangle15Image from '../assets/images/ChangePosition_Rectangle_15.png';
 import Ellipse12Image from '../assets/images/Main_Ellipse_12.png';
 import Ellipse14Image from '../assets/images/Main_Ellipse_14.png';
@@ -15,6 +19,7 @@ import './Main.css';
 import {
   styled
 } from '@mui/material/styles';
+import OpponentProfile from './OpponentProfile';
 
 // import Menu01 from '../components/Menu01/Menu01';
 
@@ -454,6 +459,7 @@ const Replay = styled("div")({
   position: `absolute`,
   left: `8px`,
   top: `781px`,
+  transform: 'rotate(35.179deg)',
 });
 
 const Q030 = styled("div")({
@@ -743,23 +749,123 @@ const PlaySquare = styled("img")({
   top: `811px`,
 });
 
+const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 
 function Main() {
+  // const [player1Name, setPlayer1Name] = useState('Michael');
+
+  const location = useLocation();
+  let index=0;
+  if(null!=location.state && location.state.dealerIndex!=0){
+    index=location.state.dealerIndex;
+  }
+
+  const [dealerIndex, setDealerIndex] = useState(index);
+  console.log("When page loads ",dealerIndex)
+
+  const [player0, setPlayer0] = useState({name: 'Michael',position:(dealerIndex)%6});
+  const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6});
+  const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6});
+  const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6});
+  const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6});
+  const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6});
+
+  const navigate = useNavigate();
+
+  const handlePlayerClick = (player) => {
+    console.log("On Player click in Main ",dealerIndex)
+    // console.log("--------------------- Player Click---------------------------");
+    // console.log("p0 ",player0.name+" "+ positions[player0.position])
+    // console.log("p1 ",player1.name+" "+ positions[player1.position])
+    // console.log("p2 ",player2.name+" "+ positions[player2.position])
+    // console.log("p3 ",player3.name+" "+ positions[player3.position])
+    // console.log("p4 ",player4.name+" "+ positions[player4.position])
+    // console.log("p5 ",player5.name+" "+ positions[player5.position])
+       navigate('/opponent', { state: { 
+                                          name: player.name, 
+                                          position: positions[player.position],
+                                          dealerIndex : dealerIndex
+                                      } });
+  };
+
+  const handleDealClick = () => {
+
+    console.log("---------------------Switching Deal Click---------------------------");
+
+    setDealerIndex((dealerIndex+1)%6)
+
+    setPlayer0({
+      ...player0,
+        name: player0.name,
+        position: (player0.position+5)%6
+    });
+    
+    setPlayer1({
+      ...player1,
+      name: player1.name,
+      position: (player1.position+5)%6
+    });
+   
+    setPlayer2({
+      ...player2,
+      name: player2.name,
+      position: (player2.position+5)%6
+    });
+   
+    setPlayer3({
+      ...player3,
+      name: player3.name,
+      position: (player3.position+5)%6
+    });
+    
+    setPlayer4({
+      ...player4,
+      name: player4.name,
+      position: (player4.position+5)%6
+    });
+   
+    setPlayer5({
+      ...player5,
+      name: player5.name,
+      position: (player5.position+5)%6
+    });
+    // console.log("p0 ",player0.name+" "+ positions[player0.position])
+    // console.log("p1 ",player1.name+" "+ positions[player1.position])
+    // console.log("p2 ",player2.name+" "+ positions[player2.position])
+    // console.log("p3 ",player3.name+" "+ positions[player3.position])
+    // console.log("p4 ",player4.name+" "+ positions[player4.position])
+    // console.log("p5 ",player5.name+" "+ positions[player5.position])
+   
+  };
+
   return (
+    <div>
+      <h3>{player0.position} {player0.name} {positions[player0.position]}</h3>
+      <h3>{player1.position} {player1.name} {positions[player1.position]}</h3>
+      <h3>{player2.position} {player2.name} {positions[player2.position]}</h3>
+      <h3>{player3.position} {player3.name} {positions[player3.position]}</h3>
+      <h3>{player4.position} {player4.name} {positions[player4.position]}</h3>
+      <h3>{player5.position} {player5.name} {positions[player5.position]}</h3>
     <Main1>
+ 
       {/* <Rectangle15>
       </Rectangle15> */}
+      {/* Table  */}
       <Rectangle15 src={Rectangle15Image} loading='lazy' alt={"Rectangle 15"}></Rectangle15>
-
+      {/* Dealer token, timer , Deal */}
       <Ellipse12 src={Ellipse12Image} loading='lazy' alt={"Ellipse 12"}/>
-      <Ellipse14 src={Ellipse14Image} loading='lazy' alt={"Ellipse 14"}/>
+      <button onClick={handleDealClick}>
+        <Ellipse14 src={Ellipse14Image} loading='lazy' alt={"Ellipse 14"}/>
+      </button>
       <Ellipse15 src={Ellipse15Image} loading='lazy' alt={"Ellipse 15"}/>
+      {/* Background of poker */}
       <Rectangle8>
       </Rectangle8>
       {/* <Menu01/> */}
       <Poker>
         {`POKER`}
       </Poker>
+      {/* Fold raise etc */}
       <Rectangle9>
       </Rectangle9>
       <Rectangle60>
@@ -771,24 +877,34 @@ function Main() {
       <Fold>
         {`Fold`}
       </Fold>
+      <button onClick={handleDealClick}>
       <Deal>
         {`Deal`}
-      </Deal>
+      </Deal></button>
       <Raise>
         {`Raise`}
       </Raise>
       <Check>
         {`Check`}
       </Check>
+      {/* Two rectangles at the bottom of page */}
       <Rectangle12>
       </Rectangle12>
       <Rectangle13>
       </Rectangle13>
-      <Ellipse4 src={Ellipse4Image} loading='lazy' alt={"Ellipse 4"}/>
-      <Ellipse5 src={Ellipse5Image} loading='lazy' alt={"Ellipse 5"}/>
-      <Ellipse9 src={Ellipse9Image} loading='lazy' alt={"Ellipse 9"}/>
-      <Ellipse10 src={Ellipse10Image} loading='lazy' alt={"Ellipse 10"}/>
-      <Ellipse11 src={Ellipse11Image} loading='lazy' alt={"Ellipse 11"}/>
+      {/* Player images  */}
+
+      <button onClick={() => handlePlayerClick(player0)}>
+      <Ellipse4 src={Ellipse4Image} loading='lazy' alt={"Ellipse 4"}/></button>
+      <button onClick={() => handlePlayerClick(player1)}>
+      <Ellipse5 src={Ellipse5Image} loading='lazy' alt={"Ellipse 5"}/></button>
+      <button onClick={() => handlePlayerClick(player2)}>
+      <Ellipse9 src={Ellipse9Image} loading='lazy' alt={"Ellipse 9"}/></button>
+      <button onClick={() => handlePlayerClick(player3)}>
+      <Ellipse10 src={Ellipse10Image} loading='lazy' alt={"Ellipse 10"}/></button>
+      <button onClick={() => handlePlayerClick(player4)}>
+      <Ellipse11 src={Ellipse11Image} loading='lazy' alt={"Ellipse 11"}/></button>
+      {/* Border around money */}
       <Rectangle27>
       </Rectangle27>
       <Rectangle53>
@@ -823,6 +939,7 @@ function Main() {
       <D>
         {`D`}
       </D>
+      {/* Cards infornt of players - white/blue */}
       <Rectangle25>
       </Rectangle25>
       <Rectangle34>
@@ -858,6 +975,7 @@ function Main() {
       <Jack>
         {`Jack`}
       </Jack>
+      {/* The 5 cards in the middle of table  */}
       <Rectangle23>
       </Rectangle23>
       <Rectangle56>
@@ -868,10 +986,12 @@ function Main() {
       </Rectangle57>
       <Rectangle59>
       </Rectangle59>
+
+      
       <ArrowSquareUp src={ArrowSquareUpImage} loading='lazy' alt={"arrow-square-up"}/>
       <Ellipse13 src={Ellipse13Image} loading='lazy' alt={"Ellipse 13"}/>
       <PlaySquare src={PlaySquareImage} loading='lazy' alt={"play-square"}/>
-    </Main1>);
+    </Main1></div>);
 
   }
 
