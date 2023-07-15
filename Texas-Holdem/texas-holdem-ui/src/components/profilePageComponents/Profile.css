@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+
+.profile-page {
+  width: 24.375rem;
+  height: 52.75rem;
+  flex-shrink: 0;
+  background: url("../../assets/images/casino-tokens-yellow-background.png"), lightgray 50% / cover no-repeat;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+ width: 24.375rem;
+  height: 4.125rem;
+  flex-shrink: 0;
+  background: #2A2E31;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.44rem 0 0;
+  margin-top: 1.44rem;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  color: #FFF;
+  font-family: Orbitron;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  letter-spacing: 0.17875rem;
+  margin-left: 1.44rem;
+  margin-top: -0.33rem;
+}
+
+.close-button {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-right: 1.44rem;
+  margin-top: -1.3rem;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.44rem;
+}
+
+.card {
+  width: 21.875rem;
+  height: 5.5rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #FFF;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.card span {
+  color: #233329;
+  font-family: Orbitron;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  letter-spacing: 0.14625rem;
+}

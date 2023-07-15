@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TypeSelection from './pages/TypeSelection';
 import ProfilePage from './components/ProfilePage';
 import OpponentsProfile from './components/opponentsProfileComponents/OpponentsProfile';
+import Profile from './components/profilePageComponents/Profile';
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
       <Route path="/" element={<TypeSelection />}></Route>
       <Route path="main" element={<Main />} />
             <Route path="type" element={<TypeSelection />} />
-            <Route path="profile" element={<ProfilePage />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="change-position" element={<ChangePosition />} />
             <Route path="opponent" element={<OpponentsProfile/>} />
           
