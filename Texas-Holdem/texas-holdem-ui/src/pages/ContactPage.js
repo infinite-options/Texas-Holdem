@@ -20,6 +20,7 @@ export default function ContactPage() {
 
     function setPlayerType(playerIndex, newPlayerType) {
         usersData[playerIndex].playerType = newPlayerType;
+        console.log(usersData);
         updator([]);
     }
 
