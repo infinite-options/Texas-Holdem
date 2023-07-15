@@ -1,0 +1,105 @@
+.app-container {
+}
+
+
+.playerInfo-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 22px;
+    font-family: "Outfit";
+    width: 350px;
+    margin-left: 20px;
+    margin-top: 35px;
+
+    box-shadow: 0px 4px 4px #00000040;
+    border-radius: 10px;
+}
+.text-box {
+    display: flex;
+    flex-direction: column;
+    
+    width: 50%;
+    height: 100px;
+    border-radius: 10px 0px 0px 10px;
+    background-color: #F3AA45;
+
+    padding-top: 10px;
+    padding-left: 10px;
+    font-weight: 600;
+}
+.content-box {
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    height: 100px;
+    border-radius: 0px 10px 10px 0px;
+    background-color: #FFFFFF;
+
+    padding-top: 10px;
+    padding-left: 10px; 
+    font-weight: 400;
+
+}
+.second-text {
+    margin-top: 10px;
+    width: 80%;
+}
+
+
+.table-container {
+    font-family: "Outfit";
+    margin-left: 20px;
+    margin-top: 35px;
+}
+.title-text{
+    font-weight: 700;
+    font-size: 24px;
+
+}
+
+.statistics-container {
+    font-family: "Outfit";
+    margin-left: 20px;
+    margin-top: 20px;
+
+}
+
+.playerType-container {
+    display: flex;
+    flex-direction: row-reverse;
+    font-family: "Outfit";
+    margin-left: 20px;
+}
+.playerType-button {
+    display: flex;
+    flex-direction: column;
+
+    width: 128px;
+    height: 100px;
+    margin: 15px;
+
+    border-radius: 10px;
+    
+    background-color: #E28D7E;
+    box-shadow: 0px 4px 4px 0px #2A2E31;
+    color: #FFFFFF;
+    
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.close-button-container {
+    font-family: "Outfit";
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 40px;
+}
+.close-box {
+    display: flex;
+    flex-direction: row-reverse;
+
+}

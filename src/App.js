@@ -4,7 +4,7 @@ import Navbar from "./components/navbarComponents/Navbar";
 import EngineTest from "./pages/EngineTest";
 import TypeSelection from "./pages/TypeSelection";
 import ContactPage from "./pages/ContactPage";
-import ContactPage2 from "./pages/ContactPage2";
+import OpponentsProfile from "./pages/OpponentsProfile";
 
 const App = () => {
   
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/" element={<EngineTest />} />
         <Route path="type" element={<TypeSelection />} />
         <Route path="contact" element={<ContactPage />} />
-        <Route path="contact2" element={<ContactPage2 />} />
+        <Route path="opponentsProfile" element={<OpponentsProfile />} />
       </Routes>
     </GameContextProvider>
   );
