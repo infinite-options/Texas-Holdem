@@ -9,7 +9,7 @@ function OpponentProfile() {
     const [dealerIndex, setDealerIndex] = useState(location.state.dealerIndex);
     console.log("On Player click in OP ",dealerIndex)
     const handleMainPageClick = () => {
-        navigate('/main', { state: { dealerIndex : location.state.dealerIndex} });
+        navigate('/', { state: { dealerIndex : location.state.dealerIndex} });
     };
 
     return (<div>

@@ -5,9 +5,10 @@ import ChangePosition from './components/changePositionComponents/ChangePosition
 import React from 'react';
 import Main from './components/mainComponents/Main';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import OpponentProfile from './components/OpponentProfile';
+
 import TypeSelection from './pages/TypeSelection';
 import ProfilePage from './components/ProfilePage';
+import OpponentsProfile from './components/opponentsProfileComponents/OpponentsProfile';
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
             <Route path="type" element={<TypeSelection />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="change-position" element={<ChangePosition />} />
-            <Route path="opponent" element={<OpponentProfile/>} />
+            <Route path="opponent" element={<OpponentsProfile/>} />
           
       </Routes>
       </BrowserRouter>
