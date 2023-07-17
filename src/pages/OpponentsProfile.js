@@ -6,7 +6,6 @@ import "../components/OpponentsProfileComponents/OpponentsProfile.css";
 import "./Pages.css";
 import { useContext } from "react";
 import { GameContext } from "../contexts/GameContext";
-import { useState } from "react";
 
 export default function OpponentsProfile() {
     // Inputs

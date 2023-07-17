@@ -23,7 +23,7 @@ export default function PlayerTypeButton(props) {
 
     return(
         <div className="playerType-container">
-            <div className={`playerType-button${isPressing ? "-pressed" : ""}`} onMouseDown={()=>{console.log("Pressed"); setIsPressing(true);}} onMouseUp={()=>setIsPressing(false)}>
+            <div className={`playerType-button${isPressing ? "-pressed" : ""}`} onMouseDown={()=>{setIsPressing(true);}} onMouseUp={()=>setIsPressing(false)}>
                 {!isPressing ? 
                 <>
                     <div>
