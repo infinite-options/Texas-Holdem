@@ -4,8 +4,15 @@ import Stastics from "../components/OpponentsProfileComponents/Statistics";
 import Table from "../components/OpponentsProfileComponents/Table";
 import "../components/OpponentsProfileComponents/OpponentsProfile.css";
 import "./Pages.css";
+import { useContext } from "react";
+import { GameContext } from "../contexts/GameContext";
 
 export default function OpponentsProfile() {
+    const {game_data, game_states, game_players, game_decks} = useContext(GameContext);
+    const [fetchData] = game_data
+    const [players, setPlayers] = game_players;
+    const [deck, setDeck] = game_decks;
+
     return(
         <div className="app-container">
             <div className="poker-900-weight-font">
@@ -19,7 +26,7 @@ export default function OpponentsProfile() {
                 </div>
                 
                 <PlayerInfo />
-                <Table />
+                <Table player={["Player 1", "tight-agressive", "but"]} data={fetchData}/>
                 <Stastics />
                 <PlayerTypeButton />
             </div>

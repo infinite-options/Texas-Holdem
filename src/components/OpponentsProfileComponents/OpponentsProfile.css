@@ -103,3 +103,20 @@
     flex-direction: row-reverse;
 
 }
+
+.table {
+    border-collapse: collapse;
+  }
+  
+  .table td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    cursor: pointer;
+    text-align: center;
+    user-select: none;
+  }
+  
+  .table .selected {
+    background-color: red;
+  }
