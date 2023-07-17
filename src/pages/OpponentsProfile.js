@@ -9,38 +9,16 @@ import { GameContext } from "../contexts/GameContext";
 import { useState } from "react";
 
 export default function OpponentsProfile() {
+    // Inputs
+    const player_name = "Player 1";
+    const player_type = "tight-agressive";
+    const player_pos = "sb";
+
     const { game_data } = useContext(GameContext);
     const [fetchData] = game_data;
-    // Manual input to test the logic
-    const [player_name, setPlayerName] = useState("");
-    const [player_type, setPlayerType] = useState("");
-    const [player_pos, setPlayerPos] = useState("");
-    const [input, setInput] = useState([]);
-    function saveData() {
-        setInput([player_name, player_type, player_pos]);
-    }
 
     return(
         <div className="app-container">
-            <div className="Delete on integration">
-                <h2>Manual Input</h2>
-                <div>
-                    <label>
-                        Player Name: <input value={player_name} onChange={(e)=>setPlayerName(e.target.value)}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Player Type: <input value={player_type} onChange={(e)=>setPlayerType(e.target.value)}/>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Player Position: <input value={player_pos} onChange={(e)=>setPlayerPos(e.target.value)}/>
-                    </label>
-                </div>
-                <button onClick={()=>saveData()}>save</button>
-            </div>
             <div className="poker-900-weight-font">
                 <div className="close-button-container">
                     <div className="close-box">
@@ -51,10 +29,10 @@ export default function OpponentsProfile() {
                     </div>
                 </div>
                 
-                <PlayerInfo player={[input[0], input[1], input[2]]}/>
-                <Table player={[input[0], input[1], input[2]]} data={fetchData}/>
-                <Stastics player={[input[0], input[1], input[2]]} data={fetchData}/>
-                <PlayerTypeButton type={input[1]}/>
+                <PlayerInfo player={[player_name, player_type, player_pos]}/>
+                <Table player={[player_name, player_type, player_pos]} data={fetchData}/>
+                <Stastics player={[player_name, player_type, player_pos]} data={fetchData}/>
+                <PlayerTypeButton type={player_type}/>
             </div>
         </div>
     );
