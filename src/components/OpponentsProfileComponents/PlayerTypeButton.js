@@ -9,7 +9,7 @@ export default function PlayerTypeButton(props) {
         }
         const dashIndex = type.indexOf('-');
         if(dashIndex === -1) {
-            return <div>type</div>;
+            return <div>{type}</div>;
         }
         const line1 = type.slice(0, dashIndex+1);
         const line2 = type.slice(dashIndex+1);
