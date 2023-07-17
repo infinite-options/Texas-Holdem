@@ -12,8 +12,6 @@ export default function Table(props) {
     const [draggingState, setDraggingState] = useState(false);
     const [, updateState] = useState();
 
-    console.log(keyTable);
-
     const handleMouseDown = (i, j) => {
         setIsDragging(true);
         table[keyTable[i][j]] = table[keyTable[i][j]] === VALUE.RAISE ? VALUE.FOLD : VALUE.RAISE;
