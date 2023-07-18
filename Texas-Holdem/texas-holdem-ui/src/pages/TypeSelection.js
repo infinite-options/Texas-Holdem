@@ -3,9 +3,15 @@ import PlayerTypeSelector from "../components/typeSelectionComponents/PlayerType
 import ConfirmButton from "../components/typeSelectionComponents/ConfirmButton";
 import PokerHeader from "../components/pokerHeaderComponents/PokerHeader";
 import "./Pages.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { GameContext } from "../contexts/GameContext";
 
 export default function TypeSelection() {
+    const {game_data, game_states, game_players, game_decks} = useContext(GameContext);
+    const [fetchData] = game_data
+    const [players, setPlayers] = game_players;
+    const [deck, setDeck] = game_decks;
+
     const [output, ] = useState({
         tightAggressive: 0,
         tightPassive: 0,
@@ -35,7 +41,7 @@ export default function TypeSelection() {
                 <PlayerTypeSelector box={["Tight-passive", "#E28D7E"]} output={output}/>
                 <PlayerTypeSelector box={["Loose-passive", "#84827F"]} output={output}/>
 
-                <ConfirmButton output={output}/>
+                <ConfirmButton output={[output, setPlayers]}/>
             </div>
         </div>
         

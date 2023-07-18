@@ -672,7 +672,7 @@ const Jack = styled("div")({
   textDecoration: `none`,
   textTransform: `none`,
   position: `absolute`,
-  left: `336px`,
+  left: `330px`,
   top: `340px`,
 });
 
@@ -750,12 +750,15 @@ const PlaySquare = styled("img")({
   top: `811px`,
 });
 
-const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
+const positions = ["but", "sb", "bb", "lj", "hj", "co"];
 
-function Main() {
+function Main(props) {
   // const [player1Name, setPlayer1Name] = useState('Michael');
 
   const location = useLocation();
+  const players = props.players;
+  console.log(players);
+
   let index=0;
   if(null!=location.state && location.state.dealerIndex!=0){
     index=location.state.dealerIndex;
@@ -764,11 +767,11 @@ function Main() {
   const [dealerIndex, setDealerIndex] = useState(index);
   console.log("When page loads ",dealerIndex)
 
-  const [player0, setPlayer0] = useState({name: 'Michael',position:(dealerIndex)%6});
-  const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6});
-  const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6});
-  const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6});
-  const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6});
+  const [player0, setPlayer0] = useState({name: players[0].name, position:(dealerIndex)%6, type: players[0].type});
+  const [player1, setPlayer1] = useState({name: players[1].name, position:(dealerIndex+1)%6, type: players[1].type});
+  const [player2, setPlayer2] = useState({name: players[2].name, position:(dealerIndex+2)%6, type: players[2].type});
+  const [player3, setPlayer3] = useState({name: players[3].name, position:(dealerIndex+3)%6, type: players[3].type});
+  const [player4, setPlayer4] = useState({name: players[4].name, position:(dealerIndex+4)%6, type: players[4].type});
   const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6});
 
   const navigate = useNavigate();
@@ -784,6 +787,7 @@ function Main() {
     // console.log("p5 ",player5.name+" "+ positions[player5.position])
        navigate('/opponent', { state: { 
                                           name: player.name, 
+                                          type: player.type,
                                           position: positions[player.position],
                                           dealerIndex : dealerIndex
                                       } });
@@ -967,19 +971,19 @@ function Main() {
       <Rectangle51>
       </Rectangle51>
       <Michael>
-        {`Michael`}
+        {player0.name}
       </Michael>
       <John>
-        {`John`}
+        {player1.name}
       </John>
       <Jay>
-        {`Jay`}
+        {player2.name}
       </Jay>
       <Stan>
-        {`Stan`}
+        {player3.name}
       </Stan>
       <Jack>
-        {`Jack`}
+        {player4.name}
       </Jack>
       {/* The 5 cards in the middle of table  */}
       <Rectangle23>

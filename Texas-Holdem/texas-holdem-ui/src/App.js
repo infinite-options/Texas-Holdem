@@ -1,30 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
-import styled from 'styled-components';
 import ChangePosition from './components/changePositionComponents/ChangePosition';
 import React from 'react';
-import Main from './components/mainComponents/Main';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { GameContextProvider } from './contexts/GameContext';
 
 import TypeSelection from './pages/TypeSelection';
-import ProfilePage from './components/ProfilePage';
-import OpponentsProfile from './components/opponentsProfileComponents/OpponentsProfile';
+import OpponentsProfile from './pages/OpponentsProfile';
 import Profile from './components/profilePageComponents/Profile';
+import MainPage from './pages/MainPage';
+
+
 
 const App = () => {
   return (
     <React.Fragment>
-    <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<TypeSelection />}></Route>
-      <Route path="main" element={<Main />} />
+      <GameContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<TypeSelection />} />
+            <Route path="main" element={<MainPage />} />
             <Route path="type" element={<TypeSelection />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-position" element={<ChangePosition />} />
             <Route path="opponent" element={<OpponentsProfile/>} />
-          
-      </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </GameContextProvider>
    </React.Fragment>
   );
 };
