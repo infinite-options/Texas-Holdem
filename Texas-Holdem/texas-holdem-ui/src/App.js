@@ -10,21 +10,31 @@ import TypeSelection from './pages/TypeSelection';
 import ProfilePage from './components/ProfilePage';
 import OpponentsProfile from './components/opponentsProfileComponents/OpponentsProfile';
 import Profile from './components/profilePageComponents/Profile';
+import ContactPage from './pages/ContactPage';
+import { useState } from 'react';
+import { PlayerContext, PlayerContextProvider } from './contexts/PlayerContext';
+import Main01 from './components/mainComponents/Main01';
 
 const App = () => {
+
   return (
     <React.Fragment>
+       <PlayerContextProvider>
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<TypeSelection />}></Route>
-      <Route path="main" element={<Main />} />
+       
+            <Route path="/" element={<TypeSelection />}></Route>
+            <Route path="main" element={<Main />} />
+            <Route path="main01" element={<Main01 />} />
             <Route path="type" element={<TypeSelection />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-position" element={<ChangePosition />} />
             <Route path="opponent" element={<OpponentsProfile/>} />
-          
+            <Route path="player-style" element={<ContactPage/>} />
+            <Route path="player-position" element={<ChangePosition/>} />
       </Routes>
       </BrowserRouter>
+      </PlayerContextProvider>
    </React.Fragment>
   );
 };

@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { PlayerContext } from '../../contexts/PlayerContext';
+
 import Rectangle15Image from '../../assets/images/ChangePosition_Rectangle_15.png';
 import Ellipse12Image from '../../assets/images/Main_Ellipse_12.png';
 import Ellipse14Image from '../../assets/images/Main_Ellipse_14.png';
@@ -753,103 +756,59 @@ const PlaySquare = styled("img")({
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 
 function Main() {
-  // const [player1Name, setPlayer1Name] = useState('Michael');
 
   const location = useLocation();
-  let index=0;
-  if(null!=location.state && location.state.dealerIndex!=0){
-    index=location.state.dealerIndex;
-  }
-
-  const [dealerIndex, setDealerIndex] = useState(index);
-  console.log("When page loads ",dealerIndex)
-
-  const [player0, setPlayer0] = useState({name: 'Michael',position:(dealerIndex)%6});
-  const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6});
-  const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6});
-  const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6});
-  const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6});
-  const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6});
+  const { dealerIndex, updateDealerIndex,
+    player0, updatePlayer0,
+    player1, updatePlayer1,
+    player2, updatePlayer2,
+    player3, updatePlayer3,
+    player4, updatePlayer4,
+    player5, updatePlayer5} = useContext(PlayerContext);
 
   const navigate = useNavigate();
 
   const handlePlayerClick = (player) => {
-    console.log("On Player click in Main ",dealerIndex)
-    // console.log("--------------------- Player Click---------------------------");
-    // console.log("p0 ",player0.name+" "+ positions[player0.position])
-    // console.log("p1 ",player1.name+" "+ positions[player1.position])
-    // console.log("p2 ",player2.name+" "+ positions[player2.position])
-    // console.log("p3 ",player3.name+" "+ positions[player3.position])
-    // console.log("p4 ",player4.name+" "+ positions[player4.position])
-    // console.log("p5 ",player5.name+" "+ positions[player5.position])
-       navigate('/opponent', { state: { 
-                                          name: player.name, 
-                                          position: positions[player.position],
-                                          dealerIndex : dealerIndex
-                                      } });
+      navigate('/opponent', { state: 
+        { selectedName: player.name,
+          selectedPosition: player.position,
+          selectedStyle: player.ptype}
+       });
   };
 
   const handleMenuClick = () => {
-    navigate('/profile');
+      navigate('/profile');
   };
   const handleDealClick = () => {
 
-    console.log("---------------------Switching Deal Click---------------------------");
+    console.log("------------------Start Switching Deal Click---------------------------");
 
-    setDealerIndex((dealerIndex+1)%6)
+    updateDealerIndex((dealerIndex+1)%6)
+    let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype}
+    updatePlayer0(player0x)
+    let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype}
+    updatePlayer1(player1x)
+    let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype}
+    updatePlayer2(player2x)
+    let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype}
+    updatePlayer3(player3x)
+    let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype}
+    updatePlayer4(player4x)
+    let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype}
+    updatePlayer5(player5x)
+    console.log("------------------End Switching Deal Click---------------------------");
 
-    setPlayer0({
-      ...player0,
-        name: player0.name,
-        position: (player0.position+5)%6
-    });
-    
-    setPlayer1({
-      ...player1,
-      name: player1.name,
-      position: (player1.position+5)%6
-    });
-   
-    setPlayer2({
-      ...player2,
-      name: player2.name,
-      position: (player2.position+5)%6
-    });
-   
-    setPlayer3({
-      ...player3,
-      name: player3.name,
-      position: (player3.position+5)%6
-    });
-    
-    setPlayer4({
-      ...player4,
-      name: player4.name,
-      position: (player4.position+5)%6
-    });
-   
-    setPlayer5({
-      ...player5,
-      name: player5.name,
-      position: (player5.position+5)%6
-    });
-    // console.log("p0 ",player0.name+" "+ positions[player0.position])
-    // console.log("p1 ",player1.name+" "+ positions[player1.position])
-    // console.log("p2 ",player2.name+" "+ positions[player2.position])
-    // console.log("p3 ",player3.name+" "+ positions[player3.position])
-    // console.log("p4 ",player4.name+" "+ positions[player4.position])
-    // console.log("p5 ",player5.name+" "+ positions[player5.position])
-   
   };
 
   return (
     <div>
-      <h3>{player0.position} {player0.name} {positions[player0.position]}</h3>
-      <h3>{player1.position} {player1.name} {positions[player1.position]}</h3>
-      <h3>{player2.position} {player2.name} {positions[player2.position]}</h3>
-      <h3>{player3.position} {player3.name} {positions[player3.position]}</h3>
-      <h3>{player4.position} {player4.name} {positions[player4.position]}</h3>
-      <h3>{player5.position} {player5.name} {positions[player5.position]}</h3>
+      {console.log(player0.position+" "+positions[player0.position]+" "+player0.ptype+" "+player0.name)}
+      {console.log(player1.position+" "+positions[player1.position]+" "+player1.ptype+" "+player1.name)}
+      {console.log(player2.position+" "+positions[player2.position]+" "+player2.ptype+" "+player2.name)}
+      {console.log(player3.position+" "+positions[player3.position]+" "+player3.ptype+" "+player3.name)}
+      {console.log(player4.position+" "+positions[player4.position]+" "+player4.ptype+" "+player4.name)}
+      {console.log(player5.position+" "+positions[player5.position]+" "+player5.ptype+" "+player5.name)}
+
     <Main1>
  
       {/* <Rectangle15>
@@ -997,7 +956,8 @@ function Main() {
       <ArrowSquareUp src={ArrowSquareUpImage} loading='lazy' alt={"arrow-square-up"}/>
       <Ellipse13 src={Ellipse13Image} loading='lazy' alt={"Ellipse 13"}/>
       <PlaySquare src={PlaySquareImage} loading='lazy' alt={"play-square"}/>
-    </Main1></div>);
+    </Main1>
+    </div>);
 
   }
 

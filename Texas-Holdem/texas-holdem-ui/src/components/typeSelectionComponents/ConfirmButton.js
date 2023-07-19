@@ -4,15 +4,19 @@ export default function ConfirmButton(props) {
     const output = props.output;
     const navigate = useNavigate();
 
-    const handleMainClick = () => {
-        navigate('/main');
-    };
+
     function enterGame(output) {
         console.log("Output TA "+output.tightAggressive);
         console.log("Output TP "+output.tightPassive);
         console.log("Output LA "+output.looseAggressive);
         console.log("Output LP "+output.loosePassive);  
-        navigate('/main');
+
+        navigate('/main', { state: { 
+            ota : output.tightAggressive, 
+            otp : output.tightPassive,
+            ola : output.looseAggressive,
+            olp : output.loosePassive
+        } });
     }
     
     return(
