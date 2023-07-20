@@ -20,6 +20,7 @@ import './Main.css';
 import {
   styled
 } from '@mui/material/styles';
+import { SUIT, getRankIndex, shuffledDeck } from '../../preset/Preset';
 
 
 // import Menu01 from '../components/Menu01/Menu01';
@@ -757,6 +758,7 @@ function Main(props) {
 
   const location = useLocation();
   const players = props.players;
+  const fetchData = props.data;
   console.log(players);
 
   let index=0;
@@ -767,17 +769,33 @@ function Main(props) {
   const [dealerIndex, setDealerIndex] = useState(index);
   console.log("When page loads ",dealerIndex)
 
-  const [player0, setPlayer0] = useState({name: players[0].name, position:(dealerIndex)%6, type: players[0].type});
-  const [player1, setPlayer1] = useState({name: players[1].name, position:(dealerIndex+1)%6, type: players[1].type});
-  const [player2, setPlayer2] = useState({name: players[2].name, position:(dealerIndex+2)%6, type: players[2].type});
-  const [player3, setPlayer3] = useState({name: players[3].name, position:(dealerIndex+3)%6, type: players[3].type});
-  const [player4, setPlayer4] = useState({name: players[4].name, position:(dealerIndex+4)%6, type: players[4].type});
+  const deck = shuffledDeck();
+  const hand0 = [deck[0], deck[1]];
+  const hand1 = [deck[2], deck[3]];
+  const hand2 = [deck[4], deck[5]];
+  const hand3 = [deck[6], deck[7]];
+  const hand4 = [deck[8], deck[9]];
+  const hand5 = [deck[10], deck[11]];
+
+  const [player0, setPlayer0] = useState({name: players[0].name, position:(dealerIndex)%6, type: players[0].type, hands: hand0});
+  const [player1, setPlayer1] = useState({name: players[1].name, position:(dealerIndex+1)%6, type: players[1].type, hands: hand1});
+  const [player2, setPlayer2] = useState({name: players[2].name, position:(dealerIndex+2)%6, type: players[2].type, hands: hand2});
+  const [player3, setPlayer3] = useState({name: players[3].name, position:(dealerIndex+3)%6, type: players[3].type, hands: hand3});
+  const [player4, setPlayer4] = useState({name: players[4].name, position:(dealerIndex+4)%6, type: players[4].type, hands: hand4});
   const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6});
+  /**
+   * Calling tables from database
+   */
+  // const test_user = getUser(fetchData, player0.name, player0.type, positions[player0.position]);
+  // const test_table = JSON.parse(test_user.preflop_table);
+  // console.log(getAction(test_table, hand0));
 
   const navigate = useNavigate();
 
   const handlePlayerClick = (player) => {
     console.log("On Player click in Main ",dealerIndex)
+    const user = getUser(fetchData, player.name, player.type, positions[player.position]);
+    const table = JSON.parse(user.preflop_table);
     // console.log("--------------------- Player Click---------------------------");
     // console.log("p0 ",player0.name+" "+ positions[player0.position])
     // console.log("p1 ",player1.name+" "+ positions[player1.position])
@@ -789,7 +807,9 @@ function Main(props) {
                                           name: player.name, 
                                           type: player.type,
                                           position: positions[player.position],
-                                          dealerIndex : dealerIndex
+                                          dealerIndex : dealerIndex,
+                                          hands: player.hands,
+                                          action: getAction(table, player.hands)
                                       } });
   };
 
@@ -845,6 +865,29 @@ function Main(props) {
     // console.log("p5 ",player5.name+" "+ positions[player5.position])
    
   };
+
+  function getUser(fetchedData, player_name, player_type, player_position) {
+    let user = null;
+    fetchData.map(data=>{
+      if(data.player_type === player_type && data.position === player_position) {
+        user = data;
+      }
+    });
+    return user;
+  }
+
+  function getHand(draw1, draw2) {
+    const rank1 = draw1.charAt(0);
+    const rank2 = draw2.charAt(0);
+    const suit = draw1.charAt(1) === draw2.charAt(1) ? SUIT.SUIT : SUIT.OFFSUIT;
+
+    const handKey = getRankIndex(rank1) < getRankIndex(rank2) ? rank1+rank2+suit : rank2+rank1+suit;  
+    return handKey;
+  } 
+
+  function getAction(table, cards) {
+    return table[getHand(cards[0], cards[1])];
+  }
 
   return (
     <div>
@@ -928,18 +971,23 @@ function Main(props) {
       <Q850>
         {`$850`}
       </Q850>
+      <CardView position={{x:"12px", y:"515px"}} hands={hand0} />
       <Q8501>
         {`$850`}
       </Q8501>
+      <CardView position={{x:"35px", y:"310px"}} hands={hand1} />
       <Q8502>
         {`$850`}
       </Q8502>
+      <CardView position={{x:"230px", y:"235px"}} hands={hand2} />
       <Q8503>
         {`$850`}
       </Q8503>
+      <CardView position={{x:"300px", y:"305px"}}  hands={hand3} />
       <Q8504>
         {`$850`}
       </Q8504>
+      <CardView position={{x:"325px", y:"515px"}} hands={hand4} />
       <Replay>
         {`Replay`}
       </Replay>
@@ -1004,6 +1052,23 @@ function Main(props) {
     </Main1></div>);
 
   }
+
+function CardView(props) {
+  const position = props.position;
+  const [card1, card2] = props.hands;
+  return (
+    <div style={{
+      position:'absolute',
+      left: position.x,
+      top: position.y,
+
+      fontSize: "15px",
+      color: "red",
+    }}>
+        {card1}{" | "}{card2}
+    </div>
+  );
+}
 
 export default Main;
 

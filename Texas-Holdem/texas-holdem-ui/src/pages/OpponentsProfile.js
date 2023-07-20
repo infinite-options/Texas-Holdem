@@ -16,6 +16,8 @@ export default function OpponentsProfile() {
     const player_name = location.state.name;
     const player_type = location.state.type;
     const player_pos = location.state.position;
+    const hands = location.state.hands;
+    const action = location.state.action;
 
     const { game_data } = useContext(GameContext);
     const [fetchData] = game_data;
@@ -38,6 +40,12 @@ export default function OpponentsProfile() {
                 
                 <PlayerInfo player={[player_name, player_type, player_pos]}/>
                 <Table player={[player_name, player_type, player_pos]} data={fetchData}/>
+                <div>
+                    Hands: {hands[0]} {', '} {hands[1]}
+                </div>
+                <div>
+                    Action: {action}
+                </div>
                 <Stastics player={[player_name, player_type, player_pos]} data={fetchData}/>
                 <PlayerTypeButton type={player_type}/>
             </div>

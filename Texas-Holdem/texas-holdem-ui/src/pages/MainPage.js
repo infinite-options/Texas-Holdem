@@ -9,7 +9,7 @@ export default function MainPage() {
     const [deck, setDeck] = game_decks;
     return(
         <div>
-            <Main players={players}/>
+            <Main players={players} data={fetchData}/>
         </div>
     );
 }
