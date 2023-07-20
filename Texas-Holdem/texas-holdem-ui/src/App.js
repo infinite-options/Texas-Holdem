@@ -8,6 +8,7 @@ import TypeSelection from './pages/TypeSelection';
 import OpponentsProfile from './pages/OpponentsProfile';
 import Profile from './components/profilePageComponents/Profile';
 import MainPage from './pages/MainPage';
+import ContactPage from './pages/ContactPage';
 
 
 
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="profile" element={<Profile />} />
             <Route path="change-position" element={<ChangePosition />} />
             <Route path="opponent" element={<OpponentsProfile/>} />
+            <Route path="player-style" element={<ContactPage/>} />
           </Routes>
         </BrowserRouter>
       </GameContextProvider>

@@ -1,7 +1,13 @@
 import React from "react";
 import "./Profile.css";
+import {useNavigate} from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const handlePlayerStyleClick = () => {
+    navigate('/player-style');
+  };
+
   return (
     <div className="profile-page">
       <div className="header">
@@ -34,7 +40,9 @@ const Profile = () => {
           <span>Hand Rankings</span>
         </div>
         <div className="card">
+         <button onClick={handlePlayerStyleClick}>
           <span>Change Player's Style</span>
+          </button>
         </div>
         <div className="card">
           <span>Choose Player's Type</span>

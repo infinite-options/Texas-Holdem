@@ -38,14 +38,8 @@ export default function OpponentsProfile() {
                     </div>
                 </div>
                 
-                <PlayerInfo player={[player_name, player_type, player_pos]}/>
+                <PlayerInfo player={[player_name, player_type, player_pos]} hands={[hands, action]}/>
                 <Table player={[player_name, player_type, player_pos]} data={fetchData}/>
-                <div>
-                    Hands: {hands[0]} {', '} {hands[1]}
-                </div>
-                <div>
-                    Action: {action}
-                </div>
                 <Stastics player={[player_name, player_type, player_pos]} data={fetchData}/>
                 <PlayerTypeButton type={player_type}/>
             </div>

@@ -1063,11 +1063,17 @@ function CardView(props) {
       top: position.y,
 
       fontSize: "15px",
-      color: "red",
     }}>
-        {card1}{" | "}{card2}
+        <span className={`${isRed(card1)?"font-red":""}`}>{card1}</span>{', '}<span className={`${isRed(card2)?"font-red":""}`}>{card2}</span>
     </div>
   );
+}
+
+function isRed(card) {
+  if(card.length !== 2) {
+      return false;
+  }
+  return (card.charAt(1) === '♥' || card.charAt(1) === '♦');
 }
 
 export default Main;
