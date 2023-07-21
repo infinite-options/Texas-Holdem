@@ -496,7 +496,6 @@ const Rectangle25 = styled("div")({
 
 const Rectangle34 = styled("div")({
   backgroundColor: `rgba(70, 142, 246, 1)`,
-  border: `1px solid rgba(0, 0, 0, 1)`,
   boxSizing: `border-box`,
   width: `30px`,
   height: `41px`,
@@ -543,7 +542,6 @@ const Rectangle26 = styled("div")({
 
 const Rectangle35 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
-  border: `1px solid rgba(0, 0, 0, 1)`,
   boxSizing: `border-box`,
   width: `31px`,
   height: `41px`,
@@ -740,58 +738,58 @@ const PlaySquare = styled("img")({
 
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 const deckOfCards = [
-  { id: 1, name: "A♥" , color : "black"},
-  { id: 2, name: "A♦" , color : "black"},
-  { id: 3, name: "A♣" , color : "red"},
-  { id: 4, name: "A♠" , color : "red"},
-  { id: 5, name: "K♥" , color : "black"},
-  { id: 6, name: "K♦" , color : "black"},
-  { id: 7, name: "K♣" , color : "red"},
-  { id: 8, name: "K♠" , color : "red"},
-  { id: 9, name: "Q♥" , color : "black"},
-  { id: 10, name: "Q♦" , color : "black"},
-  { id: 11, name: "Q♣" , color : "red"},
-  { id: 12, name: "Q♠" , color : "red"},
-  { id: 13, name: "J♥" , color : "black"},
-  { id: 14, name: "J♦" , color : "black"},
-  { id: 15, name: "J♣" , color : "red"},
-  { id: 16, name: "J♠" , color : "red"},
-  { id: 17, name: "T♥" , color : "black"},
-  { id: 18, name: "T♦" , color : "black"},
-  { id: 19, name: "T♣" , color : "red"},
-  { id: 20, name: "T♠" , color : "red"},
-  { id: 21, name: "9♥" , color : "black"},
-  { id: 22, name: "9♦" , color : "black"},
-  { id: 23, name: "9♣" , color : "red"},
-  { id: 24, name: "9♠" , color : "red"},
-  { id: 25, name: "8♥" , color : "black"},
-  { id: 26, name: "8♦" , color : "black"},
-  { id: 27, name: "8♣" , color : "red"},
-  { id: 28, name: "8♠" , color : "red"},
-  { id: 29, name: "7♥" , color : "black"},
-  { id: 30, name: "7♦" , color : "black"},
-  { id: 31, name: "7♣" , color : "red"},
-  { id: 32, name: "7♠" , color : "red"},
-  { id: 33, name: "6♥" , color : "black"},
-  { id: 34, name: "6♦" , color : "black"},
-  { id: 35, name: "6♣" , color : "red"},
-  { id: 36, name: "6♠" , color : "red"},
-  { id: 37, name: "5♥" , color : "black"},
-  { id: 38, name: "5♦" , color : "black"},
-  { id: 39, name: "5♣" , color : "red"},
-  { id: 40, name: "5♠" , color : "red"},
-  { id: 41, name: "4♥" , color : "black"},
-  { id: 42, name: "4♦" , color : "black"},
-  { id: 43, name: "4♣" , color : "red"},
-  { id: 44, name: "4♠" , color : "red"},
-  { id: 45, name: "3♥" , color : "black"},
-  { id: 46, name: "3♦" , color : "black"},
-  { id: 47, name: "3♣" , color : "red"},
-  { id: 48, name: "3♠" , color : "red"},
-  { id: 49, name: "2♥" , color : "black"},
-  { id: 50, name: "2♦" , color : "black"},
-  { id: 51, name: "2♣" , color : "red"},
-  { id: 52, name: "2♠" , color : "red"},
+  { id: 1, name: "A♥" , color : "red"},
+  { id: 2, name: "A♦" , color : "red"},
+  { id: 3, name: "A♣" , color : "black"},
+  { id: 4, name: "A♠" , color : "black"},
+  { id: 5, name: "K♥" , color : "red"},
+  { id: 6, name: "K♦" , color : "red"},
+  { id: 7, name: "K♣" , color : "black"},
+  { id: 8, name: "K♠" , color : "black"},
+  { id: 9, name: "Q♥" , color : "red"},
+  { id: 10, name: "Q♦" , color : "red"},
+  { id: 11, name: "Q♣" , color : "black"},
+  { id: 12, name: "Q♠" , color : "black"},
+  { id: 13, name: "J♥" , color : "red"},
+  { id: 14, name: "J♦" , color : "red"},
+  { id: 15, name: "J♣" , color : "black"},
+  { id: 16, name: "J♠" , color : "black"},
+  { id: 17, name: "T♥" , color : "red"},
+  { id: 18, name: "T♦" , color : "red"},
+  { id: 19, name: "T♣" , color : "black"},
+  { id: 20, name: "T♠" , color : "black"},
+  { id: 21, name: "9♥" , color : "red"},
+  { id: 22, name: "9♦" , color : "red"},
+  { id: 23, name: "9♣" , color : "black"},
+  { id: 24, name: "9♠" , color : "black"},
+  { id: 25, name: "8♥" , color : "red"},
+  { id: 26, name: "8♦" , color : "red"},
+  { id: 27, name: "8♣" , color : "black"},
+  { id: 28, name: "8♠" , color : "black"},
+  { id: 29, name: "7♥" , color : "red"},
+  { id: 30, name: "7♦" , color : "red"},
+  { id: 31, name: "7♣" , color : "black"},
+  { id: 32, name: "7♠" , color : "black"},
+  { id: 33, name: "6♥" , color : "red"},
+  { id: 34, name: "6♦" , color : "red"},
+  { id: 35, name: "6♣" , color : "black"},
+  { id: 36, name: "6♠" , color : "black"},
+  { id: 37, name: "5♥" , color : "red"},
+  { id: 38, name: "5♦" , color : "red"},
+  { id: 39, name: "5♣" , color : "black"},
+  { id: 40, name: "5♠" , color : "black"},
+  { id: 41, name: "4♥" , color : "red"},
+  { id: 42, name: "4♦" , color : "red"},
+  { id: 43, name: "4♣" , color : "black"},
+  { id: 44, name: "4♠" , color : "black"},
+  { id: 45, name: "3♥" , color : "red"},
+  { id: 46, name: "3♦" , color : "red"},
+  { id: 47, name: "3♣" , color : "black"},
+  { id: 48, name: "3♠" , color : "black"},
+  { id: 49, name: "2♥" , color : "red"},
+  { id: 50, name: "2♦" , color : "red"},
+  { id: 51, name: "2♣" , color : "black"},
+  { id: 52, name: "2♠" , color : "black"},
 ];
 
 function Main(props) {
@@ -808,9 +806,17 @@ function Main(props) {
     player5, updatePlayer5} = useContext(PlayerContext);
 
   const navigate = useNavigate();
+  
+  const [action0, setAction0] = useState("");
+  const [action1, setAction1] = useState("");
+  const [action2, setAction2] = useState("");
+  const [action3, setAction3] = useState("");
+  const [action4, setAction4] = useState("");
+  const [action5, setAction5] = useState("");
 
   function getUser(fetchedData, player_name, player_style, player_position_short) {
-    let user = null;
+    let user = null;    
+    console.log("Action2", player_style, player_position_short);
     fetchData.map(data=>{
       if(data.player_type === player_style && data.position === player_position_short) {
         user = data;
@@ -832,30 +838,38 @@ function Main(props) {
     return table[getHand(cards[0], cards[1])];
   }
 
-  const handlePlayerClick = (player) => {
+  function getShortPosition(i) {
     const shortPos = ["but", "sb", "bb", "lj", "hj", "co"];
-    
-    let type ='';
-    if(player.ptype=='Loose-passive'){
+    return shortPos[i];
+  }
+
+  function getType_database(ptype) {
+    let type ='NA';
+    if(ptype==='Loose-passive'){
       type='loose-passive';
     }
-    if(player.ptype=='Tight-passive'){
+    if(ptype==='Tight-passive'){
       type='tight-passive';
     }
-    if(player.ptype=='Tight-agressive' || player.ptype=='Tight-aggressive'){
-      type='tight-agressive';
+    if(ptype==='Tight-agressive' || ptype==='Tight-aggressive'){
+      type='tight-aggressive';
     }
-    if(player.ptype=='Loose-agressive' || player.ptype=='Loose-aggressive'){
-      type='loose-agressive';
+    if(ptype==='Loose-agressive' || ptype==='Loose-aggressive'){
+      type='loose-aggressive';
     }
+    return type;
+  }
 
-    const user = getUser(fetchData, player.name, type, shortPos[player.position]);
+  const handlePlayerClick = (player) => {
+    let type = getType_database(player.ptype);
+
+    const user = getUser(fetchData, player.name, type, getShortPosition(player.position));
     let table;
     if(user!=null){
       table = JSON.parse(user.preflop_table);
       navigate('/opponent', { state: 
         { selectedName: player.name,
-          selectedPosition: shortPos[player.position],
+          selectedPosition: getShortPosition(player.position),
           selectedStyle: type,
           selectedCards:player.cards,
           action: getAction(table, player.cards)}
@@ -874,30 +888,57 @@ function Main(props) {
     const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
     
     console.log("------------------Start Switching Deal Click---------------------------");
-
+    const hand0 = shuffledDeck.slice(0, 2);
+    const hand1 = shuffledDeck.slice(2, 4);
+    const hand2 = shuffledDeck.slice(4, 6);
+    const hand3 = shuffledDeck.slice(6, 8);
+    const hand4 = shuffledDeck.slice(8, 10);
+    const hand5 = shuffledDeck.slice(10, 12);
+    console.log("CLicked", hand0);
     updateDealerIndex((dealerIndex+1)%6)
-    let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype,
-      cards:shuffledDeck.slice(0, 2)
+    let player0x = {name:player0.name,position: (player0.position+5)%6, ptype: player0.ptype,
+      cards:hand0
     }
     updatePlayer0(player0x)
-    let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype,
-      cards:shuffledDeck.slice(2, 4)}
+    let player1x = {name:player1.name,position: (player1.position+5)%6, ptype: player1.ptype,
+      cards:hand1}
     updatePlayer1(player1x)
-    let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype,
-      cards:shuffledDeck.slice(4, 6)}
+    let player2x = {name:player2.name,position: (player2.position+5)%6, ptype: player2.ptype,
+      cards:hand2}
     updatePlayer2(player2x)
-    let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype,
-      cards:shuffledDeck.slice(6, 8)}
+    let player3x = {name:player3.name,position: (player3.position+5)%6, ptype: player3.ptype,
+      cards:hand3}
     updatePlayer3(player3x)
-    let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype,
-      cards:shuffledDeck.slice(8, 10)}
+    let player4x = {name:player4.name,position: (player4.position+5)%6, ptype: player4.ptype,
+      cards:hand4}
     updatePlayer4(player4x)
-    let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype,
-      cards:shuffledDeck.slice(10, 12)}
+    let player5x = {name:player5.name,position: (player5.position+5)%6, ptype: player5.ptype,
+      cards:hand5}
     updatePlayer5(player5x)
     console.log("------------------End Switching Deal Click---------------------------");
 
+    // Update actions
+    setAction0(getActionText(player0, (player0.position+5)%6, hand0));
+    setAction1(getActionText(player1, (player1.position+5)%6, hand1));
+    setAction2(getActionText(player2, (player2.position+5)%6, hand2));
+    setAction3(getActionText(player3, (player3.position+5)%6, hand3));
+    setAction4(getActionText(player4, (player4.position+5)%6, hand4));
+    setAction5(getActionText(player5, (player5.position+5)%6, hand5));
   };
+
+  function getActionText(player, position, hand) {  
+    let action = "No saved Table";
+    const user = getUser(fetchData, player.name, getType_database(player.ptype), getShortPosition(position));
+    console.log("Action1", user);
+    if(user !== null) {
+      const table = JSON.parse(user.preflop_table);
+      console.log("Action1", player);
+      console.log("Action1", hand);
+      action = getAction(table, hand);
+    }
+    console.log("Action3", player, hand, action);
+    return action;
+  }
 
   return (
     <div>
@@ -989,33 +1030,18 @@ function Main(props) {
       <Q850>
         {`$850`}
       </Q850>
-      {player0.cards.length>0?(<div>
-        <CardView position={{x1:"12px", y1:"515px",x2:"42px", y2:"515px"}} hands={player0.cards} />
-      </div>):(<div></div>)}
       <Q8501>
         {`$850`}
       </Q8501>
-      {player1.cards.length>0?(<div>
-      <CardView position={{x1:"35px", y1:"310px",x2:"65px", y2:"310px"}} hands={player1.cards} />
-      </div>):(<div></div>)}
       <Q8502>
         {`$850`}
       </Q8502> 
-      {player2.cards.length>0?(<div>
-      <CardView position={{x1:"230px", y1:"235px",x2:"260px", y2:"235px"}} hands={player2.cards} />
-       </div>):(<div></div>)}
        <Q8503>
         {`$850`}
       </Q8503>
-      {player3.cards.length>0?(<div>
-      <CardView position={{x1:"300px", y1:"305px",x2:"330px", y2:"305px"}}  hands={player3.cards} />
-       </div>):(<div></div>)}
        <Q8504>
         {`$850`}
       </Q8504>
-      {player4.cards.length>0?(<div>
-      <CardView position={{x1:"325px", y1:"515px",x2:"355px", y2:"515px"}} hands={player4.cards} />
-      </div>):(<div></div>)}
       <Replay>
         {`Replay`}
       </Replay>
@@ -1025,7 +1051,7 @@ function Main(props) {
       {/* Cards infornt of players - white/blue */}
       <Rectangle25>
       </Rectangle25>
-      <Rectangle34>
+      <Rectangle34> 
       </Rectangle34>
       <Rectangle44>
       </Rectangle44>
@@ -1058,6 +1084,34 @@ function Main(props) {
       <Jack>
       {player4.name}
       </Jack>
+
+      {/* Card Texts */}
+      {player0.cards.length>0?(<div>
+        <CardView position={{x1:"19px", y1:"425px",x2:"43px", y2:"428px"}} hands={player0.cards} />
+      </div>):(<div></div>)}
+      {player1.cards.length>0?(<div>
+      <CardView position={{x1:"49px", y1:"218px",x2:"72px", y2:"223px"}} hands={player1.cards} />
+      </div>):(<div></div>)}
+      {player2.cards.length>0?(<div>
+      <CardView position={{x1:"172px", y1:"175px",x2:"195px", y2:"178px"}} hands={player2.cards} />
+       </div>):(<div></div>)}
+      {player3.cards.length>0?(<div>
+      <CardView position={{x1:"296px", y1:"215px",x2:"318px", y2:"220px"}}  hands={player3.cards} />
+       </div>):(<div></div>)}
+      {player4.cards.length>0?(<div>
+      <CardView position={{x1:"328px", y1:"425px",x2:"350px", y2:"430px"}} hands={player4.cards} />
+      </div>):(<div></div>)}
+      {player5.cards.length>0?(<div>
+      <CardView position={{x1:"65px", y1:"740px",x2:"125px", y2:"740px"}} hands={player5.cards} />
+      </div>):(<div></div>)}
+
+      {/* Actions */}
+      <ActionView position={{x:"15px", y:"512px"}} data={action0}/>
+      <ActionView position={{x:"46px", y:"305px"}} data={action1}/>
+      <ActionView position={{x:"230px", y:"235px"}} data={action2}/>
+      <ActionView position={{x:"300px", y:"305px"}} data={action3}/>
+      <ActionView position={{x:"330px", y:"512px"}} data={action4}/>
+      <ActionView position={{x:"160px", y:"650px"}} data={action5}/>
       {/* The 5 cards in the middle of table  */}
       <Rectangle23>
       </Rectangle23>
@@ -1106,5 +1160,22 @@ return (
   
 );
   }
+
+  
+function ActionView(props) {
+  const position = props.position;
+  const action = props.data;
+  return(
+    <div style={{
+      position:'absolute',
+      left: position.x,
+      top: position.y,
+
+      fontSize: "15px",
+    }}>
+      {action}
+    </div>
+  );
+}
   
 export default Main;
