@@ -1069,7 +1069,6 @@ function Main(props) {
       </Rectangle57>
       <Rectangle59>
       </Rectangle59>
-
       
       <ArrowSquareUp src={ArrowSquareUpImage} loading='lazy' alt={"arrow-square-up"}/>
       <Ellipse13 src={Ellipse13Image} loading='lazy' alt={"Ellipse 13"}/>
