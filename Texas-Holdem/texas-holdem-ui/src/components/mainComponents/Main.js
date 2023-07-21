@@ -990,31 +990,31 @@ function Main(props) {
         {`$850`}
       </Q850>
       {player0.cards.length>0?(<div>
-        <CardView position={{x1:"12px", y1:"515px",x2:"15px", y2:"515px"}} hands={player0.cards} />
+        <CardView position={{x1:"12px", y1:"515px",x2:"42px", y2:"515px"}} hands={player0.cards} />
       </div>):(<div></div>)}
       <Q8501>
         {`$850`}
       </Q8501>
       {player1.cards.length>0?(<div>
-      <CardView position={{x1:"35px", y1:"310px",x2:"38px", y2:"310px"}} hands={player1.cards} />
+      <CardView position={{x1:"35px", y1:"310px",x2:"65px", y2:"310px"}} hands={player1.cards} />
       </div>):(<div></div>)}
       <Q8502>
         {`$850`}
       </Q8502> 
       {player2.cards.length>0?(<div>
-      <CardView position={{x1:"230px", y1:"235px",x2:"233px", y2:"235px"}} hands={player2.cards} />
+      <CardView position={{x1:"230px", y1:"235px",x2:"260px", y2:"235px"}} hands={player2.cards} />
        </div>):(<div></div>)}
        <Q8503>
         {`$850`}
       </Q8503>
       {player3.cards.length>0?(<div>
-      <CardView position={{x1:"300px", y1:"305px",x2:"303px", y2:"305px"}}  hands={player3.cards} />
+      <CardView position={{x1:"300px", y1:"305px",x2:"330px", y2:"305px"}}  hands={player3.cards} />
        </div>):(<div></div>)}
        <Q8504>
         {`$850`}
       </Q8504>
       {player4.cards.length>0?(<div>
-      <CardView position={{x1:"325px", y1:"515px",x2:"325px", y2:"515px"}} hands={player4.cards} />
+      <CardView position={{x1:"325px", y1:"515px",x2:"355px", y2:"515px"}} hands={player4.cards} />
       </div>):(<div></div>)}
       <Replay>
         {`Replay`}

@@ -51,14 +51,14 @@ const OpponentsProfile = () => {
                 </div>
             </div>
             
-            <PlayerInfo player={[selectedUserName, selectedStyle, selectedPosition]}/>
+            <PlayerInfo player={[selectedUserName, selectedStyle, selectedPosition]} hands={[selectedCards, action]}/>
             <Table player={[selectedUserName, selectedStyle, selectedPosition]} data={fetchData}/>
-            <div>
+            {/* <div>
                 Hands: {selectedCards[0].name} {', '} {selectedCards[1].name}
             </div>
             <div>
                 Action: {action}
-            </div>
+            </div> */}
             <Stastics player={[selectedUserName, selectedStyle, selectedPosition]} data={fetchData}/>
             <PlayerTypeButton type={selectedStyle}/>
         </div>

@@ -2,6 +2,14 @@ import "./OpponentsProfile.css";
 
 export default function PlayerInfo(props) {
     const [player_name, , player_pos] = props.player;
+    const [cards, action] = props.hands;
+
+    function isRed(card) {
+        if(card.length !== 2) {
+            return false;
+        }
+        return (card.charAt(1) === '♥' || card.charAt(1) === '♦');
+    }
 
     function getPositionText(pos) {
         switch (pos) {
@@ -31,19 +39,32 @@ export default function PlayerInfo(props) {
     return(
         <div className="playerInfo-container">
             <div className="text-box">
-                <div>
+            <div  className="col-text">
                     Player's Name
                 </div>
-                <div className="second-text">
-                    Position
+                <div className="col-text">
+                    Position 
+                </div>
+                <div className="col-text">
+                    Hands
+                </div>
+                <div className="col-text">
+                    Action
                 </div>
             </div>
             <div className="content-box">
-                <div>
+                <div  className="col-text">
                     {player_name}
                 </div>
-                <div className="second-text">
+                <div className="col-text">
                     {getPositionText(player_pos)}
+                </div>
+                <div className="col-text">
+                <span className={`${isRed(cards[0].name)?"font-red":""}`}>{cards[0].name}</span>{', '}<span className={`${isRed(cards[1].name)?"font-red":""}`}>{cards[1].name}</span>
+                </div>
+
+                <div className="col-text">
+                    {action}
                 </div>
             </div>
 
