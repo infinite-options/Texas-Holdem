@@ -1,0 +1,11 @@
+.players-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.community-cards-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
