@@ -22,6 +22,9 @@ const PlayerContext = createContext();
     const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6,ptype:'',
           cards:[]});
   
+    const [shuffledDeck, setShuffledDeck] = useState([]);
+    const [dealFlag, setDealFlag] = useState('hold');
+
     const updateDealerIndex = (newData) => {
         setDealerIndex(newData);
     };
@@ -50,6 +53,26 @@ const PlayerContext = createContext();
         setPlayer5(newData);
     }
 
+    const updateDealFlag=(flag)=>{
+       setDealFlag(flag);
+    }
+
+    // const updateFlop=(flag)=>{
+    //     setFlopFlag(flag);
+    // }
+
+    // const updateTurn=(flag)=>{
+    //     setTurnFlag(flag);
+    // }
+
+    // const updateRiver=(flag)=>{
+    //     setRiverFlag(flag);
+    // }
+
+    const updateDeck=(newData)=>{
+        setShuffledDeck(newData)
+    }
+
     return (
         // the Provider gives access to the context to its children
         <PlayerContext.Provider value = {
@@ -60,6 +83,12 @@ const PlayerContext = createContext();
                 player3, updatePlayer3,
                 player4, updatePlayer4,
                 player5, updatePlayer5,
+                // holdFlag, updateHold,
+                // flopFlag, updateFlop,
+                // turnFlag, updateTurn,
+                // riverFlag, updateRiver,
+                dealFlag, updateDealFlag,
+                shuffledDeck, updateDeck
             }}>
           {children}
         </PlayerContext.Provider>

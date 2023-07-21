@@ -6,8 +6,6 @@ import PlayerTypeButton from "./PlayerTypeButton";
 import Stastics from "./Statistics";
 import Table from "./Table";
 import { useContext } from 'react';
-import { PlayerContext } from '../../contexts/PlayerContext';
-import { ReactComponent as Close } from "../../assets/images/x-close.svg";
 import {useNavigate} from "react-router-dom";
 import {useLocation} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -53,12 +51,6 @@ const OpponentsProfile = () => {
             
             <PlayerInfo player={[selectedUserName, selectedStyle, selectedPosition]} hands={[selectedCards, action]}/>
             <Table player={[selectedUserName, selectedStyle, selectedPosition]} data={fetchData}/>
-            {/* <div>
-                Hands: {selectedCards[0].name} {', '} {selectedCards[1].name}
-            </div>
-            <div>
-                Action: {action}
-            </div> */}
             <Stastics player={[selectedUserName, selectedStyle, selectedPosition]} data={fetchData}/>
             <PlayerTypeButton type={selectedStyle}/>
         </div>

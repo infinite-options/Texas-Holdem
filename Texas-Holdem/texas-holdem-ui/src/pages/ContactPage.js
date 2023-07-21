@@ -21,7 +21,14 @@ export default function ContactPage(props) {
         player2, updatePlayer2,
         player3, updatePlayer3,
         player4, updatePlayer4,
-        player5, updatePlayer5} = useContext(PlayerContext);
+        player5, updatePlayer5,
+        // holdFlag, updateHold,
+        // flopFlag, updateFlop,
+        // turnFlag, updateTurn,
+        // riverFlag, updateRiver
+        dealFlag, updateDealFlag,
+        shuffledDeck, updateDeck
+    } = useContext(PlayerContext);
  
         const [usersData,] = useState(
         [

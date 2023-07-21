@@ -738,6 +738,8 @@ const PlaySquare = styled("img")({
   top: `811px`,
 });
 
+
+
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 const deckOfCards = [
   { id: 1, name: "A♥" , color : "black"},
@@ -798,6 +800,10 @@ function Main(props) {
 
   const fetchData = props.data;
 
+  const [flopCard, setflopCard] = useState([]);
+  const [turnCard, setTurnCard] = useState([]);
+  const [riverCard, setRiverCard] = useState([]);
+
   const location = useLocation();
   const { dealerIndex, updateDealerIndex,
     player0, updatePlayer0,
@@ -805,7 +811,15 @@ function Main(props) {
     player2, updatePlayer2,
     player3, updatePlayer3,
     player4, updatePlayer4,
-    player5, updatePlayer5} = useContext(PlayerContext);
+    player5, updatePlayer5,
+    // holdFlag, updateHold,
+    // flopFlag, updateFlop,
+    // turnFlag, updateTurn,
+    // riverFlag, updateRiver,
+    // shuffledDeck, updateDeck
+    dealFlag, updateDealFlag,
+    shuffledDeck, updateDeck
+  } = useContext(PlayerContext);
 
   const navigate = useNavigate();
 
@@ -871,31 +885,51 @@ function Main(props) {
   };
   const handleDealClick = () => {
 
-    const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
-    
-    console.log("------------------Start Switching Deal Click---------------------------");
+    if(dealFlag=='hold'){
+      const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
+      updateDeck(shuffledDeck)
+  
+      console.log("------------------Start Switching Deal Click---------------------------");
+  
+      updateDealerIndex((dealerIndex+1)%6)
+      let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype,
+        cards:shuffledDeck.slice(0, 2)
+      }
+      updatePlayer0(player0x)
+      let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype,
+        cards:shuffledDeck.slice(2, 4)}
+      updatePlayer1(player1x)
+      let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype,
+        cards:shuffledDeck.slice(4, 6)}
+      updatePlayer2(player2x)
+      let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype,
+        cards:shuffledDeck.slice(6, 8)}
+      updatePlayer3(player3x)
+      let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype,
+        cards:shuffledDeck.slice(8, 10)}
+      updatePlayer4(player4x)
+      let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype,
+        cards:shuffledDeck.slice(10, 12)}
+      updatePlayer5(player5x)
+      console.log("------------------End Switching Deal Click---------------------------");
+      updateDealFlag('flop')
 
-    updateDealerIndex((dealerIndex+1)%6)
-    let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype,
-      cards:shuffledDeck.slice(0, 2)
+      setflopCard([]);
+      setTurnCard([]);
+      setRiverCard([]);
+    }else if(dealFlag=='flop'){
+      let flopCards=shuffledDeck.slice(12, 15);
+      setflopCard(flopCards); 
+      updateDealFlag('turn'); 
+    }else if(dealFlag=='turn'){
+      let turnCards=shuffledDeck.slice(15, 16);
+      setTurnCard(turnCards); 
+      updateDealFlag('river');       
+    }else if(dealFlag=='river'){
+      let riverCards=shuffledDeck.slice(16, 17);
+      setRiverCard(riverCards);
+      updateDealFlag('hold');        
     }
-    updatePlayer0(player0x)
-    let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype,
-      cards:shuffledDeck.slice(2, 4)}
-    updatePlayer1(player1x)
-    let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype,
-      cards:shuffledDeck.slice(4, 6)}
-    updatePlayer2(player2x)
-    let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype,
-      cards:shuffledDeck.slice(6, 8)}
-    updatePlayer3(player3x)
-    let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype,
-      cards:shuffledDeck.slice(8, 10)}
-    updatePlayer4(player4x)
-    let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype,
-      cards:shuffledDeck.slice(10, 12)}
-    updatePlayer5(player5x)
-    console.log("------------------End Switching Deal Click---------------------------");
 
   };
 
@@ -914,6 +948,9 @@ function Main(props) {
       {player3.cards.length!=0 && console.log(player3.name +" : "+player3.cards[0].name+" "+player3.cards[1].name)}
       {player4.cards.length!=0 && console.log(player4.name +" : "+player4.cards[0].name+" "+player4.cards[1].name)}
       {player5.cards.length!=0 && console.log(player5.name +" : "+player5.cards[0].name+" "+player5.cards[1].name)}
+      {flopCard.length!=0 && console.log("Flop : "+flopCard[0].name +" "+flopCard[1].name+" "+flopCard[2].name)}
+      {turnCard.length!=0 && console.log("Turn : "+turnCard[0].name)}
+      {riverCard.length!=0 && console.log("River : "+riverCard[0].name)}
 
     <Main1>
  
@@ -989,59 +1026,60 @@ function Main(props) {
       <Q850>
         {`$850`}
       </Q850>
-      {player0.cards.length>0?(<div>
-        <CardView position={{x1:"12px", y1:"515px",x2:"42px", y2:"515px"}} hands={player0.cards} />
-      </div>):(<div></div>)}
       <Q8501>
         {`$850`}
       </Q8501>
-      {player1.cards.length>0?(<div>
-      <CardView position={{x1:"35px", y1:"310px",x2:"65px", y2:"310px"}} hands={player1.cards} />
-      </div>):(<div></div>)}
       <Q8502>
         {`$850`}
       </Q8502> 
-      {player2.cards.length>0?(<div>
-      <CardView position={{x1:"230px", y1:"235px",x2:"260px", y2:"235px"}} hands={player2.cards} />
-       </div>):(<div></div>)}
        <Q8503>
         {`$850`}
       </Q8503>
-      {player3.cards.length>0?(<div>
-      <CardView position={{x1:"300px", y1:"305px",x2:"330px", y2:"305px"}}  hands={player3.cards} />
-       </div>):(<div></div>)}
        <Q8504>
         {`$850`}
       </Q8504>
-      {player4.cards.length>0?(<div>
-      <CardView position={{x1:"325px", y1:"515px",x2:"355px", y2:"515px"}} hands={player4.cards} />
-      </div>):(<div></div>)}
       <Replay>
         {`Replay`}
       </Replay>
       <Q030>
         {`0:30`}
       </Q030>
-      {/* Cards infornt of players - white/blue */}
-      <Rectangle25>
-      </Rectangle25>
-      <Rectangle34>
-      </Rectangle34>
-      <Rectangle44>
-      </Rectangle44>
-      <Rectangle47>
-      </Rectangle47>
-      <Rectangle50>
-      </Rectangle50>
+      {/* <Rectangle25> */}
+      {player0.cards.length>0 && <div>
+        <CardView position={{x1:"18px", y1:"422px"}} hands={player0.cards[0].name} color={player0.cards[0].color}/>
+      </div>}
+      {/* </Rectangle25> */}
+  {/* <CardRectangle backgroundColor={'rgba(70, 142, 246, 1)'} position={{w:"31px", h:"41px",l:"18px",t:"422px"}}>
+      {player0.cards.length>0?(<div>
+        <CardView position={{x1:"18px", y1:"422px"}} hands={player0.cards[0].name} color={player0.cards[0].color}/>
+      </div>):(<div></div>)}
+	</CardRectangle> */}
       <Rectangle26>
+      {player0.cards.length>0 && player0.cards[1].name}
       </Rectangle26>
+      <Rectangle34>
+        {player1.cards.length>0 && player1.cards[0].name}
+      </Rectangle34>
       <Rectangle35>
+      {player1.cards.length>0 && player1.cards[1].name}
       </Rectangle35>
+      <Rectangle44>
+      {player2.cards.length>0 && player2.cards[0].name}
+      </Rectangle44>
       <Rectangle45>
+      {player2.cards.length>0 && player2.cards[1].name}
       </Rectangle45>
+      <Rectangle47>
+      {player3.cards.length>0 && player3.cards[0].name}
+      </Rectangle47>
       <Rectangle48>
+      {player3.cards.length>0 && player3.cards[1].name}
       </Rectangle48>
+      <Rectangle50>
+      {player4.cards.length>0 && player4.cards[0].name}
+      </Rectangle50>
       <Rectangle51>
+      {player4.cards.length>0 && player4.cards[1].name}
       </Rectangle51>
       <Michael>
       {player0.name}
@@ -1060,14 +1098,19 @@ function Main(props) {
       </Jack>
       {/* The 5 cards in the middle of table  */}
       <Rectangle23>
+      {flopCard.length>0 && flopCard[0].name}
       </Rectangle23>
       <Rectangle56>
+      {flopCard.length>0 && flopCard[1].name}
       </Rectangle56>
-      <Rectangle58>
-      </Rectangle58>
       <Rectangle57>
+      {flopCard.length>0 && flopCard[2].name}
       </Rectangle57>
+      <Rectangle58>
+      {turnCard.length>0 && turnCard[0].name}
+      </Rectangle58>
       <Rectangle59>
+      {riverCard.length>0 && riverCard[0].name}
       </Rectangle59>
 
       
@@ -1080,32 +1123,36 @@ function Main(props) {
 
 function CardView(props) {
 const position = props.position;
-const [card1, card2] = props.hands;
+const card = props.hands;
+const color = props.color;
 return (
-  <div>
     <div style={{
     position:'absolute',
     left: position.x1,
     top: position.y1,
-
     fontSize: "15px",
-    color: card1.color,
+    color: color,
   }}>
-      {card1.name}
+      {card}
   </div>
-  <div style={{
-    position:'absolute',
-    left: position.x2,
-    top: position.y2,
-
-    fontSize: "15px",
-    color: card2.color,
-  }}>
-      {card2.name}
-  </div>
-  </div>
-  
-);
+  );
   }
+
+  function CardRectangle(props) {
+    const bc = props.backgroundColor;
+    const position = props.position;
+    return (
+        <div style={{
+          backgroundColor:bc,
+        position:'absolute',
+        left: position.l,
+        top: position.t,
+        width: position.w,
+        height: position.h,
+        fontSize: "15px",
+      }}>
+      </div>
+      );
+      }
   
 export default Main;
