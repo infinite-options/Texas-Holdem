@@ -14,18 +14,23 @@ import ContactPage from './pages/ContactPage';
 import { useState } from 'react';
 import { PlayerContext, PlayerContextProvider } from './contexts/PlayerContext';
 import Main01 from './components/mainComponents/Main01';
+import { GameContextProvider } from './contexts/GameContext';
+import MainPage from './components/mainComponents/MainPage';
+
 
 const App = () => {
 
   return (
     <React.Fragment>
+     
        <PlayerContextProvider>
-    <BrowserRouter>
-      <Routes>
+       <GameContextProvider>
+        <BrowserRouter>
+          <Routes>
        
             <Route path="/" element={<TypeSelection />}></Route>
-            <Route path="main" element={<Main />} />
-            <Route path="main01" element={<Main01 />} />
+            <Route path="main" element={<MainPage />} />
+           
             <Route path="type" element={<TypeSelection />} />
             <Route path="profile" element={<Profile />} />
             <Route path="change-position" element={<ChangePosition />} />
@@ -34,6 +39,7 @@ const App = () => {
             <Route path="player-position" element={<ChangePosition/>} />
       </Routes>
       </BrowserRouter>
+      </GameContextProvider>
       </PlayerContextProvider>
    </React.Fragment>
   );

@@ -1,12 +1,17 @@
 
 import React, { useState } from "react";
 import "./OpponentsProfile.css";
+import PlayerInfo from "./PlayerInfo";
+import PlayerTypeButton from "./PlayerTypeButton";
+import Stastics from "./Statistics";
+import Table from "./Table";
 import { useContext } from 'react';
 import { PlayerContext } from '../../contexts/PlayerContext';
 import { ReactComponent as Close } from "../../assets/images/x-close.svg";
 import {useNavigate} from "react-router-dom";
 import {useLocation} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { GameContext } from "../../contexts/GameContext";
 
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 
@@ -15,71 +20,50 @@ const OpponentsProfile = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  let selectedUser = location.state.selectedName;
-  let selectedPosition = positions[location.state.selectedPosition];
+  const { game_data } = useContext(GameContext);
+  const [fetchData] = game_data;
+
+  let selectedUserName = location.state.selectedName;
+  let selectedPosition = location.state.selectedPosition;
   let selectedStyle = location.state.selectedStyle;
+  let selectedCards = location.state.selectedCards;
+  const action = location.state.action;
 
   console.log("Selected Player");
-  console.log(selectedUser+" "+selectedPosition+" "+selectedStyle);
-
-  const { dealerIndex, updateDealerIndex,
-    player0, updatePlayer0,
-    player1, updatePlayer1,
-    player2, updatePlayer2,
-    player3, updatePlayer3,
-    player4, updatePlayer4,
-    player5, updatePlayer5} = useContext(PlayerContext);
+  console.log(selectedUserName+" "+selectedPosition+" "+selectedStyle);
+  if(selectedCards.length>0){
+    console.log(selectedCards[0].name+" "+selectedCards[1].name+" ");
+  }
 
   const handleMainPageClick = () => {
       navigate('/main');
   };
   
-    const [isFlipped, setIsFlipped] = useState(false);
-
-    const handleClick = () => {
-      setIsFlipped(!isFlipped);
-    };
-
-
-  return (
-    <div className="profile-page">
-      <div className="header">
-        <button onClick={() => handleMainPageClick()} className="close-button">
-            <Close />
-        </button>
-      </div>
-      <div className="card">
-        <div className="card-line">
-          <span className="card-span">Player's Name</span>
-          <span className="card-span white">&nbsp;{selectedUser}</span>
+  return(
+    <div className="app-container">
+        <div className="poker-900-weight-font">
+            <div className="close-button-container">
+                <div className="close-box">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={()=>{handleMainPageClick()}}>
+                        <rect width="28" height="28" rx="5" fill="#233329"/>
+                        <path d="M21 7L7 21M7 7L21 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <PlayerInfo player={[selectedUserName, selectedStyle, selectedPosition]}/>
+            <Table player={[selectedUserName, selectedStyle, selectedPosition]} data={fetchData}/>
+            <div>
+                Hands: {selectedCards[0].name} {', '} {selectedCards[1].name}
+            </div>
+            <div>
+                Action: {action}
+            </div>
+            <Stastics player={[selectedUserName, selectedStyle, selectedPosition]} data={fetchData}/>
+            <PlayerTypeButton type={selectedStyle}/>
         </div>
-        <div className="card-line">
-          <span className="card-span">Current Position</span>
-          <span className="card-span white">&nbsp;{selectedPosition}</span>
-        </div>
-        <div className="card-line">
-          <span className="card-span">Current Style</span>
-          <span className="card-span white">&nbsp;{selectedStyle}</span>
-        </div>
-      </div>
-      <div className="hands-text">Hands Player would play</div>
-      <div className="image-container"></div>
-      <div className="hands-text">Statistics</div>
-      <div className="image-2"></div>
-      {/* <div className="legend-container">
-        <span>No. of flop scenes</span>
-        <span>No. of Pre-Flops</span>
-        <span>No. of raises</span>
-      </div> */}
-      <div
-        className={`flippable-button ${isFlipped ? "flipped" : ""}`}
-        onClick={handleClick}>
-        <span className="flippable-button-text">
-          {isFlipped ? "Tight-passive" : "Reveal Player's style"}
-        </span>
-      </div>
     </div>
-  );
+);
 };
 
 export default OpponentsProfile;

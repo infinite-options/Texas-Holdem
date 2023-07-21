@@ -8,13 +8,19 @@ const PlayerContext = createContext();
 
     const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 
-    const [dealerIndex, setDealerIndex] = useState(0);
-    const [player0, setPlayer0] = useState({name: 'Michael',position:(dealerIndex)%6,ptype:'Loose-passive'});
-    const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6,ptype:'Loose-passive'});
-    const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6,ptype:'Tight-passive'});
-    const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6,ptype:'Tight-aggressive'});
-    const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6,ptype:'Loose-aggressive'});
-    const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6,ptype:''});
+    const [dealerIndex, setDealerIndex] = useState(1);
+    const [player0, setPlayer0] = useState({name: 'Michael',position:(dealerIndex)%6,ptype:'Loose-passive',
+          cards:[]});
+    const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6,ptype:'Loose-passive',
+          cards:[]});
+    const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6,ptype:'Tight-passive',
+          cards:[]});
+    const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6,ptype:'Tight-aggressive',
+          cards:[]});
+    const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6,ptype:'Loose-aggressive',
+          cards:[]});
+    const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6,ptype:'',
+          cards:[]});
   
     const updateDealerIndex = (newData) => {
         setDealerIndex(newData);

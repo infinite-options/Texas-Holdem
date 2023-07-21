@@ -60,23 +60,28 @@ export default function ContactPage(props) {
     
         usersData.map((user, i) => {
             if(user.username==player0.name){
-                let player0x = {name:player0.name,position:player0.position,ptype: user.playerType}
+                let player0x = {name:player0.name,position:player0.position,
+                    ptype: user.playerType,cards: player0.cards}
                 updatePlayer0(player0x)
             }
             if(user.username==player1.name){
-                let player1x = {name:player1.name,position:player1.position,ptype: user.playerType}
+                let player1x = {name:player1.name,position:player1.position,
+                    ptype: user.playerType,cards: player1.cards}
                 updatePlayer1(player1x)
             }
             if(user.username==player2.name){
-                let player2x = {name:player2.name,position:player2.position,ptype: user.playerType}
+                let player2x = {name:player2.name,position:player2.position,
+                    ptype: user.playerType,cards: player2.cards}
                 updatePlayer2(player2x)
             }
             if(user.username==player3.name){
-                let player3x = {name:player3.name,position:player3.position,ptype: user.playerType}
+                let player3x = {name:player3.name,position:player3.position,
+                    ptype: user.playerType,cards: player3.cards}
                 updatePlayer3(player3x)
             }
             if(user.username==player4.name){
-                let player4x = {name:player4.name,position:player4.position,ptype: user.playerType}
+                let player4x = {name:player4.name,position:player4.position,
+                    ptype: user.playerType,cards: player4.cards}
                 updatePlayer4(player4x)
             }
         });

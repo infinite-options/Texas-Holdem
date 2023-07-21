@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
+import { SUIT, getRankIndex, shuffledDeck } from '../../preset/Preset';
 import { PlayerContext } from '../../contexts/PlayerContext';
-
 import Rectangle15Image from '../../assets/images/ChangePosition_Rectangle_15.png';
 import Ellipse12Image from '../../assets/images/Main_Ellipse_12.png';
 import Ellipse14Image from '../../assets/images/Main_Ellipse_14.png';
@@ -20,12 +20,8 @@ import Ellipse13Image from '../../assets/images/Main_Ellipse_13.png';
 import PlaySquareImage from '../../assets/images/Main_play_square.svg';
 import MenuImg from '../../assets/images/Menu_img.png';
 import './Main.css';
-import {
-  styled
-} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
-
-// import Menu01 from '../components/Menu01/Menu01';
 
 const Main1 = styled("div")({
   backgroundColor: `rgba(245, 245, 245, 1)`,
@@ -42,17 +38,6 @@ const Main1 = styled("div")({
   overflow: `hidden`,
 });
 
-// const Rectangle15 = styled("div")({
-//   background: `linear-gradient(-89.64deg, rgba(35, 51, 41, 1) 4.1242209425326255%, rgba(99, 212, 113, 1) 99.89351945840635%)`,
-//   border: `1px solid rgba(243, 170, 69, 1)`,
-//   boxSizing: `border-box`,
-//   borderRadius: `1000px`,
-//   width: `349.94px`,
-//   height: `229.44px`,
-//   position: `absolute`,
-//   left: `373px`,
-//   top: `558px`,
-// });
 const Rectangle15 = styled("div")({
   background: `linear-gradient(-89.64deg, rgba(35, 51, 41, 1) 4.1242209425326255%, rgba(99, 212, 113, 1) 99.89351945840635%)`,
   border: `1px solid rgba(243, 170, 69, 1)`,
@@ -675,7 +660,7 @@ const Jack = styled("div")({
   textDecoration: `none`,
   textTransform: `none`,
   position: `absolute`,
-  left: `336px`,
+  left: `330px`,
   top: `340px`,
 });
 
@@ -754,8 +739,64 @@ const PlaySquare = styled("img")({
 });
 
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
+const deckOfCards = [
+  { id: 1, name: "A♥" , color : "black"},
+  { id: 2, name: "A♦" , color : "black"},
+  { id: 3, name: "A♣" , color : "red"},
+  { id: 4, name: "A♠" , color : "red"},
+  { id: 5, name: "K♥" , color : "black"},
+  { id: 6, name: "K♦" , color : "black"},
+  { id: 7, name: "K♣" , color : "red"},
+  { id: 8, name: "K♠" , color : "red"},
+  { id: 9, name: "Q♥" , color : "black"},
+  { id: 10, name: "Q♦" , color : "black"},
+  { id: 11, name: "Q♣" , color : "red"},
+  { id: 12, name: "Q♠" , color : "red"},
+  { id: 13, name: "J♥" , color : "black"},
+  { id: 14, name: "J♦" , color : "black"},
+  { id: 15, name: "J♣" , color : "red"},
+  { id: 16, name: "J♠" , color : "red"},
+  { id: 17, name: "T♥" , color : "black"},
+  { id: 18, name: "T♦" , color : "black"},
+  { id: 19, name: "T♣" , color : "red"},
+  { id: 20, name: "T♠" , color : "red"},
+  { id: 21, name: "9♥" , color : "black"},
+  { id: 22, name: "9♦" , color : "black"},
+  { id: 23, name: "9♣" , color : "red"},
+  { id: 24, name: "9♠" , color : "red"},
+  { id: 25, name: "8♥" , color : "black"},
+  { id: 26, name: "8♦" , color : "black"},
+  { id: 27, name: "8♣" , color : "red"},
+  { id: 28, name: "8♠" , color : "red"},
+  { id: 29, name: "7♥" , color : "black"},
+  { id: 30, name: "7♦" , color : "black"},
+  { id: 31, name: "7♣" , color : "red"},
+  { id: 32, name: "7♠" , color : "red"},
+  { id: 33, name: "6♥" , color : "black"},
+  { id: 34, name: "6♦" , color : "black"},
+  { id: 35, name: "6♣" , color : "red"},
+  { id: 36, name: "6♠" , color : "red"},
+  { id: 37, name: "5♥" , color : "black"},
+  { id: 38, name: "5♦" , color : "black"},
+  { id: 39, name: "5♣" , color : "red"},
+  { id: 40, name: "5♠" , color : "red"},
+  { id: 41, name: "4♥" , color : "black"},
+  { id: 42, name: "4♦" , color : "black"},
+  { id: 43, name: "4♣" , color : "red"},
+  { id: 44, name: "4♠" , color : "red"},
+  { id: 45, name: "3♥" , color : "black"},
+  { id: 46, name: "3♦" , color : "black"},
+  { id: 47, name: "3♣" , color : "red"},
+  { id: 48, name: "3♠" , color : "red"},
+  { id: 49, name: "2♥" , color : "black"},
+  { id: 50, name: "2♦" , color : "black"},
+  { id: 51, name: "2♣" , color : "red"},
+  { id: 52, name: "2♠" , color : "red"},
+];
 
-function Main() {
+function Main(props) {
+
+  const fetchData = props.data;
 
   const location = useLocation();
   const { dealerIndex, updateDealerIndex,
@@ -768,12 +809,61 @@ function Main() {
 
   const navigate = useNavigate();
 
+  function getUser(fetchedData, player_name, player_style, player_position_short) {
+    let user = null;
+    fetchData.map(data=>{
+      if(data.player_type === player_style && data.position === player_position_short) {
+        user = data;
+      }
+    });
+    return user;
+  }
+
+  function getHand(draw1, draw2) {
+    const rank1 = draw1.name.charAt(0);
+    const rank2 = draw2.name.charAt(0);
+    const suit = draw1.name.charAt(1) === draw2.name.charAt(1) ? SUIT.SUIT : SUIT.OFFSUIT;
+
+    const handKey = getRankIndex(rank1) < getRankIndex(rank2) ? rank1+rank2+suit : rank2+rank1+suit;  
+    return handKey;
+  } 
+
+  function getAction(table, cards) {
+    return table[getHand(cards[0], cards[1])];
+  }
+
   const handlePlayerClick = (player) => {
+    const shortPos = ["but", "sb", "bb", "lj", "hj", "co"];
+    
+    let type ='';
+    if(player.ptype=='Loose-passive'){
+      type='loose-passive';
+    }
+    if(player.ptype=='Tight-passive'){
+      type='tight-passive';
+    }
+    if(player.ptype=='Tight-agressive' || player.ptype=='Tight-aggressive'){
+      type='tight-agressive';
+    }
+    if(player.ptype=='Loose-agressive' || player.ptype=='Loose-aggressive'){
+      type='loose-agressive';
+    }
+
+    const user = getUser(fetchData, player.name, type, shortPos[player.position]);
+    let table;
+    if(user!=null){
+      table = JSON.parse(user.preflop_table);
       navigate('/opponent', { state: 
         { selectedName: player.name,
-          selectedPosition: player.position,
-          selectedStyle: player.ptype}
+          selectedPosition: shortPos[player.position],
+          selectedStyle: type,
+          selectedCards:player.cards,
+          action: getAction(table, player.cards)}
        });
+    }else{
+      alert("No data fetched")
+    }
+
   };
 
   const handleMenuClick = () => {
@@ -781,20 +871,29 @@ function Main() {
   };
   const handleDealClick = () => {
 
+    const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
+    
     console.log("------------------Start Switching Deal Click---------------------------");
 
     updateDealerIndex((dealerIndex+1)%6)
-    let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype}
+    let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype,
+      cards:shuffledDeck.slice(0, 2)
+    }
     updatePlayer0(player0x)
-    let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype}
+    let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype,
+      cards:shuffledDeck.slice(2, 4)}
     updatePlayer1(player1x)
-    let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype}
+    let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype,
+      cards:shuffledDeck.slice(4, 6)}
     updatePlayer2(player2x)
-    let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype}
+    let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype,
+      cards:shuffledDeck.slice(6, 8)}
     updatePlayer3(player3x)
-    let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype}
+    let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype,
+      cards:shuffledDeck.slice(8, 10)}
     updatePlayer4(player4x)
-    let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype}
+    let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype,
+      cards:shuffledDeck.slice(10, 12)}
     updatePlayer5(player5x)
     console.log("------------------End Switching Deal Click---------------------------");
 
@@ -808,6 +907,13 @@ function Main() {
       {console.log(player3.position+" "+positions[player3.position]+" "+player3.ptype+" "+player3.name)}
       {console.log(player4.position+" "+positions[player4.position]+" "+player4.ptype+" "+player4.name)}
       {console.log(player5.position+" "+positions[player5.position]+" "+player5.ptype+" "+player5.name)}
+
+      {player0.cards.length!=0 && console.log(player0.name +" : "+player0.cards[0].name+" "+player0.cards[1].name)}
+      {player1.cards.length!=0 && console.log(player1.name +" : "+player1.cards[0].name+" "+player1.cards[1].name)}
+      {player2.cards.length!=0 && console.log(player2.name +" : "+player2.cards[0].name+" "+player2.cards[1].name)}
+      {player3.cards.length!=0 && console.log(player3.name +" : "+player3.cards[0].name+" "+player3.cards[1].name)}
+      {player4.cards.length!=0 && console.log(player4.name +" : "+player4.cards[0].name+" "+player4.cards[1].name)}
+      {player5.cards.length!=0 && console.log(player5.name +" : "+player5.cards[0].name+" "+player5.cards[1].name)}
 
     <Main1>
  
@@ -883,27 +989,39 @@ function Main() {
       <Q850>
         {`$850`}
       </Q850>
+      {player0.cards.length>0?(<div>
+        <CardView position={{x1:"12px", y1:"515px",x2:"15px", y2:"515px"}} hands={player0.cards} />
+      </div>):(<div></div>)}
       <Q8501>
         {`$850`}
       </Q8501>
+      {player1.cards.length>0?(<div>
+      <CardView position={{x1:"35px", y1:"310px",x2:"38px", y2:"310px"}} hands={player1.cards} />
+      </div>):(<div></div>)}
       <Q8502>
         {`$850`}
-      </Q8502>
-      <Q8503>
+      </Q8502> 
+      {player2.cards.length>0?(<div>
+      <CardView position={{x1:"230px", y1:"235px",x2:"233px", y2:"235px"}} hands={player2.cards} />
+       </div>):(<div></div>)}
+       <Q8503>
         {`$850`}
       </Q8503>
-      <Q8504>
+      {player3.cards.length>0?(<div>
+      <CardView position={{x1:"300px", y1:"305px",x2:"303px", y2:"305px"}}  hands={player3.cards} />
+       </div>):(<div></div>)}
+       <Q8504>
         {`$850`}
       </Q8504>
+      {player4.cards.length>0?(<div>
+      <CardView position={{x1:"325px", y1:"515px",x2:"325px", y2:"515px"}} hands={player4.cards} />
+      </div>):(<div></div>)}
       <Replay>
         {`Replay`}
       </Replay>
       <Q030>
         {`0:30`}
       </Q030>
-      <D>
-        {`D`}
-      </D>
       {/* Cards infornt of players - white/blue */}
       <Rectangle25>
       </Rectangle25>
@@ -926,19 +1044,19 @@ function Main() {
       <Rectangle51>
       </Rectangle51>
       <Michael>
-        {`Michael`}
+      {player0.name}
       </Michael>
       <John>
-        {`John`}
+      {player1.name}
       </John>
       <Jay>
-        {`Jay`}
+      {player2.name}
       </Jay>
       <Stan>
-        {`Stan`}
+      {player3.name}
       </Stan>
       <Jack>
-        {`Jack`}
+      {player4.name}
       </Jack>
       {/* The 5 cards in the middle of table  */}
       <Rectangle23>
@@ -956,11 +1074,38 @@ function Main() {
       <ArrowSquareUp src={ArrowSquareUpImage} loading='lazy' alt={"arrow-square-up"}/>
       <Ellipse13 src={Ellipse13Image} loading='lazy' alt={"Ellipse 13"}/>
       <PlaySquare src={PlaySquareImage} loading='lazy' alt={"play-square"}/>
-    </Main1>
-    </div>);
+      </Main1></div>);
 
-  }
+}
 
-export default Main;
+function CardView(props) {
+const position = props.position;
+const [card1, card2] = props.hands;
+return (
+  <div>
+    <div style={{
+    position:'absolute',
+    left: position.x1,
+    top: position.y1,
 
+    fontSize: "15px",
+    color: card1.color,
+  }}>
+      {card1.name}
+  </div>
+  <div style={{
+    position:'absolute',
+    left: position.x2,
+    top: position.y2,
+
+    fontSize: "15px",
+    color: card2.color,
+  }}>
+      {card2.name}
+  </div>
+  </div>
   
+);
+  }
+  
+export default Main;
