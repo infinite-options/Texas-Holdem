@@ -1,10 +1,8 @@
 
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import {useLocation} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { SUIT, getRankIndex, shuffledDeck } from '../../preset/Preset';
+import { SUIT, getRankIndex } from '../../preset/Preset';
 import { PlayerContext } from '../../contexts/PlayerContext';
 import Rectangle15Image from '../../assets/images/ChangePosition_Rectangle_15.png';
 import Ellipse12Image from '../../assets/images/Main_Ellipse_12.png';
@@ -796,7 +794,6 @@ function Main(props) {
 
   const fetchData = props.data;
 
-  const location = useLocation();
   const { dealerIndex, updateDealerIndex,
     player0, updatePlayer0,
     player1, updatePlayer1,
@@ -816,7 +813,7 @@ function Main(props) {
 
   function getUser(fetchedData, player_name, player_style, player_position_short) {
     let user = null;    
-    console.log("Action2", player_style, player_position_short);
+    // console.log("Action2", player_style, player_position_short);
     fetchData.map(data=>{
       if(data.player_type === player_style && data.position === player_position_short) {
         user = data;
@@ -894,7 +891,7 @@ function Main(props) {
     const hand3 = shuffledDeck.slice(6, 8);
     const hand4 = shuffledDeck.slice(8, 10);
     const hand5 = shuffledDeck.slice(10, 12);
-    console.log("CLicked", hand0);
+    // console.log("CLicked", hand0);
     updateDealerIndex((dealerIndex+1)%6)
     let player0x = {name:player0.name,position: (player0.position+5)%6, ptype: player0.ptype,
       cards:hand0
@@ -916,29 +913,36 @@ function Main(props) {
       cards:hand5}
     updatePlayer5(player5x)
     console.log("------------------End Switching Deal Click---------------------------");
-
-    // Update actions
-    setAction0(getActionText(player0, (player0.position+5)%6, hand0));
-    setAction1(getActionText(player1, (player1.position+5)%6, hand1));
-    setAction2(getActionText(player2, (player2.position+5)%6, hand2));
-    setAction3(getActionText(player3, (player3.position+5)%6, hand3));
-    setAction4(getActionText(player4, (player4.position+5)%6, hand4));
-    setAction5(getActionText(player5, (player5.position+5)%6, hand5));
   };
 
-  function getActionText(player, position, hand) {  
-    let action = "No saved Table";
-    const user = getUser(fetchData, player.name, getType_database(player.ptype), getShortPosition(position));
-    console.log("Action1", user);
-    if(user !== null) {
-      const table = JSON.parse(user.preflop_table);
-      console.log("Action1", player);
-      console.log("Action1", hand);
-      action = getAction(table, hand);
+
+
+  useEffect(()=>{  
+    function getActionText(player, position, hand) {  
+      let action = "No saved Table";
+      const user = getUser(fetchData, player.name, getType_database(player.ptype), getShortPosition(position));
+      if(user !== null) {
+        const table = JSON.parse(user.preflop_table);
+        action = getAction(table, hand);
+      }
+      return action;
     }
-    console.log("Action3", player, hand, action);
-    return action;
-  }
+
+    function updateActions() {
+      // Update actions
+      setAction0(getActionText(player0, player0.position, player0.cards));
+      setAction1(getActionText(player1, player1.position, player1.cards));
+      setAction2(getActionText(player2, player2.position, player2.cards));
+      setAction3(getActionText(player3, player3.position, player3.cards));
+      setAction4(getActionText(player4, player4.position, player4.cards));
+      setAction5(getActionText(player5, player5.position, player5.cards));
+    }
+    if(player0.cards.length > 0) {
+      updateActions();
+    }
+  }, [fetchData, player0, player1, player2, player3, player4, player5]);
+
+
 
   return (
     <div>
@@ -949,12 +953,12 @@ function Main(props) {
       {console.log(player4.position+" "+positions[player4.position]+" "+player4.ptype+" "+player4.name)}
       {console.log(player5.position+" "+positions[player5.position]+" "+player5.ptype+" "+player5.name)}
 
-      {player0.cards.length!=0 && console.log(player0.name +" : "+player0.cards[0].name+" "+player0.cards[1].name)}
-      {player1.cards.length!=0 && console.log(player1.name +" : "+player1.cards[0].name+" "+player1.cards[1].name)}
-      {player2.cards.length!=0 && console.log(player2.name +" : "+player2.cards[0].name+" "+player2.cards[1].name)}
-      {player3.cards.length!=0 && console.log(player3.name +" : "+player3.cards[0].name+" "+player3.cards[1].name)}
-      {player4.cards.length!=0 && console.log(player4.name +" : "+player4.cards[0].name+" "+player4.cards[1].name)}
-      {player5.cards.length!=0 && console.log(player5.name +" : "+player5.cards[0].name+" "+player5.cards[1].name)}
+      {player0.cards.length!==0 && console.log(player0.name +" : "+player0.cards[0].name+" "+player0.cards[1].name)}
+      {player1.cards.length!==0 && console.log(player1.name +" : "+player1.cards[0].name+" "+player1.cards[1].name)}
+      {player2.cards.length!==0 && console.log(player2.name +" : "+player2.cards[0].name+" "+player2.cards[1].name)}
+      {player3.cards.length!==0 && console.log(player3.name +" : "+player3.cards[0].name+" "+player3.cards[1].name)}
+      {player4.cards.length!==0 && console.log(player4.name +" : "+player4.cards[0].name+" "+player4.cards[1].name)}
+      {player5.cards.length!==0 && console.log(player5.name +" : "+player5.cards[0].name+" "+player5.cards[1].name)}
 
     <Main1>
  
