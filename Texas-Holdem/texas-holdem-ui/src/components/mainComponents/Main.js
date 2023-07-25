@@ -894,28 +894,58 @@ function Main(props) {
     // console.log("CLicked", hand0);
     updateDealerIndex((dealerIndex+1)%6)
     let player0x = {name:player0.name,position: (player0.position+5)%6, ptype: player0.ptype,
-      cards:hand0
+      cards:hand0, money: player0.money,
     }
     updatePlayer0(player0x)
     let player1x = {name:player1.name,position: (player1.position+5)%6, ptype: player1.ptype,
-      cards:hand1}
+      cards:hand1, money: player1.money,}
     updatePlayer1(player1x)
     let player2x = {name:player2.name,position: (player2.position+5)%6, ptype: player2.ptype,
-      cards:hand2}
+      cards:hand2, money: player2.money,}
     updatePlayer2(player2x)
     let player3x = {name:player3.name,position: (player3.position+5)%6, ptype: player3.ptype,
-      cards:hand3}
+      cards:hand3, money: player3.money,}
     updatePlayer3(player3x)
     let player4x = {name:player4.name,position: (player4.position+5)%6, ptype: player4.ptype,
-      cards:hand4}
+      cards:hand4, money: player4.money,}
     updatePlayer4(player4x)
     let player5x = {name:player5.name,position: (player5.position+5)%6, ptype: player5.ptype,
-      cards:hand5}
+      cards:hand5, money: player5.money,}
     updatePlayer5(player5x)
     console.log("------------------End Switching Deal Click---------------------------");
+
+
+    let p0_bet = 55;
+    updatePlayer0(playerAfterBet(player0, p0_bet));
+    console.log("Player0 bet:", p0_bet, "in [100,10,5] ", getChips(p0_bet));
+    
+    let p4_bet = 125;
+    updatePlayer4(playerAfterBet(player4, p4_bet));
+    console.log("Player4 bet:", p4_bet, "in [100,10,5] ", getChips(p4_bet));
   };
 
+  function playerAfterBet(player, bet) {
+    let betted = player.money-bet;
+    console.log("Betting: ", betted);
+    return {name:player.name, position: (player.position+5)%6, ptype:player.ptype, cards:player.cards, money:betted};
+  }
 
+  function getChips(money) {
+    const chips = [100, 10, 5];
+    const counts = [0, 0, 0];
+  
+    let remain = money;
+    let chip_i = 0;
+    while(remain > 0 && chip_i < chips.length) {
+      if(remain >= chips[chip_i]) {
+        remain -= chips[chip_i];
+        counts[chip_i]++;
+      } else {
+        chip_i++;
+      }
+    }
+    return counts;
+  }
 
   useEffect(()=>{  
     function getActionText(player, position, hand) {  
@@ -937,12 +967,11 @@ function Main(props) {
       setAction4(getActionText(player4, player4.position, player4.cards));
       setAction5(getActionText(player5, player5.position, player5.cards));
     }
+
     if(player0.cards.length > 0) {
       updateActions();
     }
   }, [fetchData, player0, player1, player2, player3, player4, player5]);
-
-
 
   return (
     <div>
@@ -1031,21 +1060,22 @@ function Main(props) {
       </Rectangle55>
       <Rectangle52>
       </Rectangle52>
+      <Q8504>
+        {`$${player0.money}`}
+      </Q8504>
       <Q850>
-        {`$850`}
+        {`$${player1.money}`}
       </Q850>
       <Q8501>
-        {`$850`}
+        {`$${player2.money}`}
       </Q8501>
       <Q8502>
-        {`$850`}
+        {`$${player3.money}`}
       </Q8502> 
-       <Q8503>
-        {`$850`}
+      <Q8503>
+        {`$${player4.money}`}
       </Q8503>
-       <Q8504>
-        {`$850`}
-      </Q8504>
+      
       <Replay>
         {`Replay`}
       </Replay>
