@@ -1096,7 +1096,34 @@ function Main(props) {
       updateDealFlag('hold');        
     }
 
+    /* Test Bet */
+    let p0_bet = 55;
+    updatePlayer0(playerAfterBet(player0, shuffledDeck.slice(0, 2), player0.totalAmt, player0.currentAmt, p0_bet));
+    console.log("Player0 bet:", p0_bet, "in [100,10,5] ", getChips(p0_bet));
   };
+
+  function playerAfterBet(player, cards, totalAmt, currentAmt, bet_money) {
+    let total = totalAmt-bet_money;
+    let current = currentAmt+bet_money;
+    return {name:player.name, position: (player.position+5)%6, ptype:player.ptype, cards:cards, totalAmt:total, currentAmt:current};
+  }
+
+  function getChips(money) {
+    const chips = [100, 10, 5];
+    const counts = [0, 0, 0];
+  
+    let remain = money;
+    let chip_i = 0;
+    while(remain > 0 && chip_i < chips.length) {
+      if(remain >= chips[chip_i]) {
+        remain -= chips[chip_i];
+        counts[chip_i]++;
+      } else {
+        chip_i++;
+      }
+    }
+    return counts;
+  }
   
   useEffect(()=>{  
     function getActionText(player, position, hand) {  
