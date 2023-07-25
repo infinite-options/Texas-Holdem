@@ -6,21 +6,20 @@ const PlayerContext = createContext();
 
  const PlayerContextProvider = ({ children }) => {
 
-    const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
-
     const [dealerIndex, setDealerIndex] = useState(1);
+    
     const [player0, setPlayer0] = useState({name: 'Michael',position:(dealerIndex)%6,ptype:'Loose-passive',
-          cards:[]});
-    const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6,ptype:'Loose-passive',
-          cards:[]});
-    const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6,ptype:'Tight-passive',
-          cards:[]});
-    const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6,ptype:'Tight-aggressive',
-          cards:[]});
-    const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6,ptype:'Loose-aggressive',
-          cards:[]});
-    const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6,ptype:'',
-          cards:[]});
+    cards:[], totalAmt:850, currentAmt:0});
+const [player1, setPlayer1] = useState({name: 'John',position:(dealerIndex+1)%6,ptype:'Loose-passive',
+    cards:[], totalAmt:850, currentAmt:0});
+const [player2, setPlayer2] = useState({name: 'Jay',position:(dealerIndex+2)%6,ptype:'Tight-passive',
+    cards:[], totalAmt:850, currentAmt:0});
+const [player3, setPlayer3] = useState({name: 'Stan',position:(dealerIndex+3)%6,ptype:'Tight-aggressive',
+    cards:[], totalAmt:850, currentAmt:0});
+const [player4, setPlayer4] = useState({name: 'Jack',position:(dealerIndex+4)%6,ptype:'Loose-aggressive',
+    cards:[], totalAmt:850, currentAmt:0});
+const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6,ptype:'',
+    cards:[], totalAmt:850, currentAmt:0});
   
     const [shuffledDeck, setShuffledDeck] = useState([]);
     const [dealFlag, setDealFlag] = useState('hold');
@@ -57,18 +56,6 @@ const PlayerContext = createContext();
        setDealFlag(flag);
     }
 
-    // const updateFlop=(flag)=>{
-    //     setFlopFlag(flag);
-    // }
-
-    // const updateTurn=(flag)=>{
-    //     setTurnFlag(flag);
-    // }
-
-    // const updateRiver=(flag)=>{
-    //     setRiverFlag(flag);
-    // }
-
     const updateDeck=(newData)=>{
         setShuffledDeck(newData)
     }
@@ -83,10 +70,6 @@ const PlayerContext = createContext();
                 player3, updatePlayer3,
                 player4, updatePlayer4,
                 player5, updatePlayer5,
-                // holdFlag, updateHold,
-                // flopFlag, updateFlop,
-                // turnFlag, updateTurn,
-                // riverFlag, updateRiver,
                 dealFlag, updateDealFlag,
                 shuffledDeck, updateDeck
             }}>

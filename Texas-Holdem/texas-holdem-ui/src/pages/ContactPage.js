@@ -68,27 +68,27 @@ export default function ContactPage(props) {
         usersData.map((user, i) => {
             if(user.username==player0.name){
                 let player0x = {name:player0.name,position:player0.position,
-                    ptype: user.playerType,cards: player0.cards}
+                    ptype: user.playerType,cards: player0.cards, totalAmt:player0.totalAmt, currentAmt:player0.currentAmt }
                 updatePlayer0(player0x)
             }
             if(user.username==player1.name){
                 let player1x = {name:player1.name,position:player1.position,
-                    ptype: user.playerType,cards: player1.cards}
+                    ptype: user.playerType,cards: player1.cards, totalAmt:player1.totalAmt, currentAmt:player1.currentAmt}
                 updatePlayer1(player1x)
             }
             if(user.username==player2.name){
                 let player2x = {name:player2.name,position:player2.position,
-                    ptype: user.playerType,cards: player2.cards}
+                    ptype: user.playerType,cards: player2.cards, totalAmt:player2.totalAmt, currentAmt:player2.currentAmt}
                 updatePlayer2(player2x)
             }
             if(user.username==player3.name){
                 let player3x = {name:player3.name,position:player3.position,
-                    ptype: user.playerType,cards: player3.cards}
+                    ptype: user.playerType,cards: player3.cards, totalAmt:player3.totalAmt, currentAmt:player3.currentAmt}
                 updatePlayer3(player3x)
             }
             if(user.username==player4.name){
                 let player4x = {name:player4.name,position:player4.position,
-                    ptype: user.playerType,cards: player4.cards}
+                    ptype: user.playerType,cards: player4.cards, totalAmt:player4.totalAmt, currentAmt:player4.currentAmt}
                 updatePlayer4(player4x)
             }
         });
