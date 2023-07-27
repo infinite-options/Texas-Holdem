@@ -955,6 +955,15 @@ function Main(props) {
   const [turnCard, setTurnCard] = useState([]);
   const [riverCard, setRiverCard] = useState([]);
 
+  const [pot, setPot] = useState(0);
+
+  const [bet0, setBet0] = useState(20);
+  const [bet1, setBet1] = useState(20);
+  const [bet2, setBet2] = useState(20);
+  const [bet3, setBet3] = useState(20);
+  const [bet4, setBet4] = useState(20);
+  const [bet5, setBet5] = useState(20);
+
   const location = useLocation();
   const { dealerIndex, updateDealerIndex,
     player0, updatePlayer0,
@@ -1058,45 +1067,154 @@ function Main(props) {
   
       updateDealerIndex((dealerIndex+1)%6)
       let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype,
-        cards:shuffledDeck.slice(0, 2), totalAmt:850, currentAmt:0}
+        cards:shuffledDeck.slice(0, 2), totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
       updatePlayer0(player0x)
       let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype,
-        cards:shuffledDeck.slice(2, 4), totalAmt:850, currentAmt:0}
+        cards:shuffledDeck.slice(2, 4), totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
       updatePlayer1(player1x)
       let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype,
-        cards:shuffledDeck.slice(4, 6), totalAmt:850, currentAmt:0}
+        cards:shuffledDeck.slice(4, 6), totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
       updatePlayer2(player2x)
       let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype,
-        cards:shuffledDeck.slice(6, 8), totalAmt:850, currentAmt:0}
+        cards:shuffledDeck.slice(6, 8), totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
       updatePlayer3(player3x)
       let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype,
-        cards:shuffledDeck.slice(8, 10), totalAmt:850, currentAmt:0}
+        cards:shuffledDeck.slice(8, 10), totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
       updatePlayer4(player4x)
       let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype,
-        cards:shuffledDeck.slice(10, 12), totalAmt:850, currentAmt:0}
+        cards:shuffledDeck.slice(10, 12), totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
       updatePlayer5(player5x)
       
+      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
+        +bet0+bet1+bet2+bet3+bet4+bet5)
+     // setBet0(0);setBet1(0);setBet2(0);setBet3(0);setBet4(0);setBet5(0);
+
       console.log("------------------End Switching Deal Click---------------------------");
       updateDealFlag('flop')
 
       setflopCard([]);
       setTurnCard([]);
       setRiverCard([]);
+
     }else if(dealFlag=='flop'){
       let flopCards=shuffledDeck.slice(12, 15);
       setflopCard(flopCards); 
       updateDealFlag('turn'); 
+
+      console.log("Before")
+      console.log(player0.totalAmt)
+      console.log(player1.totalAmt)
+      console.log(player2.totalAmt)
+      console.log(player3.totalAmt)
+      console.log(player4.totalAmt)
+      console.log(player5.totalAmt)
+
+      let player0x = {name:player0.name,position: player0.position,ptype: player0.ptype,
+        cards:player0.cards, totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
+      updatePlayer0(player0x)
+      let player1x = {name:player1.name,position: (player1.position),ptype: player1.ptype,
+        cards:player1.cards, totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
+      updatePlayer1(player1x)
+      let player2x = {name:player2.name,position: (player2.position),ptype: player2.ptype,
+        cards:player2.cards, totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
+      updatePlayer2(player2x)
+      let player3x = {name:player3.name,position: (player3.position),ptype: player3.ptype,
+        cards:player3.cards, totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
+      updatePlayer3(player3x)
+      let player4x = {name:player4.name,position: (player4.position),ptype: player4.ptype,
+        cards:player4.cards, totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
+      updatePlayer4(player4x)
+      let player5x = {name:player5.name,position: (player5.position),ptype: player5.ptype,
+        cards:player5.cards, totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
+      updatePlayer5(player5x)
+
+      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
+        +bet0+bet1+bet2+bet3+bet4+bet5)
+
     }else if(dealFlag=='turn'){
       let turnCards=shuffledDeck.slice(15, 16);
       setTurnCard(turnCards); 
-      updateDealFlag('river');       
+      updateDealFlag('river');   
+      
+      let player0x = {name:player0.name,position: player0.position,ptype: player0.ptype,
+        cards:player0.cards, totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
+      updatePlayer0(player0x)
+      let player1x = {name:player1.name,position: (player1.position),ptype: player1.ptype,
+        cards:player1.cards, totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
+      updatePlayer1(player1x)
+      let player2x = {name:player2.name,position: (player2.position),ptype: player2.ptype,
+        cards:player2.cards, totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
+      updatePlayer2(player2x)
+      let player3x = {name:player3.name,position: (player3.position),ptype: player3.ptype,
+        cards:player3.cards, totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
+      updatePlayer3(player3x)
+      let player4x = {name:player4.name,position: (player4.position),ptype: player4.ptype,
+        cards:player4.cards, totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
+      updatePlayer4(player4x)
+      let player5x = {name:player5.name,position: (player5.position),ptype: player5.ptype,
+        cards:player5.cards, totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
+      updatePlayer5(player5x)
+
+      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
+        +bet0+bet1+bet2+bet3+bet4+bet5)
+
     }else if(dealFlag=='river'){
       let riverCards=shuffledDeck.slice(16, 17);
       setRiverCard(riverCards);
-      updateDealFlag('hold');        
+      updateDealFlag('hold');     
+      
+      let player0x = {name:player0.name,position: player0.position,ptype: player0.ptype,
+        cards:player0.cards, totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
+      updatePlayer0(player0x)
+      let player1x = {name:player1.name,position: (player1.position),ptype: player1.ptype,
+        cards:player1.cards, totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
+      updatePlayer1(player1x)
+      let player2x = {name:player2.name,position: (player2.position),ptype: player2.ptype,
+        cards:player2.cards, totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
+      updatePlayer2(player2x)
+      let player3x = {name:player3.name,position: (player3.position),ptype: player3.ptype,
+        cards:player3.cards, totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
+      updatePlayer3(player3x)
+      let player4x = {name:player4.name,position: (player4.position),ptype: player4.ptype,
+        cards:player4.cards, totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
+      updatePlayer4(player4x)
+      let player5x = {name:player5.name,position: (player5.position),ptype: player5.ptype,
+        cards:player5.cards, totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
+      updatePlayer5(player5x)
+
+      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
+        +bet0+bet1+bet2+bet3+bet4+bet5)
     }
 
-  };
+    //  let p0_bet = 20;
+    //  updatePlayer0(playerAfterBet(player0, shuffledDeck.slice(0, 2), player0.totalAmt, player0.currentAmt, p0_bet));
+    //  console.log(player0.name + " bet:", p0_bet, "in [100,10,5] ", getChips(p0_bet));
+   };
+
+  
+
+  function playerAfterBet(player, cards, totalAmt, currentAmt, bet_money) {
+    let total = totalAmt-bet_money;
+    let current = currentAmt+bet_money;
+    return {name:player.name, position: (player.position+5)%6, ptype:player.ptype, cards:cards, totalAmt:total, currentAmt:current};
+  }
+
+  function getChips(money) {
+    const chips = [100, 10, 5];
+    const counts = [0, 0, 0];
+
+    let remain = money;
+    let chip_i = 0;
+    while(remain > 0 && chip_i < chips.length) {
+      if(remain >= chips[chip_i]) {
+        remain -= chips[chip_i];
+        counts[chip_i]++;
+      } else {
+        chip_i++;
+      }
+    }
+    return counts;
+  }
   
   useEffect(()=>{  
     function getActionText(player, position, hand) {  
@@ -1143,6 +1261,17 @@ function Main(props) {
       {flopCard.length!==0 && console.log("Flop : "+flopCard[0].name +" "+flopCard[1].name+" "+flopCard[2].name)}
       {turnCard.length!==0 && console.log("Turn : "+turnCard[0].name)}
       {riverCard.length!==0 && console.log("River : "+riverCard[0].name)}
+
+      {console.log("total current  Bet")}
+      {console.log(player0.totalAmt+" "+player0.currentAmt+" "+bet0)}
+      {console.log(player1.totalAmt+" "+player1.currentAmt+" "+bet1)}
+      {console.log(player2.totalAmt+" "+player2.currentAmt+" "+bet2)}
+      {console.log(player3.totalAmt+" "+player3.currentAmt+" "+bet3)}
+      {console.log(player4.totalAmt+" "+player4.currentAmt+" "+bet4)}
+      {console.log(player5.totalAmt+" "+player5.currentAmt+" "+bet5)}
+      
+      {console.log("Pot : "+pot)}
+
 
     <Main1>
  
