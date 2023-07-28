@@ -19,6 +19,7 @@ import ArrowSquareUpImage from '../../assets/images/Main_arrow_square_up.svg';
 import Ellipse13Image from '../../assets/images/Main_Ellipse_13.png';
 import PlaySquareImage from '../../assets/images/Main_play_square.svg';
 import MenuImg from '../../assets/images/Menu_img.png';
+import PokerChipsImage from '../../assets/images/Main_poker_chips.png';
 import './Main.css';
 import { styled } from '@mui/material/styles';
 
@@ -687,13 +688,6 @@ const Rectangle59 = styled("div")({
   top: `430px`,
 });
 
-const ArrowSquareUp = styled("img")({
-  height: `auto`,
-  width: `25px`,
-  position: `absolute`,
-  left: `256px`,
-  top: `668px`,
-});
 
 const Ellipse13 = styled("img")({
   height: `62px`,
@@ -890,6 +884,67 @@ const Y = styled("div")({
   top: `69px`,
 });
 
+const ArrowSquareUp = styled("img")({
+  height: `auto`,
+  width: `25px`,
+  position: `absolute`,
+  left: `256px`,
+  top: `668px`,
+});
+
+const PokerChips0 = styled("img")({
+  height: `18px`,
+  width: `18px`,
+  objectFit: `cover`,
+  position: `absolute`,
+  left: `91px`,
+  top: `478px`,
+});
+
+const PokerChips1 = styled("img")({
+  height: `18px`,
+  width: `18px`,
+  objectFit: `cover`,
+  position: `absolute`,
+  left: `117px`,
+  top: `318px`,
+});
+
+const PokerChips2 = styled("img")({
+  height: `18px`,
+  width: `18px`,
+  objectFit: `cover`,
+  position: `absolute`,
+  left: `187px`,
+  top: `285px`,
+});
+
+const PokerChips3 = styled("img")({
+  height: `18px`,
+  width: `18px`,
+  objectFit: `cover`,
+  position: `absolute`,
+  left: `256px`,
+  top: `318px`,
+});
+
+const PokerChips4 = styled("img")({
+  height: `18px`,
+  width: `18px`,
+  objectFit: `cover`,
+  position: `absolute`,
+  left: `284px`,
+  top: `478px`,
+});
+
+const PokerChips5 = styled("img")({
+  height: `18px`,
+  width: `18px`,
+  objectFit: `cover`,
+  position: `absolute`,
+  left: `180px`,
+  top: `601px`,
+});
 
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 const deckOfCards = [
@@ -1131,6 +1186,25 @@ function Main(props) {
       setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
         +bet0+bet1+bet2+bet3+bet4+bet5)
 
+        let fiveCard0 = player0.cards;
+        const combinedArray0 = fiveCard0.concat(flopCards);
+        console.log(player0.name +" "+determineHandRanking(combinedArray0));
+        let fiveCard1 = player1.cards;
+        const combinedArray1 = fiveCard1.concat(flopCards);
+        console.log(player1.name +" "+determineHandRanking(combinedArray1));
+        let fiveCard2 = player2.cards;
+        const combinedArray2 = fiveCard2.concat(flopCards);
+        console.log(player2.name +" "+determineHandRanking(combinedArray2));
+        let fiveCard3 = player3.cards;
+        const combinedArray3 = fiveCard3.concat(flopCards);
+        console.log(player3.name +" "+determineHandRanking(combinedArray3));
+        let fiveCard4 = player4.cards;
+        const combinedArray4 = fiveCard4.concat(flopCards);
+        console.log(player4.name +" "+determineHandRanking(combinedArray4));
+        let fiveCard5 = player5.cards;
+        const combinedArray5 = fiveCard5.concat(flopCards);
+        console.log(player5.name +" "+determineHandRanking(combinedArray5));
+
     }else if(dealFlag=='turn'){
       let turnCards=shuffledDeck.slice(15, 16);
       setTurnCard(turnCards); 
@@ -1242,36 +1316,71 @@ function Main(props) {
   }, [fetchData, player0, player1, player2, player3, player4, player5]);
 
 
+  function determineHandRanking(cards) {
+    // Check for a flush
+    const suits = cards.map(card => card.name.charAt(1));
+    const isFlush = suits.every(suit => suit === suits[0]);
+  
+    // Create a map of card ranks and their occurrences
+    const ranks = {};
+    cards.forEach(card => {
+      const rank = card.name.charAt(0);
+      ranks[rank] = (ranks[rank] || 0) + 1;
+    });
+  
+    // Check for a straight
+    const sortedRanks = Object.keys(ranks).sort((a, b) => ('23456789TJQKA'.indexOf(a) - '23456789TJQKA'.indexOf(b)));
+    const isStraight = sortedRanks.every((rank, index) => index === 0 || '23456789TJQKA'.indexOf(rank) === '23456789TJQKA'.indexOf(sortedRanks[index - 1]) + 1);
+  
+    // Check for straight flush and royal flush
+    const isStraightFlush = isFlush && isStraight;
+    const isRoyalFlush = isStraightFlush && sortedRanks[0] === 'T';
+  
+    // Check for other hand rankings
+    const rankValues = Object.values(ranks);
+    const isFourOfAKind = rankValues.includes(4);
+    const isFullHouse = rankValues.includes(3) && rankValues.includes(2);
+    const isThreeOfAKind = rankValues.includes(3);
+    const isTwoPair = rankValues.filter(val => val === 2).length === 2;
+    const isOnePair = rankValues.includes(2);
+  
+    // Determine the hand ranking
+    if (isRoyalFlush) return "Royal Flush";
+    if (isStraightFlush) return "Straight Flush";
+    if (isFourOfAKind) return "Four of a Kind";
+    if (isFullHouse) return "Full House";
+    if (isFlush) return "Flush";
+    if (isStraight) return "Straight";
+    if (isThreeOfAKind) return "Three of a Kind";
+    if (isTwoPair) return "Two Pair";
+    if (isOnePair) return "One Pair";
+    return "High Card";
+  }
+  
+  function printDetails(player, bet) {
 
+    let printStr = player.name+" "+player.position+" "+positions[player.position]+" "+player.ptype+" ";
+    if(player.cards.length!==0){
+      printStr = printStr + player0.cards[0].name+" "+player0.cards[1].name+" ";
+    }
+    printStr = printStr + player.totalAmt+" "+player.currentAmt+" "+bet;
+    console.log(printStr);
+  
+  }
   return (
     <div>
-      {console.log(player0.position+" "+positions[player0.position]+" "+player0.ptype+" "+player0.name)}
-      {console.log(player1.position+" "+positions[player1.position]+" "+player1.ptype+" "+player1.name)}
-      {console.log(player2.position+" "+positions[player2.position]+" "+player2.ptype+" "+player2.name)}
-      {console.log(player3.position+" "+positions[player3.position]+" "+player3.ptype+" "+player3.name)}
-      {console.log(player4.position+" "+positions[player4.position]+" "+player4.ptype+" "+player4.name)}
-      {console.log(player5.position+" "+positions[player5.position]+" "+player5.ptype+" "+player5.name)}
 
-      {player0.cards.length!==0 && console.log(player0.name +" : "+player0.cards[0].name+" "+player0.cards[1].name)}
-      {player1.cards.length!==0 && console.log(player1.name +" : "+player1.cards[0].name+" "+player1.cards[1].name)}
-      {player2.cards.length!==0 && console.log(player2.name +" : "+player2.cards[0].name+" "+player2.cards[1].name)}
-      {player3.cards.length!==0 && console.log(player3.name +" : "+player3.cards[0].name+" "+player3.cards[1].name)}
-      {player4.cards.length!==0 && console.log(player4.name +" : "+player4.cards[0].name+" "+player4.cards[1].name)}
-      {player5.cards.length!==0 && console.log(player5.name +" : "+player5.cards[0].name+" "+player5.cards[1].name)}
+    {printDetails(player0, bet0)}
+    {printDetails(player1, bet1)}
+    {printDetails(player2, bet2)}
+    {printDetails(player3, bet3)}
+    {printDetails(player4, bet4)}
+    {printDetails(player5, bet5)}
+
       {flopCard.length!==0 && console.log("Flop : "+flopCard[0].name +" "+flopCard[1].name+" "+flopCard[2].name)}
       {turnCard.length!==0 && console.log("Turn : "+turnCard[0].name)}
       {riverCard.length!==0 && console.log("River : "+riverCard[0].name)}
-
-      {console.log("total current  Bet")}
-      {console.log(player0.totalAmt+" "+player0.currentAmt+" "+bet0)}
-      {console.log(player1.totalAmt+" "+player1.currentAmt+" "+bet1)}
-      {console.log(player2.totalAmt+" "+player2.currentAmt+" "+bet2)}
-      {console.log(player3.totalAmt+" "+player3.currentAmt+" "+bet3)}
-      {console.log(player4.totalAmt+" "+player4.currentAmt+" "+bet4)}
-      {console.log(player5.totalAmt+" "+player5.currentAmt+" "+bet5)}
-      
       {console.log("Pot : "+pot)}
-
 
     <Main1>
  
@@ -1439,7 +1548,22 @@ function Main(props) {
       <ActionView position={{x:"300px", y:"305px"}} data={action3}/>
       <ActionView position={{x:"330px", y:"512px"}} data={action4}/>
       <ActionView position={{x:"160px", y:"650px"}} data={action5}/>
-      
+
+      {/* Poker Chips */}
+      {player0.cards.length>0 && <PokerChips0 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      {player1.cards.length>0 && <PokerChips1 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      {player2.cards.length>0 && <PokerChips2 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      {player3.cards.length>0 && <PokerChips3 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      {player4.cards.length>0 && <PokerChips4 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      {player5.cards.length>0 && <PokerChips5 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+
+       {player0.cards.length>0 && <PokerAmtView  position={{y:"458px", x:"91px"}} data={player0.currentAmt}/>}
+       {player0.cards.length>0 && <PokerAmtView  position={{y:"303px", x:"117px"}} data={player1.currentAmt}/>}
+       {player0.cards.length>0 && <PokerAmtView  position={{y:"265px", x:"187px"}} data={player2.currentAmt}/>}
+       {player0.cards.length>0 && <PokerAmtView  position={{y:"303px", x:"256px"}} data={player3.currentAmt}/>}
+       {player0.cards.length>0 && <PokerAmtView  position={{y:"458px", x:"284px"}} data={player4.currentAmt}/>}
+       {player0.cards.length>0 && <PokerAmtView  position={{y:"581px", x:"180px"}} data={player5.currentAmt}/>}
+
       {/* The 5 cards in the middle of table  */}
       <Rectangle23>
       </Rectangle23>
@@ -1513,7 +1637,6 @@ function CardView(props) {
         position:'absolute',
         left: position.x,
         top: position.y,
-    
         fontSize: "18px",
         color: card.color,
       }}>
@@ -1521,6 +1644,48 @@ function CardView(props) {
       </div>
     );
     }
+    // <PokerChipView src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"} position={{x:"458px", y:"91px"}} data={player0.currentAmt}/>
+
+    function PokerChipView(props) {
+      const position = props.position;
+      const currentAmt = props.data;
+      const image = props.src;
+      
+      return (
+          <div style={{
+            height: `30px`,
+            width: `18px`,
+            src:image,
+            objectFit: `cover`,
+            position: `absolute`,
+            left: position.x,
+            top: position.y,
+        }}>
+           {currentAmt} 
+        </div>
+      );
+      }
+      function PokerAmtView(props) {
+        const position = props.position;
+        const currentAmt = props.data;
+        const image = props.src;
+        
+        return (
+            <div style={{
+              height: `30px`,
+              width: `18px`,
+              position: `absolute`,
+              fontSize: "12px",
+              color : "#FFFFFF",
+              left: position.x,
+              top: position.y,
+          }}>
+             {currentAmt} 
+          </div>
+        );
+        }
+    
+  
 
   function CardRectangle(props) {
     const bc = props.backgroundColor;
