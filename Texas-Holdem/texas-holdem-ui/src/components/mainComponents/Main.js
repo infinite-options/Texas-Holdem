@@ -108,10 +108,21 @@ const Rectangle9 = styled("div")({
   boxShadow: `0px 4px 4px rgba(243, 170, 69, 1)`,
   borderRadius: `10px`,
   width: `79px`,
-  height: `80px`,
+  height: `40px`,
   position: `absolute`,
   left: `296px`,
   top: `637px`,
+});
+
+const Rectangle9a = styled("div")({
+  backgroundColor: `rgba(82, 163, 82, 1)`,
+  boxShadow: `0px 4px 4px rgba(243, 170, 69, 1)`,
+  borderRadius: `10px`,
+  width: `79px`,
+  height: `40px`,
+  position: `absolute`,
+  left: `296px`,
+  top: `690px`,
 });
 
 const Rectangle60 = styled("div")({
@@ -182,6 +193,7 @@ const Deal = styled("div")({
   left: `208px`,
   top: `555px`,
 });
+
 const Raise = styled("div")({
   textAlign: `left`,
   whiteSpace: `pre-wrap`,
@@ -197,8 +209,27 @@ const Raise = styled("div")({
   width: `67px`,
   position: `absolute`,
   left: `302px`,
-  top: `668px`,
+  top: `650px`,
 });
+
+const Match = styled("div")({
+  textAlign: `left`,
+  whiteSpace: `pre-wrap`,
+  fontSynthesis: `none`,
+  color: `rgba(255, 255, 255, 1)`,
+  fontStyle: `normal`,
+  fontFamily: `Orbitron`,
+  fontWeight: `900`,
+  fontSize: `18px`,
+  letterSpacing: `2.34px`,
+  textDecoration: `none`,
+  textTransform: `none`,
+  width: `67px`,
+  position: `absolute`,
+  left: `302px`,
+  top: `700px`,
+});
+
 
 const Check = styled("div")({
   textAlign: `left`,
@@ -424,6 +455,23 @@ const Q8504 = styled("div")({
   position: `absolute`,
   left: `24px`,
   top: `488px`,
+});
+
+const Q8505 = styled("div")({
+  textAlign: `left`,
+  whiteSpace: `pre-wrap`,
+  fontSynthesis: `none`,
+  color: `rgba(35, 51, 41, 1)`,
+  fontStyle: `normal`,
+  fontFamily: `Open Sans`,
+  fontWeight: `600`,
+  fontSize: `13px`,
+  letterSpacing: `0.65px`,
+  textDecoration: `none`,
+  textTransform: `none`,
+  position: `absolute`,
+  left: `160px`,
+  top: `680px`,
 });
 
 const Replay = styled("div")({
@@ -949,8 +997,8 @@ const PokerChips5 = styled("img")({
 const positions = ["Dealer", "Small Blind", "Big Blind", "Low Jack", "High Jack", "Cut Off"];
 const deckOfCards = [
   { id: 1, name: "A♥" , color : "red"},
-    { id: 2, name: "A♦" , color : "red"},
-    { id: 3, name: "A♣" , color : "black"},
+  { id: 2, name: "A♦" , color : "red"},
+  { id: 3, name: "A♣" , color : "black"},
   { id: 4, name: "A♠" , color : "black"},
   { id: 5, name: "K♥" , color : "red"},
   { id: 6, name: "K♦" , color : "red"},
@@ -1005,21 +1053,16 @@ const deckOfCards = [
 function Main(props) {
 
   const fetchData = props.data;
+  let ps = 0;
 
+  const [playerSelectedAmt, setPlayerSelectedAmt] = useState(false);
   const [flopCard, setflopCard] = useState([]);
   const [turnCard, setTurnCard] = useState([]);
   const [riverCard, setRiverCard] = useState([]);
 
-  const [pot, setPot] = useState(0);
+  const [potSize, setPotSize] = useState(0);
+  const [maxAmt, setmaxAmt] = useState(0);
 
-  const [bet0, setBet0] = useState(20);
-  const [bet1, setBet1] = useState(20);
-  const [bet2, setBet2] = useState(20);
-  const [bet3, setBet3] = useState(20);
-  const [bet4, setBet4] = useState(20);
-  const [bet5, setBet5] = useState(20);
-
-  const location = useLocation();
   const { dealerIndex, updateDealerIndex,
     player0, updatePlayer0,
     player1, updatePlayer1,
@@ -1027,11 +1070,6 @@ function Main(props) {
     player3, updatePlayer3,
     player4, updatePlayer4,
     player5, updatePlayer5,
-    // holdFlag, updateHold,
-    // flopFlag, updateFlop,
-    // turnFlag, updateTurn,
-    // riverFlag, updateRiver,
-    // shuffledDeck, updateDeck
     dealFlag, updateDealFlag,
     shuffledDeck, updateDeck
   } = useContext(PlayerContext);
@@ -1044,6 +1082,7 @@ function Main(props) {
   const [action3, setAction3] = useState("");
   const [action4, setAction4] = useState("");
   const [action5, setAction5] = useState("");
+  const [myAction, setMyAction] = useState("");
 
   function getUser(fetchedData, player_name, player_style, player_position_short) {
     let user = null;
@@ -1108,84 +1147,43 @@ function Main(props) {
       alert("No data fetched")
     }
   };
-
-  const handleMenuClick = () => {
-      navigate('/profile');
-  };
   const handleDealClick = () => {
 
     if(dealFlag=='hold'){
       const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
       updateDeck(shuffledDeck)
   
-      console.log("------------------Start Switching Deal Click---------------------------");
-  
       updateDealerIndex((dealerIndex+1)%6)
-      let player0x = {name:player0.name,position: (player0.position+5)%6,ptype: player0.ptype,
-        cards:shuffledDeck.slice(0, 2), totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
-      updatePlayer0(player0x)
-      let player1x = {name:player1.name,position: (player1.position+5)%6,ptype: player1.ptype,
-        cards:shuffledDeck.slice(2, 4), totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
-      updatePlayer1(player1x)
-      let player2x = {name:player2.name,position: (player2.position+5)%6,ptype: player2.ptype,
-        cards:shuffledDeck.slice(4, 6), totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
-      updatePlayer2(player2x)
-      let player3x = {name:player3.name,position: (player3.position+5)%6,ptype: player3.ptype,
-        cards:shuffledDeck.slice(6, 8), totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
-      updatePlayer3(player3x)
-      let player4x = {name:player4.name,position: (player4.position+5)%6,ptype: player4.ptype,
-        cards:shuffledDeck.slice(8, 10), totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
-      updatePlayer4(player4x)
-      let player5x = {name:player5.name,position: (player5.position+5)%6,ptype: player5.ptype,
-        cards:shuffledDeck.slice(10, 12), totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
-      updatePlayer5(player5x)
-      
-      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
-        +bet0+bet1+bet2+bet3+bet4+bet5)
-     // setBet0(0);setBet1(0);setBet2(0);setBet3(0);setBet4(0);setBet5(0);
 
-      console.log("------------------End Switching Deal Click---------------------------");
+      updatePlayer0(holdPlayerUpdate(player0,shuffledDeck, 0,2));
+      updatePlayer1(holdPlayerUpdate(player1,shuffledDeck, 2,4));
+      updatePlayer2(holdPlayerUpdate(player2,shuffledDeck, 4,6));
+      updatePlayer3(holdPlayerUpdate(player3,shuffledDeck, 6,8));
+      updatePlayer4(holdPlayerUpdate(player4,shuffledDeck, 8,10));
+      updatePlayer5(holdPlayerUpdate(player5,shuffledDeck, 10,12));
+
       updateDealFlag('flop')
-
       setflopCard([]);
       setTurnCard([]);
       setRiverCard([]);
+      setPlayerSelectedAmt(false)
 
     }else if(dealFlag=='flop'){
+      
       let flopCards=shuffledDeck.slice(12, 15);
       setflopCard(flopCards); 
-      updateDealFlag('turn'); 
+  
+      let bet0 = 45;let bet1 = 45;let bet2 = 45;
+      let bet3 = 45;let bet4 = 45;let bet5 = 45;
 
-      console.log("Before")
-      console.log(player0.totalAmt)
-      console.log(player1.totalAmt)
-      console.log(player2.totalAmt)
-      console.log(player3.totalAmt)
-      console.log(player4.totalAmt)
-      console.log(player5.totalAmt)
+      updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
+      updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
+      updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
+      updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
+      updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
+      updatePlayer5(flopPlayerUpdate(player5,'',0));
 
-      let player0x = {name:player0.name,position: player0.position,ptype: player0.ptype,
-        cards:player0.cards, totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
-      updatePlayer0(player0x)
-      let player1x = {name:player1.name,position: (player1.position),ptype: player1.ptype,
-        cards:player1.cards, totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
-      updatePlayer1(player1x)
-      let player2x = {name:player2.name,position: (player2.position),ptype: player2.ptype,
-        cards:player2.cards, totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
-      updatePlayer2(player2x)
-      let player3x = {name:player3.name,position: (player3.position),ptype: player3.ptype,
-        cards:player3.cards, totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
-      updatePlayer3(player3x)
-      let player4x = {name:player4.name,position: (player4.position),ptype: player4.ptype,
-        cards:player4.cards, totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
-      updatePlayer4(player4x)
-      let player5x = {name:player5.name,position: (player5.position),ptype: player5.ptype,
-        cards:player5.cards, totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
-      updatePlayer5(player5x)
-
-      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
-        +bet0+bet1+bet2+bet3+bet4+bet5)
-
+        console.log("HAND AFTER FLOP CARDS");
         let fiveCard0 = player0.cards;
         const combinedArray0 = fiveCard0.concat(flopCards);
         console.log(player0.name +" "+determineHandRanking(combinedArray0));
@@ -1205,67 +1203,130 @@ function Main(props) {
         const combinedArray5 = fiveCard5.concat(flopCards);
         console.log(player5.name +" "+determineHandRanking(combinedArray5));
 
+        updateDealFlag('turn'); 
+        setPlayerSelectedAmt(false)
+
     }else if(dealFlag=='turn'){
       let turnCards=shuffledDeck.slice(15, 16);
-      setTurnCard(turnCards); 
-      updateDealFlag('river');   
-      
-      let player0x = {name:player0.name,position: player0.position,ptype: player0.ptype,
-        cards:player0.cards, totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
-      updatePlayer0(player0x)
-      let player1x = {name:player1.name,position: (player1.position),ptype: player1.ptype,
-        cards:player1.cards, totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
-      updatePlayer1(player1x)
-      let player2x = {name:player2.name,position: (player2.position),ptype: player2.ptype,
-        cards:player2.cards, totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
-      updatePlayer2(player2x)
-      let player3x = {name:player3.name,position: (player3.position),ptype: player3.ptype,
-        cards:player3.cards, totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
-      updatePlayer3(player3x)
-      let player4x = {name:player4.name,position: (player4.position),ptype: player4.ptype,
-        cards:player4.cards, totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
-      updatePlayer4(player4x)
-      let player5x = {name:player5.name,position: (player5.position),ptype: player5.ptype,
-        cards:player5.cards, totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
-      updatePlayer5(player5x)
+      setTurnCard(turnCards);
 
-      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
-        +bet0+bet1+bet2+bet3+bet4+bet5)
+      let bet0 = 35;let bet1 = 35;let bet2 = 35;
+      let bet3 = 35;let bet4 = 35;let bet5 = 35;
+
+      updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
+      updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
+      updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
+      updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
+      updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
+      updatePlayer5(flopPlayerUpdate(player5,'',0));
+
+        console.log("HAND AFTER TURN CARDS");
+        let fiveCard0 = player0.cards;
+        const combinedArray0 = fiveCard0.concat(flopCard);
+        const combinedArray00 = combinedArray0.concat(turnCards);
+        console.log(player0.name +" "+determineHandRanking(combinedArray00));
+        let fiveCard1 = player1.cards;
+        const combinedArray1 = fiveCard1.concat(flopCard);
+        const combinedArray11 = combinedArray1.concat(turnCards);
+        console.log(player1.name +" "+determineHandRanking(combinedArray11));
+        let fiveCard2 = player2.cards;
+        const combinedArray2 = fiveCard2.concat(flopCard);
+        const combinedArray22 = combinedArray2.concat(turnCards);
+        console.log(player2.name +" "+determineHandRanking(combinedArray22));
+        let fiveCard3 = player3.cards;
+        const combinedArray3 = fiveCard3.concat(flopCard);
+        const combinedArray33 = combinedArray3.concat(turnCards);
+        console.log(player3.name +" "+determineHandRanking(combinedArray33));
+        let fiveCard4 = player4.cards;
+        const combinedArray4 = fiveCard4.concat(flopCard);
+        const combinedArray44 = combinedArray4.concat(turnCards);
+        console.log(player4.name +" "+determineHandRanking(combinedArray44));
+        let fiveCard5 = player5.cards;
+        const combinedArray5 = fiveCard5.concat(flopCard);
+        const combinedArray55 = combinedArray5.concat(turnCards);
+        console.log(player5.name +" "+determineHandRanking(combinedArray55));
+
+        updateDealFlag('river');   
+        setPlayerSelectedAmt(false)
 
     }else if(dealFlag=='river'){
       let riverCards=shuffledDeck.slice(16, 17);
       setRiverCard(riverCards);
-      updateDealFlag('hold');     
-      
-      let player0x = {name:player0.name,position: player0.position,ptype: player0.ptype,
-        cards:player0.cards, totalAmt:player0.totalAmt-bet0, currentAmt:player0.currentAmt+bet0}
-      updatePlayer0(player0x)
-      let player1x = {name:player1.name,position: (player1.position),ptype: player1.ptype,
-        cards:player1.cards, totalAmt:player1.totalAmt-bet1, currentAmt:player1.currentAmt+bet1}
-      updatePlayer1(player1x)
-      let player2x = {name:player2.name,position: (player2.position),ptype: player2.ptype,
-        cards:player2.cards, totalAmt:player2.totalAmt-bet2, currentAmt:player2.currentAmt+bet2}
-      updatePlayer2(player2x)
-      let player3x = {name:player3.name,position: (player3.position),ptype: player3.ptype,
-        cards:player3.cards, totalAmt:player3.totalAmt-bet3, currentAmt:player3.currentAmt+bet3}
-      updatePlayer3(player3x)
-      let player4x = {name:player4.name,position: (player4.position),ptype: player4.ptype,
-        cards:player4.cards, totalAmt:player4.totalAmt-bet4, currentAmt:player4.currentAmt+bet4}
-      updatePlayer4(player4x)
-      let player5x = {name:player5.name,position: (player5.position),ptype: player5.ptype,
-        cards:player5.cards, totalAmt:player5.totalAmt-bet5, currentAmt:player5.currentAmt+bet5}
-      updatePlayer5(player5x)
+      updateDealFlag('hold');   
 
-      setPot(player0.currentAmt+player1.currentAmt+player2.currentAmt+player3.currentAmt+player4.currentAmt+player5.currentAmt
-        +bet0+bet1+bet2+bet3+bet4+bet5)
-    }
+      let bet0 = 15;let bet1 = 15;let bet2 = 15;
+      let bet3 = 15;let bet4 = 15;let bet5 = 15;
+
+      updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
+      updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
+      updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
+      updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
+      updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
+      updatePlayer5(flopPlayerUpdate(player5,'',0));
+
+    console.log("HAND AFTER RIVER CARDS");
+    
+    let fiveCard0 = player0.cards;
+    const combinedArray0 = fiveCard0.concat(flopCard);
+    const combinedArray00 = combinedArray0.concat(turnCard).concat(riverCard);
+    console.log(player0.name +" "+determineHandRanking(combinedArray00));
+    let fiveCard1 = player1.cards;
+    const combinedArray1 = fiveCard1.concat(flopCard);
+    const combinedArray11 = combinedArray1.concat(turnCard).concat(riverCard);
+    console.log(player1.name +" "+determineHandRanking(combinedArray11));
+    let fiveCard2 = player2.cards;
+    const combinedArray2 = fiveCard2.concat(flopCard);
+    const combinedArray22 = combinedArray2.concat(turnCard).concat(riverCard);
+    console.log(player2.name +" "+determineHandRanking(combinedArray22));
+    let fiveCard3 = player3.cards;
+    const combinedArray3 = fiveCard3.concat(flopCard);
+    const combinedArray33 = combinedArray3.concat(turnCard).concat(riverCard);
+    console.log(player3.name +" "+determineHandRanking(combinedArray33));
+    let fiveCard4 = player4.cards;
+    const combinedArray4 = fiveCard4.concat(flopCard);
+    const combinedArray44 = combinedArray4.concat(turnCard).concat(riverCard);
+    console.log(player4.name +" "+determineHandRanking(combinedArray44));
+    let fiveCard5 = player5.cards;
+    const combinedArray5 = fiveCard5.concat(flopCard);
+    const combinedArray55 = combinedArray5.concat(turnCard).concat(riverCard);
+    console.log(player5.name +" "+determineHandRanking(combinedArray55));
+
+
+    // updatePlayer0(riverPlayerUpdate(player0,action0,bet0));
+    // updatePlayer1(riverPlayerUpdate(player1,action1,bet1));
+    // updatePlayer2(riverPlayerUpdate(player2,action2,bet2));
+    // updatePlayer3(riverPlayerUpdate(player3,action3,bet3));
+    // updatePlayer4(riverPlayerUpdate(player4,action4,bet4));
+    // updatePlayer5(riverPlayerUpdate(player5,action5,bet5));
 
     //  let p0_bet = 20;
     //  updatePlayer0(playerAfterBet(player0, shuffledDeck.slice(0, 2), player0.totalAmt, player0.currentAmt, p0_bet));
     //  console.log(player0.name + " bet:", p0_bet, "in [100,10,5] ", getChips(p0_bet));
-   };
+  }
+ 
+  };
 
-  
+  function getBets(player){
+
+    if(player.position==0+1){ // dealer
+        return 40;
+    }
+    if(player.position==1+1){ // small blind
+      return 10;
+    }
+    if(player.position==2+1){ // big blind
+      return 20;
+    }
+    if(player.position==3+1){ // low jack
+      return 40;
+    }
+    if(player.position==5){ // high jack
+      return 40;
+    }
+    if(player.position==0){ // cut off
+      return 0;
+    }
+  }
 
   function playerAfterBet(player, cards, totalAmt, currentAmt, bet_money) {
     let total = totalAmt-bet_money;
@@ -1292,6 +1353,11 @@ function Main(props) {
   
   useEffect(()=>{  
     function getActionText(player, position, hand) {  
+    
+      if(position==1||position==2){
+        return 'RAISE';
+      }
+
       let action = "No saved Table";
       const user = getUser(fetchData, player.name, getType_database(player.ptype), getShortPosition(position));
       if(user !== null) {
@@ -1303,19 +1369,214 @@ function Main(props) {
 
     function updateActions() {
       // Update actions
-      setAction0(getActionText(player0, player0.position, player0.cards));
-      setAction1(getActionText(player1, player1.position, player1.cards));
-      setAction2(getActionText(player2, player2.position, player2.cards));
-      setAction3(getActionText(player3, player3.position, player3.cards));
-      setAction4(getActionText(player4, player4.position, player4.cards));
-      setAction5(getActionText(player5, player5.position, player5.cards));
+      const a0 = getActionText(player0, player0.position, player0.cards);
+      const a1 = getActionText(player1, player1.position, player1.cards);
+      const a2 = getActionText(player2, player2.position, player2.cards);
+      const a3 = getActionText(player3, player3.position, player3.cards);
+      const a4 = getActionText(player4, player4.position, player4.cards);
+      const a5 = getActionText(player5, player5.position, player5.cards);
+	  
+	  setAction0(a0);
+	  setAction1(a1);
+	  setAction2(a2);
+	  setAction3(a3);
+	  setAction4(a4);
+	  setAction5(a5);
+
     }
     if(player0.cards.length > 0) {
       updateActions();
     }
   }, [fetchData, player0, player1, player2, player3, player4, player5]);
 
+  const handlePlayerMatch = () => {
+    let betActionList = [
+      {a:action0,pb:player0.bet},{a:action1,pb:player1.bet},
+      {a:action2,pb:player2.bet},{a:action3,pb:player3.bet},
+      {a:action4,pb:player4.bet},{a:myAction,pb:player5.bet}]
+      let amt =0;
+      betActionList.map(obj=>{
+        if(obj.pb>amt && obj.a!=='FOLD'){
+          amt=obj.pb;
+        }
+      })
 
+    setmaxAmt(amt);
+
+    updatePlayer0(matchPlayerUpdate(player0,action0,amt));
+    updatePlayer1(matchPlayerUpdate(player1,action1,amt));
+    updatePlayer2(matchPlayerUpdate(player2,action2,amt));
+    updatePlayer3(matchPlayerUpdate(player3,action3,amt));
+    updatePlayer4(matchPlayerUpdate(player4,action4,amt));
+    updatePlayer5(matchPlayerUpdate(player5,action5,amt));
+
+    let ps0 = matchPotSize(player0,action0,amt);
+    let ps1 = matchPotSize(player1,action1,amt);
+    let ps2 = matchPotSize(player2,action2,amt);
+    let ps3 = matchPotSize(player3,action3,amt);
+    let ps4 = matchPotSize(player4,action4,amt);
+    let ps5 = matchPotSize(player5,action5,amt);
+
+    let newPS = ps0+ps1+ps2+ps3+ps4+ps5;
+
+    setPotSize(potSize+newPS);
+
+  };
+
+  function matchPotSize(player,action, amt){
+
+    let yourBet = player.bet;
+    let matchAmt = amt-yourBet;
+
+    if(action==='FOLD'){
+      matchAmt =0;
+    }
+    return matchAmt;
+  }
+
+  function matchPlayerUpdate(player, action, amt) {
+
+    let yourBet = player.bet;
+    let matchAmt = amt-yourBet;
+
+    if(action==='FOLD'){
+      matchAmt =0;
+    }
+    let playerx= {name:player.name, position:player.position,
+      ptype: player.ptype, cards:player.cards, 
+      totalAmt:player.totalAmt-matchAmt, currentAmt:player.currentAmt+matchAmt,
+      bet:player.bet+matchAmt,
+      action:action, play:player.play}  
+
+      return playerx;
+  }
+
+  
+  const handlePlayerRaise = () => {
+    
+    let amt = 60;
+
+    console.log("Press Raise");
+    setAction5('RAISE');
+    setMyAction('RAISE')
+    setPlayerSelectedAmt(true);
+    let playerx= {name:player5.name, position:player5.position,
+      ptype: player5.ptype, cards:player5.cards, 
+      totalAmt:player5.totalAmt-amt, currentAmt:player5.currentAmt+amt,
+      bet:amt,
+      action:'RAISE', play:true}  
+    updatePlayer5(playerx)
+
+  setPotSize(potSize+calculatePotSize("RAISE", amt));
+
+};
+
+const handlePlayerFold = () => {
+  
+  console.log("Press FOLD");
+  setAction5('FOLD');
+  setPlayerSelectedAmt(true);
+    let playerx= {name:player5.name,position:player5.position,ptype: player5.ptype,
+      cards:player5.cards, 
+      totalAmt:player5.totalAmt, currentAmt:player5.currentAmt,
+      bet:0,
+      action:'FOLD', play:false}  
+    updatePlayer5(playerx)
+
+    setPotSize(calculatePotSize("FOLD", 0));
+};
+
+const handlePlayerArrow = () => {
+  navigate('/raise-amt');
+};
+
+const handlePlayerCheck = () => {
+
+};
+
+const handleMenuClick = () => {
+    navigate('/profile');
+};
+
+function calculatePotSize(myAction, amt) {
+
+  let pts = 0;
+
+  if(action0!=='FOLD'){
+    pts=pts+player0.currentAmt;
+  }
+  if(action1!=='FOLD'){
+    pts=pts+player1.currentAmt;
+  }
+  if(action2!=='FOLD'){
+    pts=pts+player2.currentAmt;
+  }
+  if(action3!=='FOLD'){
+    pts=pts+player3.currentAmt;
+  }
+  if(action4!=='FOLD'){
+    pts=pts+player4.currentAmt;
+  }
+  if(myAction==='RAISE'){
+    pts=pts+amt;
+  }
+  return pts;
+}
+
+  function holdPlayerUpdate(player,shuffledDeck,i,j) {
+
+    const bet =  getBets(player);
+
+    if(bet>maxAmt){
+      setmaxAmt(bet)
+    }
+
+    let playerx= {name:player.name,position: (player.position+5)%6,ptype: player.ptype,
+        cards:shuffledDeck.slice(i, j), 
+        totalAmt:player.totalAmt-bet, 
+        currentAmt:player.currentAmt+bet,
+        bet:bet,
+        action:player.action, play:true
+      }
+    
+    return playerx;
+  }
+
+  function flopPlayerUpdate(player, action, bet) {
+    
+    let playerx;
+    if(action=='FOLD'){
+      playerx= {name:player.name,position:player.position,ptype: player.ptype,
+        cards:player.cards, 
+        totalAmt:player.totalAmt, currentAmt:0,
+        bet:bet,
+        action:action, play:false}  
+    }else{
+      playerx= {name:player.name,position:player.position,ptype: player.ptype,
+        cards:player.cards, 
+        totalAmt:player.totalAmt-bet, currentAmt:bet,
+        bet:bet,
+        action:action, play:true} 
+    }
+    return playerx;
+  }
+
+  function riverPlayerUpdate(player, action, bet) {
+    
+    let playerx;
+    if(action=='FOLD'){
+      playerx= {name:player.name,position:player.position,ptype: player.ptype,
+        cards:player.cards, 
+        totalAmt:850, currentAmt:0,
+        action:action, play:false}  
+    }else{
+      playerx= {name:player.name,position:player.position,ptype: player.ptype,
+        cards:player.cards, 
+        totalAmt:player.totalAmt-bet, currentAmt:0,
+        action:action, play:true} 
+    }
+    return playerx;
+  }
   function determineHandRanking(cards) {
     // Check for a flush
     const suits = cards.map(card => card.name.charAt(1));
@@ -1356,31 +1617,57 @@ function Main(props) {
     if (isOnePair) return "One Pair";
     return "High Card";
   }
+
+  function updateActionInPlayer(player, action,bet){
+
+    let playerx;
+    if(action=='FOLD'){
+      playerx= {name:player.name,position:player.position,ptype: player.ptype,
+        cards:player.cards, 
+        totalAmt:player.totalAmt, currentAmt:0,
+        action:action, play:false}  
+    }else{
+      playerx= {name:player.name,position:player.position,ptype: player.ptype,
+        cards:player.cards, 
+        totalAmt:player.totalAmt-bet, currentAmt:player.currentAmt+bet,
+        action:action, play:true} 
+    }
+    return playerx;
+  }
   
-  function printDetails(player, bet) {
+  function printDetails(player) {
 
     let printStr = player.name+" "+player.position+" "+positions[player.position]+" "+player.ptype+" ";
     if(player.cards.length!==0){
       printStr = printStr + player0.cards[0].name+" "+player0.cards[1].name+" ";
     }
-    printStr = printStr + player.totalAmt+" "+player.currentAmt+" "+bet;
+    printStr = printStr + player.totalAmt+" "+player.currentAmt+" "+player.bet+" ";
+    printStr = printStr + player.action +" "+player.play;
     console.log(printStr);
   
   }
   return (
     <div>
 
-    {printDetails(player0, bet0)}
+    {/* {printDetails(player0, bet0)}
     {printDetails(player1, bet1)}
     {printDetails(player2, bet2)}
     {printDetails(player3, bet3)}
     {printDetails(player4, bet4)}
-    {printDetails(player5, bet5)}
+    {printDetails(player5, bet5)} */}
+
+    {printDetails(player0)}
+    {printDetails(player1)}
+    {printDetails(player2)}
+    {printDetails(player3)}
+    {printDetails(player4)}
+    {printDetails(player5)} 
+
 
       {flopCard.length!==0 && console.log("Flop : "+flopCard[0].name +" "+flopCard[1].name+" "+flopCard[2].name)}
       {turnCard.length!==0 && console.log("Turn : "+turnCard[0].name)}
       {riverCard.length!==0 && console.log("River : "+riverCard[0].name)}
-      {console.log("Pot : "+pot)}
+      {console.log("Pot Size : "+potSize)}
 
     <Main1>
  
@@ -1393,10 +1680,12 @@ function Main(props) {
       <Ellipse12 src={Ellipse12Image} loading='lazy' alt={"Ellipse 12"}/>
       <button onClick={handleDealClick}>
         <Ellipse14 src={Ellipse14Image} loading='lazy' alt={"Ellipse 14"}/>
+        <Deal>{`Deal`}</Deal>
       </button>
 
       {/* Deal that moves and letter  */}
-      <D>{`D`}</D>
+      {/* <D>{`D`}</D> */}
+      {player0.cards.length==0 && <Ellipse15_0 src={Ellipse15Image} loading='lazy' alt={"Ellipse 15"}/>}
       {player0.position==0 && <Ellipse15_0 src={Ellipse15Image} loading='lazy' alt={"Ellipse 15"}/>}
       {player1.position==0 && <Ellipse15_1 src={Ellipse15Image} loading='lazy' alt={"Ellipse 15"}/>}
       {player2.position==0 && <Ellipse15_2 src={Ellipse15Image} loading='lazy' alt={"Ellipse 15"}/>}
@@ -1412,28 +1701,28 @@ function Main(props) {
       <Poker>
         {`POKER`}
       </Poker>
-      {/* Fold raise etc */}
-      <Rectangle9>
-      </Rectangle9>
-      <Rectangle60>
-      </Rectangle60>
-      <Rectangle11>
-      </Rectangle11>
-      <Rectangle10>
-      </Rectangle10>
-      <Fold>
-        {`Fold`}
-      </Fold>
-      <button onClick={handleDealClick}>
-      <Deal>
-        {`Deal`}
-      </Deal></button>
-      <Raise>
-        {`Raise`}
-      </Raise>
-      <Check>
-        {`Check`}
-      </Check>
+    
+      <button onClick={handlePlayerRaise}>{/* PRESS RAISE */}
+      <Rectangle9></Rectangle9>
+      <Raise>{`Raise`}</Raise>
+      </button>
+      <button onClick={handlePlayerMatch}>{/* PRESS Match */}
+      <Rectangle9a></Rectangle9a>
+      <Match>{`Match`}</Match>
+      </button>
+      <button onClick={() => handlePlayerArrow()}>  {/* UP ARROW */}
+      <Rectangle60></Rectangle60>
+      </button>
+      <button onClick={() => handlePlayerCheck()}> {/* PRESS CHECK */}
+      <Rectangle11></Rectangle11>
+      <Check>{`Check`}</Check>
+      </button>
+      <button onClick={handlePlayerFold}> {/* PRESS FOLD */}
+      <Rectangle10></Rectangle10>
+      <Fold>{`Fold`}</Fold>
+      </button>
+    
+   
       {/* Two rectangles at the bottom of page */}
       <Rectangle12>
       </Rectangle12>
@@ -1463,20 +1752,23 @@ function Main(props) {
       <Rectangle52>
       </Rectangle52>
       <Q850>
-        ${player1.totalAmt}
+      {action1!=='FOLD'&& <div>${player1.totalAmt}</div>}  
       </Q850>
       <Q8501>
-      ${player2.totalAmt}
+      {action2!=='FOLD'&& <div>${player2.totalAmt}</div>} 
       </Q8501>
       <Q8502>
-      ${player3.totalAmt}
+      {action3!=='FOLD'&& <div>${player3.totalAmt}</div>} 
       </Q8502> 
        <Q8503>
-       ${player4.totalAmt}
+       {action4!=='FOLD'&& <div>${player4.totalAmt}</div>} 
       </Q8503>
        <Q8504>
-       ${player0.totalAmt}
+       {action0!=='FOLD'&& <div>${player0.totalAmt}</div>} 
       </Q8504>
+      <Q8505>
+       {<div>${player5.totalAmt}</div>} 
+      </Q8505>
       <Replay>
         {`Replay`}
       </Replay>
@@ -1549,21 +1841,31 @@ function Main(props) {
       <ActionView position={{x:"330px", y:"512px"}} data={action4}/>
       <ActionView position={{x:"160px", y:"650px"}} data={action5}/>
 
+        {console.log("PS :"+ps+" " +potSize)}
+      <ActionView position={{x:"250px", y:"600px"}} data={`PotSize : `+potSize}/>
+
       {/* Poker Chips */}
-      {player0.cards.length>0 && <PokerChips0 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
-      {player1.cards.length>0 && <PokerChips1 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
-      {player2.cards.length>0 && <PokerChips2 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
-      {player3.cards.length>0 && <PokerChips3 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
-      {player4.cards.length>0 && <PokerChips4 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
-      {player5.cards.length>0 && <PokerChips5 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      {player0.cards.length>0 && 
+      <div>
+      { action0!=='FOLD' && <PokerChips0 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      { action1!=='FOLD' && <PokerChips1 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      { action2!=='FOLD' && <PokerChips2 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      { action3!=='FOLD' && <PokerChips3 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      { action4!=='FOLD' && <PokerChips4 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      { playerSelectedAmt===true && <PokerChips5 src={PokerChipsImage} loading='lazy' alt={"poker-chips 1"}/>}
+      </div>}
 
-       {player0.cards.length>0 && <PokerAmtView  position={{y:"458px", x:"91px"}} data={player0.currentAmt}/>}
-       {player0.cards.length>0 && <PokerAmtView  position={{y:"303px", x:"117px"}} data={player1.currentAmt}/>}
-       {player0.cards.length>0 && <PokerAmtView  position={{y:"265px", x:"187px"}} data={player2.currentAmt}/>}
-       {player0.cards.length>0 && <PokerAmtView  position={{y:"303px", x:"256px"}} data={player3.currentAmt}/>}
-       {player0.cards.length>0 && <PokerAmtView  position={{y:"458px", x:"284px"}} data={player4.currentAmt}/>}
-       {player0.cards.length>0 && <PokerAmtView  position={{y:"581px", x:"180px"}} data={player5.currentAmt}/>}
 
+  { player0.cards.length>0 && 
+  <div>
+  <PokerAmtView  position={{y:"458px", x:"91px"}} data={player0.currentAmt} action={action0}/>
+  <PokerAmtView  position={{y:"303px", x:"117px"}} data={player1.currentAmt} action={action1}/>
+  <PokerAmtView  position={{y:"265px", x:"187px"}} data={player2.currentAmt} action={action2}/>
+  <PokerAmtView  position={{y:"303px", x:"256px"}} data={player3.currentAmt} action={action3}/>
+  <PokerAmtView  position={{y:"458px", x:"284px"}} data={player4.currentAmt} action={action4}/>
+  {playerSelectedAmt===true && <PokerAmtView  position={{y:"581px", x:"180px"}} data={player5.currentAmt} action={myAction}/>}
+  </div>}
+  
       {/* The 5 cards in the middle of table  */}
       <Rectangle23>
       </Rectangle23>
@@ -1669,8 +1971,9 @@ function CardView(props) {
         const position = props.position;
         const currentAmt = props.data;
         const image = props.src;
-        
-        return (
+        const action = props.action;
+        if(action!=='FOLD'){
+          return (
             <div style={{
               height: `30px`,
               width: `18px`,
@@ -1683,6 +1986,9 @@ function CardView(props) {
              {currentAmt} 
           </div>
         );
+        }else{
+          return(<div></div>);
+        }
         }
     
   

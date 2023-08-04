@@ -1,1 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+
+.vranger {
+    margin-top: 450px;
+    margin-left: 210px;
+     transform: rotate(270deg);
+    -moz-transform: rotate(270deg); /*do same for other browsers if required*/
+    left: 207px;
+  
+  }

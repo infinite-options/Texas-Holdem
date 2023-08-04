@@ -16,6 +16,7 @@ import { PlayerContext, PlayerContextProvider } from './contexts/PlayerContext';
 import Main01 from './components/mainComponents/Main01';
 import { GameContextProvider } from './contexts/GameContext';
 import MainPage from './components/mainComponents/MainPage';
+import SliderOverlay from './components/mainComponents/SliderOverlay';
 
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="opponent" element={<OpponentsProfile/>} />
             <Route path="player-style" element={<ContactPage/>} />
             <Route path="player-position" element={<ChangePosition/>} />
+            <Route path="raise-amt" element={<SliderOverlay />} />
       </Routes>
       </BrowserRouter>
       </GameContextProvider>
