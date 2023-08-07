@@ -550,6 +550,16 @@ const PreflopBet1 = () => {
       setRaiseAmount(raiseAmount);
       setPurseValue((prevPurseValue) => prevPurseValue - raiseAmount);
       setPotSize((prevPotSize) => prevPotSize + raiseAmount);
+      const raiseMultiplier = raiseMultipliers[playerStyle] || 1;
+       const positionMultiplier = positionMultipliers[playerPosition] || 1;
+       const shouldBetHigh = playerHandPoints > 18;
+
+       let calculationDetails = `Raise Calculation:\n`;
+       calculationDetails += `Raise Multiplier for ${playerStyle}: ${raiseMultiplier}\n`;
+       calculationDetails += `Position Multiplier for ${playerPosition}: ${positionMultiplier}\n`;
+       calculationDetails += `Player Hand Points: ${playerHandPoints}\n`;
+       calculationDetails += `Should Bet High: ${shouldBetHigh}\n`;
+       setRaiseCalculation(calculationDetails);
     } else {
       setRaiseAmount(null);
       setRaiseCalculation("");
@@ -624,13 +634,7 @@ const PreflopBet1 = () => {
       <p>Player Hand Points: {playerHandPoints}</p>
       <>
         <p>Raise Amount: {raiseAmount}</p>
-        {/* <p>Raise Calculation: {raiseCalculation}</p> */}
-        {/* <p>
-          Raise Calculation: Raise Multiplier for loose-aggressive: 0.8 Position
-          Multiplier for but: 0.9 Player Hand Points: {playerHandPoints} Should
-          Bet High: {playerHandPoints > 18 ? "true" : "false"}
-        </p>{" "} */}
-        {/* Display the raise calculation details */}
+        <p>Raise Calculation: {raiseCalculation}</p>  
       </>
       <p>Purse Value: {purseValue}</p>
       <p>Pot Size: {potSize}</p>
