@@ -21,6 +21,14 @@ const PlayerContext = createContext();
     const [player5, setPlayer5] = useState({name: 'Archana',position:(dealerIndex+5)%6,ptype:'Loose-passive',
         cards:[], totalAmt:850, currentAmt:0, action:'', play:true, bet: 0});
   
+    const [playerSelectedAmt, setPlayerSelectedAmt] = useState(false);
+    const [flopCard, setFlopCard] = useState([]);
+    const [turnCard, setTurnCard] = useState([]);
+    const [riverCard, setRiverCard] = useState([]);
+      
+    const [potSize, setPotSize] = useState(0);
+    const [maxAmt, setMaxAmt] = useState(0);  
+
     const [shuffledDeck, setShuffledDeck] = useState([]);
     const [dealFlag, setDealFlag] = useState('hold');
 
@@ -60,6 +68,30 @@ const PlayerContext = createContext();
         setShuffledDeck(newData)
     }
 
+    const updateFlopCard=(newData)=>{
+        setFlopCard(newData)
+    }
+
+    const updateTurnCard=(newData)=>{
+        setTurnCard(newData)
+    }
+
+    const updateRiverCard=(newData)=>{
+        setRiverCard(newData)
+    }
+
+    const updatePotSize=(newData)=>{
+        setPotSize(newData)
+    }
+
+    const updateMaxAmt=(newData)=>{
+        setMaxAmt(newData)
+    }
+
+    const updatePlySelect=(newData)=>{
+        setPlayerSelectedAmt(newData)
+    }
+
     return (
         // the Provider gives access to the context to its children
         <PlayerContext.Provider value = {
@@ -71,7 +103,13 @@ const PlayerContext = createContext();
                 player4, updatePlayer4,
                 player5, updatePlayer5,
                 dealFlag, updateDealFlag,
-                shuffledDeck, updateDeck
+                shuffledDeck, updateDeck, 
+                playerSelectedAmt, updatePlySelect,
+                flopCard, updateFlopCard,
+                turnCard, updateTurnCard,
+                riverCard, updateRiverCard,
+                potSize, updatePotSize,
+                maxAmt, updateMaxAmt
             }}>
           {children}
         </PlayerContext.Provider>

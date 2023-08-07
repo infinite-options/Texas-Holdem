@@ -1055,14 +1055,6 @@ function Main(props) {
   const fetchData = props.data;
   let ps = 0;
 
-  const [playerSelectedAmt, setPlayerSelectedAmt] = useState(false);
-  const [flopCard, setflopCard] = useState([]);
-  const [turnCard, setTurnCard] = useState([]);
-  const [riverCard, setRiverCard] = useState([]);
-
-  const [potSize, setPotSize] = useState(0);
-  const [maxAmt, setmaxAmt] = useState(0);
-
   const { dealerIndex, updateDealerIndex,
     player0, updatePlayer0,
     player1, updatePlayer1,
@@ -1071,7 +1063,13 @@ function Main(props) {
     player4, updatePlayer4,
     player5, updatePlayer5,
     dealFlag, updateDealFlag,
-    shuffledDeck, updateDeck
+    shuffledDeck, updateDeck,
+    playerSelectedAmt, updatePlySelect,
+    flopCard, updateFlopCard,
+    turnCard, updateTurnCard,
+    riverCard, updateRiverCard,
+    potSize, updatePotSize,
+    maxAmt, updateMaxAmt
   } = useContext(PlayerContext);
 
   const navigate = useNavigate();
@@ -1163,16 +1161,17 @@ function Main(props) {
       updatePlayer5(holdPlayerUpdate(player5,shuffledDeck, 10,12));
 
       updateDealFlag('flop')
-      setflopCard([]);
-      setTurnCard([]);
-      setRiverCard([]);
-      setPlayerSelectedAmt(false)
+      updateFlopCard([])
+      updateTurnCard([])
+      updateRiverCard([])
+      updatePlySelect(false)
 
     }else if(dealFlag=='flop'){
       
       let flopCards=shuffledDeck.slice(12, 15);
-      setflopCard(flopCards); 
+      updateFlopCard(flopCards); 
   
+      // Ankit's code
       let bet0 = 45;let bet1 = 45;let bet2 = 45;
       let bet3 = 45;let bet4 = 45;let bet5 = 45;
 
@@ -1204,12 +1203,13 @@ function Main(props) {
         console.log(player5.name +" "+determineHandRanking(combinedArray5));
 
         updateDealFlag('turn'); 
-        setPlayerSelectedAmt(false)
+        updatePlySelect(false)
 
     }else if(dealFlag=='turn'){
       let turnCards=shuffledDeck.slice(15, 16);
-      setTurnCard(turnCards);
+      updateTurnCard(turnCards);
 
+      // Ankit's code
       let bet0 = 35;let bet1 = 35;let bet2 = 35;
       let bet3 = 35;let bet4 = 35;let bet5 = 35;
 
@@ -1247,13 +1247,14 @@ function Main(props) {
         console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
         updateDealFlag('river');   
-        setPlayerSelectedAmt(false)
+        updatePlySelect(false)
 
     }else if(dealFlag=='river'){
       let riverCards=shuffledDeck.slice(16, 17);
-      setRiverCard(riverCards);
+      updateRiverCard(riverCards);
       updateDealFlag('hold');   
 
+      // Ankit's code
       let bet0 = 15;let bet1 = 15;let bet2 = 15;
       let bet3 = 15;let bet4 = 15;let bet5 = 15;
 
@@ -1291,21 +1292,11 @@ function Main(props) {
     const combinedArray55 = combinedArray5.concat(turnCard).concat(riverCard);
     console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
-
-    // updatePlayer0(riverPlayerUpdate(player0,action0,bet0));
-    // updatePlayer1(riverPlayerUpdate(player1,action1,bet1));
-    // updatePlayer2(riverPlayerUpdate(player2,action2,bet2));
-    // updatePlayer3(riverPlayerUpdate(player3,action3,bet3));
-    // updatePlayer4(riverPlayerUpdate(player4,action4,bet4));
-    // updatePlayer5(riverPlayerUpdate(player5,action5,bet5));
-
-    //  let p0_bet = 20;
-    //  updatePlayer0(playerAfterBet(player0, shuffledDeck.slice(0, 2), player0.totalAmt, player0.currentAmt, p0_bet));
-    //  console.log(player0.name + " bet:", p0_bet, "in [100,10,5] ", getChips(p0_bet));
   }
  
   };
 
+    // Ankit's code
   function getBets(player){
 
     if(player.position==0+1){ // dealer
@@ -1401,7 +1392,7 @@ function Main(props) {
         }
       })
 
-    setmaxAmt(amt);
+    updateMaxAmt(amt);
 
     updatePlayer0(matchPlayerUpdate(player0,action0,amt));
     updatePlayer1(matchPlayerUpdate(player1,action1,amt));
@@ -1419,7 +1410,7 @@ function Main(props) {
 
     let newPS = ps0+ps1+ps2+ps3+ps4+ps5;
 
-    setPotSize(potSize+newPS);
+    updatePotSize(potSize+newPS);
 
   };
 
@@ -1454,12 +1445,12 @@ function Main(props) {
   
   const handlePlayerRaise = () => {
     
-    let amt = 60;
+    let amt = 60;// Ankit's code
 
     console.log("Press Raise");
     setAction5('RAISE');
     setMyAction('RAISE')
-    setPlayerSelectedAmt(true);
+    updatePlySelect(true);
     let playerx= {name:player5.name, position:player5.position,
       ptype: player5.ptype, cards:player5.cards, 
       totalAmt:player5.totalAmt-amt, currentAmt:player5.currentAmt+amt,
@@ -1467,7 +1458,7 @@ function Main(props) {
       action:'RAISE', play:true}  
     updatePlayer5(playerx)
 
-  setPotSize(potSize+calculatePotSize("RAISE", amt));
+  updatePotSize(potSize+calculatePotSize("RAISE", amt));
 
 };
 
@@ -1475,7 +1466,7 @@ const handlePlayerFold = () => {
   
   console.log("Press FOLD");
   setAction5('FOLD');
-  setPlayerSelectedAmt(true);
+  updatePlySelect(true);
     let playerx= {name:player5.name,position:player5.position,ptype: player5.ptype,
       cards:player5.cards, 
       totalAmt:player5.totalAmt, currentAmt:player5.currentAmt,
@@ -1483,7 +1474,7 @@ const handlePlayerFold = () => {
       action:'FOLD', play:false}  
     updatePlayer5(playerx)
 
-    setPotSize(calculatePotSize("FOLD", 0));
+    updatePotSize(calculatePotSize("FOLD", 0));
 };
 
 const handlePlayerArrow = () => {
@@ -1491,6 +1482,22 @@ const handlePlayerArrow = () => {
 };
 
 const handlePlayerCheck = () => {
+
+  // Ankit's code
+  let amt = 60;
+
+  console.log("Press Check");
+  setAction5('Check');
+  setMyAction('Check')
+  updatePlySelect(true);
+  let playerx= {name:player5.name, position:player5.position,
+    ptype: player5.ptype, cards:player5.cards, 
+    totalAmt:player5.totalAmt-amt, currentAmt:player5.currentAmt+amt,
+    bet:amt,
+    action:'RAISE', play:true}  
+  updatePlayer5(playerx)
+
+updatePotSize(potSize+calculatePotSize("RAISE", amt));
 
 };
 
@@ -1528,7 +1535,7 @@ function calculatePotSize(myAction, amt) {
     const bet =  getBets(player);
 
     if(bet>maxAmt){
-      setmaxAmt(bet)
+      updateMaxAmt(bet)
     }
 
     let playerx= {name:player.name,position: (player.position+5)%6,ptype: player.ptype,
@@ -1639,7 +1646,7 @@ function calculatePotSize(myAction, amt) {
 
     let printStr = player.name+" "+player.position+" "+positions[player.position]+" "+player.ptype+" ";
     if(player.cards.length!==0){
-      printStr = printStr + player0.cards[0].name+" "+player0.cards[1].name+" ";
+      printStr = printStr + player.cards[0].name+" "+player.cards[1].name+" ";
     }
     printStr = printStr + player.totalAmt+" "+player.currentAmt+" "+player.bet+" ";
     printStr = printStr + player.action +" "+player.play;
@@ -1713,7 +1720,7 @@ function calculatePotSize(myAction, amt) {
       <button onClick={() => handlePlayerArrow()}>  {/* UP ARROW */}
       <Rectangle60></Rectangle60>
       </button>
-      <button onClick={() => handlePlayerCheck()}> {/* PRESS CHECK */}
+      <button onClick={handlePlayerMatch}> {/* PRESS CHECK */}
       <Rectangle11></Rectangle11>
       <Check>{`Check`}</Check>
       </button>
