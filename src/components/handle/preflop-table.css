@@ -1,0 +1,20 @@
+.preflop-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.preflop-table th,
+.preflop-table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.preflop-table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.preflop-table-cell {
+  font-weight: bold;
+}
