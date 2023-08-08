@@ -1082,6 +1082,16 @@ function Main(props) {
   const [action5, setAction5] = useState("");
   const [myAction, setMyAction] = useState("");
 
+  const [playerCards, setPlayerCards] = useState(["", ""]);
+  const [playerPosition, setPlayerPosition] = useState("but");
+  const [playerStyle, setPlayerStyle] = useState("loose-aggressive");
+  const [decision, setDecision] = useState(null);
+  const [raiseAmount, setRaiseAmount] = useState(null);
+  const [purseValue, setPurseValue] = useState(850);
+  // const [potSize, setPotSize] = useState(0);
+  const [raiseCalculation, setRaiseCalculation] = useState("");
+  const [playerHandPoints, setPlayerHandPoints] = useState(0);
+
   function getUser(fetchedData, player_name, player_style, player_position_short) {
     let user = null;
     fetchData.map(data=>{
@@ -1172,8 +1182,14 @@ function Main(props) {
       updateFlopCard(flopCards); 
   
       // Ankit's code
-      let bet0 = 45;let bet1 = 45;let bet2 = 45;
-      let bet3 = 45;let bet4 = 45;let bet5 = 45;
+      // let bet0 = 45;let bet1 = 45;let bet2 = 45;
+      // let bet3 = 45;let bet4 = 45;let bet5 = 45;
+
+      let bet0 = calculateRaiseAmount(action0);
+      let bet1 = calculateRaiseAmount(action1);
+      let bet2 = calculateRaiseAmount(action2);
+      let bet3 = calculateRaiseAmount(action3);
+      let bet4 = calculateRaiseAmount(action4);
 
       updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
       updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
@@ -1210,8 +1226,14 @@ function Main(props) {
       updateTurnCard(turnCards);
 
       // Ankit's code
-      let bet0 = 35;let bet1 = 35;let bet2 = 35;
-      let bet3 = 35;let bet4 = 35;let bet5 = 35;
+      // let bet0 = 35;let bet1 = 35;let bet2 = 35;
+      // let bet3 = 35;let bet4 = 35;let bet5 = 35;
+
+      let bet0 = calculateRaiseAmount(action0);
+      let bet1 = calculateRaiseAmount(action1);
+      let bet2 = calculateRaiseAmount(action2);
+      let bet3 = calculateRaiseAmount(action3);
+      let bet4 = calculateRaiseAmount(action4);
 
       updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
       updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
@@ -1255,8 +1277,14 @@ function Main(props) {
       updateDealFlag('hold');   
 
       // Ankit's code
-      let bet0 = 15;let bet1 = 15;let bet2 = 15;
-      let bet3 = 15;let bet4 = 15;let bet5 = 15;
+      // let bet0 = 15;let bet1 = 15;let bet2 = 15;
+      // let bet3 = 15;let bet4 = 15;let bet5 = 15;
+
+      let bet0 = calculateRaiseAmount(action0);
+      let bet1 = calculateRaiseAmount(action1);
+      let bet2 = calculateRaiseAmount(action2);
+      let bet3 = calculateRaiseAmount(action3);
+      let bet4 = calculateRaiseAmount(action4);
 
       updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
       updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
@@ -1300,7 +1328,8 @@ function Main(props) {
   function getBets(player){
 
     if(player.position==0+1){ // dealer
-        return 40;
+        // return 40;
+        return calculateRaiseAmount(player.action);
     }
     if(player.position==1+1){ // small blind
       return 10;
@@ -1309,13 +1338,13 @@ function Main(props) {
       return 20;
     }
     if(player.position==3+1){ // low jack
-      return 40;
+      return calculateRaiseAmount(player.action);
     }
     if(player.position==5){ // high jack
-      return 40;
+      return calculateRaiseAmount(player.action);
     }
     if(player.position==0){ // cut off
-      return 0;
+      return calculateRaiseAmount(player.action);
     }
   }
 
@@ -1445,7 +1474,8 @@ function Main(props) {
   
   const handlePlayerRaise = () => {
     
-    let amt = 60;// Ankit's code
+//    let amt = 60;// Ankit's code
+    let amt = calculateRaiseAmount('RAISE');
 
     console.log("Press Raise");
     setAction5('RAISE');
@@ -1484,7 +1514,8 @@ const handlePlayerArrow = () => {
 const handlePlayerCheck = () => {
 
   // Ankit's code
-  let amt = 60;
+  //let amt = 60;
+  let amt = calculateRaiseAmount('RAISE');
 
   console.log("Press Check");
   setAction5('Check');
@@ -1624,6 +1655,121 @@ function calculatePotSize(myAction, amt) {
     if (isOnePair) return "One Pair";
     return "High Card";
   }
+
+  const raiseMultipliers = {
+    "tight-passive": 0.4,
+    "loose-passive": 0.5,
+    "tight-aggressive": 0.7,
+    "loose-aggressive": 0.8,
+  };
+
+  const positionMultipliers = {
+    but: 0.9,
+    "Small Blind": 0.7,
+    "Big Blind": 0.6,
+    "Lo Jack": 0.4,
+    "Hi Jack": 0.3,
+    "Cut OFF": 0.1,
+  };
+
+  const cardPoints = {
+    A: 13,
+    K: 12,
+    Q: 11,
+    J: 10,
+    T: 9,
+    9: 8,
+    8: 7,
+    7: 6,
+    6: 5,
+    5: 4,
+    4: 3,
+    3: 2,
+    2: 1,
+  };
+
+  const calculateRaiseAmount = (action) => {
+    if (action === "RAISE") {
+      const raiseMultiplier = raiseMultipliers[playerStyle] || 1;
+      const positionMultiplier = positionMultipliers[playerPosition] || 1;
+
+      const playerHandPoints = calculatePoints(playerCards);
+      const shouldBetHigh = playerHandPoints > 18;
+
+      // Calculate the raise amount based on the purse value and custom rules
+      let calculatedRaiseAmount = Math.ceil(
+        purseValue * raiseMultiplier * positionMultiplier
+      );
+
+      if (!shouldBetHigh) {
+        calculatedRaiseAmount = Math.ceil(calculatedRaiseAmount / 2); // Bet lower if points <= 18
+      }
+
+      // Cap the maximum raise amount
+      if (playerHandPoints >= 25) {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 100);
+      } else if (playerHandPoints === 24 || playerHandPoints === 23) {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 80);
+      } else if (playerHandPoints === 22 || playerHandPoints === 21) {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 60);
+      } else if (playerHandPoints === 20 || playerHandPoints === 19) {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 50);
+      } else if (playerHandPoints === 18) {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 45);
+      } else if (
+        playerHandPoints === 17 ||
+        playerHandPoints === 16 ||
+        playerHandPoints === 15
+      ) {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 40);
+      } else {
+        calculatedRaiseAmount = Math.min(calculatedRaiseAmount, 30);
+      }
+
+      return calculatedRaiseAmount;
+    } else {
+      return null;
+    }
+  };
+
+  const calculatePoints = (cards) => {
+    // const [rank1, suit1] = cards[0];
+    // const [rank2, suit2] = cards[1];
+    const [card1, card2] = cards;
+    const rank1 = card1.slice(0, -1); // Extract the rank from the card name (remove the last character)
+    const rank2 = card2.slice(0, -1); // Extract the rank from the card name (remove the last character)
+    const suit1 = card1.slice(-1); // Extract the suit from the card name (get the last character)
+    const suit2 = card2.slice(-1); // Extract the suit from the card name (get the last character)
+
+    // Check if the cards are suited or offsuit
+    const suited = suit1 === suit2;
+
+    const card1Points = cardPoints[rank1];
+    const card2Points = cardPoints[rank2];
+
+    let points = card1Points + card2Points;
+    if (suited) {
+      const rankDifference = Math.abs(card1Points - card2Points);
+      if (rankDifference === 1 || rankDifference === 0) {
+        // Suited and consecutives or Pair get a bonus of 5 points
+        points += 5;
+      } else {
+        points += 2;
+      }
+    }
+
+    if (!suited) {
+      const rankDifference = Math.abs(card1Points - card2Points);
+      if (rankDifference === 1 || rankDifference === 0) {
+        // Off-Suited and consecutives or Pair get a bonus of 2 points
+        points += 2;
+      } else {
+        points -= 2;
+      }
+    }
+    return points;
+  };
+
 
   function updateActionInPlayer(player, action,bet){
 
