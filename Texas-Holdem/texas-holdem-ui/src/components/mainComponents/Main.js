@@ -1082,16 +1082,6 @@ function Main(props) {
   const [action5, setAction5] = useState("");
   const [myAction, setMyAction] = useState("");
 
-  const [playerCards, setPlayerCards] = useState(["", ""]);
-  const [playerPosition, setPlayerPosition] = useState("but");
-  const [playerStyle, setPlayerStyle] = useState("loose-aggressive");
-  const [decision, setDecision] = useState(null);
-  const [raiseAmount, setRaiseAmount] = useState(null);
-  const [purseValue, setPurseValue] = useState(850);
-  // const [potSize, setPotSize] = useState(0);
-  const [raiseCalculation, setRaiseCalculation] = useState("");
-  const [playerHandPoints, setPlayerHandPoints] = useState(0);
-
   function getUser(fetchedData, player_name, player_style, player_position_short) {
     let user = null;
     fetchData.map(data=>{
@@ -1185,18 +1175,18 @@ function Main(props) {
       // let bet0 = 45;let bet1 = 45;let bet2 = 45;
       // let bet3 = 45;let bet4 = 45;let bet5 = 45;
 
-      let bet0 = calculateRaiseAmount(action0);
-      let bet1 = calculateRaiseAmount(action1);
-      let bet2 = calculateRaiseAmount(action2);
-      let bet3 = calculateRaiseAmount(action3);
-      let bet4 = calculateRaiseAmount(action4);
-
       updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
       updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
       updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
       updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
       updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
       updatePlayer5(flopPlayerUpdate(player5,'',0));
+
+      let bet0 = calculateRaiseAmount(action0, player0);
+      let bet1 = calculateRaiseAmount(action1, player1);
+      let bet2 = calculateRaiseAmount(action2, player2);
+      let bet3 = calculateRaiseAmount(action3, player3);
+      let bet4 = calculateRaiseAmount(action4, player4);
 
         console.log("HAND AFTER FLOP CARDS");
         let fiveCard0 = player0.cards;
@@ -1228,12 +1218,11 @@ function Main(props) {
       // Ankit's code
       // let bet0 = 35;let bet1 = 35;let bet2 = 35;
       // let bet3 = 35;let bet4 = 35;let bet5 = 35;
-
-      let bet0 = calculateRaiseAmount(action0);
-      let bet1 = calculateRaiseAmount(action1);
-      let bet2 = calculateRaiseAmount(action2);
-      let bet3 = calculateRaiseAmount(action3);
-      let bet4 = calculateRaiseAmount(action4);
+      let bet0 = calculateRaiseAmount(action0, player0);
+      let bet1 = calculateRaiseAmount(action1, player1);
+      let bet2 = calculateRaiseAmount(action2, player2);
+      let bet3 = calculateRaiseAmount(action3, player3);
+      let bet4 = calculateRaiseAmount(action4, player4);
 
       updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
       updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
@@ -1280,11 +1269,11 @@ function Main(props) {
       // let bet0 = 15;let bet1 = 15;let bet2 = 15;
       // let bet3 = 15;let bet4 = 15;let bet5 = 15;
 
-      let bet0 = calculateRaiseAmount(action0);
-      let bet1 = calculateRaiseAmount(action1);
-      let bet2 = calculateRaiseAmount(action2);
-      let bet3 = calculateRaiseAmount(action3);
-      let bet4 = calculateRaiseAmount(action4);
+      let bet0 = calculateRaiseAmount(action0, player0);
+      let bet1 = calculateRaiseAmount(action1, player1);
+      let bet2 = calculateRaiseAmount(action2, player2);
+      let bet3 = calculateRaiseAmount(action3, player3);
+      let bet4 = calculateRaiseAmount(action4, player4);
 
       updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
       updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
@@ -1329,7 +1318,7 @@ function Main(props) {
 
     if(player.position==0+1){ // dealer
         // return 40;
-        return calculateRaiseAmount(player.action);
+        return calculateRaiseAmount(player.action, player);
     }
     if(player.position==1+1){ // small blind
       return 10;
@@ -1338,13 +1327,13 @@ function Main(props) {
       return 20;
     }
     if(player.position==3+1){ // low jack
-      return calculateRaiseAmount(player.action);
+      return calculateRaiseAmount(player.action, player);
     }
     if(player.position==5){ // high jack
-      return calculateRaiseAmount(player.action);
+      return calculateRaiseAmount(player.action, player);
     }
     if(player.position==0){ // cut off
-      return calculateRaiseAmount(player.action);
+      return calculateRaiseAmount(player.action, player);
     }
   }
 
@@ -1475,7 +1464,7 @@ function Main(props) {
   const handlePlayerRaise = () => {
     
 //    let amt = 60;// Ankit's code
-    let amt = calculateRaiseAmount('RAISE');
+    let amt = calculateRaiseAmount('RAISE', player5);
 
     console.log("Press Raise");
     setAction5('RAISE');
@@ -1515,7 +1504,7 @@ const handlePlayerCheck = () => {
 
   // Ankit's code
   //let amt = 60;
-  let amt = calculateRaiseAmount('RAISE');
+  let amt = calculateRaiseAmount('RAISE', player5);
 
   console.log("Press Check");
   setAction5('Check');
@@ -1665,11 +1654,11 @@ function calculatePotSize(myAction, amt) {
 
   const positionMultipliers = {
     but: 0.9,
-    "Small Blind": 0.7,
-    "Big Blind": 0.6,
-    "Lo Jack": 0.4,
-    "Hi Jack": 0.3,
-    "Cut OFF": 0.1,
+    sb: 0.7,
+    bb: 0.6,
+    lj: 0.4,
+    hj: 0.3,
+    co: 0.1,
   };
 
   const cardPoints = {
@@ -1688,17 +1677,18 @@ function calculatePotSize(myAction, amt) {
     2: 1,
   };
 
-  const calculateRaiseAmount = (action) => {
+  const calculateRaiseAmount = (action, player) => {
+    
     if (action === "RAISE") {
-      const raiseMultiplier = raiseMultipliers[playerStyle] || 1;
-      const positionMultiplier = positionMultipliers[playerPosition] || 1;
+      const raiseMultiplier = raiseMultipliers[player.ptype] || 1;
+      const positionMultiplier = positionMultipliers[getShortPosition(player.position)] || 1;
 
-      const playerHandPoints = calculatePoints(playerCards);
+      const playerHandPoints = calculatePoints(player.cards);
       const shouldBetHigh = playerHandPoints > 18;
 
       // Calculate the raise amount based on the purse value and custom rules
       let calculatedRaiseAmount = Math.ceil(
-        purseValue * raiseMultiplier * positionMultiplier
+        player.totalAmt * raiseMultiplier * positionMultiplier
       );
 
       if (!shouldBetHigh) {
@@ -1728,7 +1718,7 @@ function calculatePotSize(myAction, amt) {
 
       return calculatedRaiseAmount;
     } else {
-      return null;
+      return 0;
     }
   };
 
@@ -1736,10 +1726,10 @@ function calculatePotSize(myAction, amt) {
     // const [rank1, suit1] = cards[0];
     // const [rank2, suit2] = cards[1];
     const [card1, card2] = cards;
-    const rank1 = card1.slice(0, -1); // Extract the rank from the card name (remove the last character)
-    const rank2 = card2.slice(0, -1); // Extract the rank from the card name (remove the last character)
-    const suit1 = card1.slice(-1); // Extract the suit from the card name (get the last character)
-    const suit2 = card2.slice(-1); // Extract the suit from the card name (get the last character)
+    const rank1 = card1.name.slice(0, -1); // Extract the rank from the card name (remove the last character)
+    const rank2 = card2.name.slice(0, -1); // Extract the rank from the card name (remove the last character)
+    const suit1 = card1.name.slice(-1); // Extract the suit from the card name (get the last character)
+    const suit2 = card2.name.slice(-1); // Extract the suit from the card name (get the last character)
 
     // Check if the cards are suited or offsuit
     const suited = suit1 === suit2;
