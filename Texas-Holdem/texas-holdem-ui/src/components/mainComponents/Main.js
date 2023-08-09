@@ -1080,6 +1080,14 @@ function Main(props) {
   const [action3, setAction3] = useState("");
   const [action4, setAction4] = useState("");
   const [action5, setAction5] = useState("");
+
+  const [raiseAmt0, setRaiseAmt0] = useState(0);
+  const [raiseAmt1, setRaiseAmt1] = useState(0);
+  const [raiseAmt2, setRaiseAmt2] = useState(0);
+  const [raiseAmt3, setRaiseAmt3] = useState(0);
+  const [raiseAmt4, setRaiseAmt4] = useState(0);
+  const [raiseAmt5, setRaiseAmt5] = useState(0);
+
   const [myAction, setMyAction] = useState("");
 
   function getUser(fetchedData, player_name, player_style, player_position_short) {
@@ -1145,6 +1153,7 @@ function Main(props) {
       alert("No data fetched")
     }
   };
+
   const handleDealClick = () => {
 
     if(dealFlag=='hold'){
@@ -1170,23 +1179,13 @@ function Main(props) {
       
       let flopCards=shuffledDeck.slice(12, 15);
       updateFlopCard(flopCards); 
-  
-      // Ankit's code
-      // let bet0 = 45;let bet1 = 45;let bet2 = 45;
-      // let bet3 = 45;let bet4 = 45;let bet5 = 45;
 
-      updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
-      updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
-      updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
-      updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
-      updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
-      updatePlayer5(flopPlayerUpdate(player5,'',0));
-
-      let bet0 = calculateRaiseAmount(action0, player0);
-      let bet1 = calculateRaiseAmount(action1, player1);
-      let bet2 = calculateRaiseAmount(action2, player2);
-      let bet3 = calculateRaiseAmount(action3, player3);
-      let bet4 = calculateRaiseAmount(action4, player4);
+      updatePlayer0(flopPlayerUpdate(player0,action0));
+      updatePlayer1(flopPlayerUpdate(player1,action1));
+      updatePlayer2(flopPlayerUpdate(player2,action2));
+      updatePlayer3(flopPlayerUpdate(player3,action3));
+      updatePlayer4(flopPlayerUpdate(player4,action4));
+      updatePlayer5(flopPlayerUpdate(player5,''));
 
         console.log("HAND AFTER FLOP CARDS");
         let fiveCard0 = player0.cards;
@@ -1215,21 +1214,12 @@ function Main(props) {
       let turnCards=shuffledDeck.slice(15, 16);
       updateTurnCard(turnCards);
 
-      // Ankit's code
-      // let bet0 = 35;let bet1 = 35;let bet2 = 35;
-      // let bet3 = 35;let bet4 = 35;let bet5 = 35;
-      let bet0 = calculateRaiseAmount(action0, player0);
-      let bet1 = calculateRaiseAmount(action1, player1);
-      let bet2 = calculateRaiseAmount(action2, player2);
-      let bet3 = calculateRaiseAmount(action3, player3);
-      let bet4 = calculateRaiseAmount(action4, player4);
-
-      updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
-      updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
-      updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
-      updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
-      updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
-      updatePlayer5(flopPlayerUpdate(player5,'',0));
+      updatePlayer0(flopPlayerUpdate(player0,action0));
+      updatePlayer1(flopPlayerUpdate(player1,action1));
+      updatePlayer2(flopPlayerUpdate(player2,action2));
+      updatePlayer3(flopPlayerUpdate(player3,action3));
+      updatePlayer4(flopPlayerUpdate(player4,action4));
+      updatePlayer5(flopPlayerUpdate(player5,''));
 
         console.log("HAND AFTER TURN CARDS");
         let fiveCard0 = player0.cards;
@@ -1265,21 +1255,11 @@ function Main(props) {
       updateRiverCard(riverCards);
       updateDealFlag('hold');   
 
-      // Ankit's code
-      // let bet0 = 15;let bet1 = 15;let bet2 = 15;
-      // let bet3 = 15;let bet4 = 15;let bet5 = 15;
-
-      let bet0 = calculateRaiseAmount(action0, player0);
-      let bet1 = calculateRaiseAmount(action1, player1);
-      let bet2 = calculateRaiseAmount(action2, player2);
-      let bet3 = calculateRaiseAmount(action3, player3);
-      let bet4 = calculateRaiseAmount(action4, player4);
-
-      updatePlayer0(flopPlayerUpdate(player0,action0,bet0));
-      updatePlayer1(flopPlayerUpdate(player1,action1,bet1));
-      updatePlayer2(flopPlayerUpdate(player2,action2,bet2));
-      updatePlayer3(flopPlayerUpdate(player3,action3,bet3));
-      updatePlayer4(flopPlayerUpdate(player4,action4,bet4));
+      updatePlayer0(flopPlayerUpdate(player0,action0));
+      updatePlayer1(flopPlayerUpdate(player1,action1));
+      updatePlayer2(flopPlayerUpdate(player2,action2));
+      updatePlayer3(flopPlayerUpdate(player3,action3));
+      updatePlayer4(flopPlayerUpdate(player4,action4));
       updatePlayer5(flopPlayerUpdate(player5,'',0));
 
     console.log("HAND AFTER RIVER CARDS");
@@ -1313,30 +1293,6 @@ function Main(props) {
  
   };
 
-    // Ankit's code
-  function getBets(player){
-
-    if(player.position==0+1){ // dealer
-        // return 40;
-        return calculateRaiseAmount(player.action, player);
-    }
-    if(player.position==1+1){ // small blind
-      return 10;
-    }
-    if(player.position==2+1){ // big blind
-      return 20;
-    }
-    if(player.position==3+1){ // low jack
-      return calculateRaiseAmount(player.action, player);
-    }
-    if(player.position==5){ // high jack
-      return calculateRaiseAmount(player.action, player);
-    }
-    if(player.position==0){ // cut off
-      return calculateRaiseAmount(player.action, player);
-    }
-  }
-
   function playerAfterBet(player, cards, totalAmt, currentAmt, bet_money) {
     let total = totalAmt-bet_money;
     let current = currentAmt+bet_money;
@@ -1360,6 +1316,22 @@ function Main(props) {
     return counts;
   }
   
+  function getActionText(player, position, hand) {  
+    
+    if(position==1||position==2){
+      return 'RAISE';
+    }
+
+    let action = "No saved Table";
+    const user = getUser(fetchData, player.name, getType_database(player.ptype), getShortPosition(position));
+    if(user !== null) {
+      const table = JSON.parse(user.preflop_table);
+      action = getAction(table, hand);
+    }
+    return action;
+  }
+
+
   useEffect(()=>{  
     function getActionText(player, position, hand) {  
     
@@ -1384,13 +1356,13 @@ function Main(props) {
       const a3 = getActionText(player3, player3.position, player3.cards);
       const a4 = getActionText(player4, player4.position, player4.cards);
       const a5 = getActionText(player5, player5.position, player5.cards);
-	  
-	  setAction0(a0);
-	  setAction1(a1);
-	  setAction2(a2);
-	  setAction3(a3);
-	  setAction4(a4);
-	  setAction5(a5);
+
+      setAction0(a0);
+      setAction1(a1);
+      setAction2(a2);
+      setAction3(a3);
+      setAction4(a4);
+      setAction5(a5);
 
     }
     if(player0.cards.length > 0) {
@@ -1463,8 +1435,8 @@ function Main(props) {
   
   const handlePlayerRaise = () => {
     
-//    let amt = 60;// Ankit's code
-    let amt = calculateRaiseAmount('RAISE', player5);
+   let amt = 60;// Ankit's code
+//    let amt = calculateRaiseAmount('RAISE', player5);
 
     console.log("Press Raise");
     setAction5('RAISE');
@@ -1503,8 +1475,8 @@ const handlePlayerArrow = () => {
 const handlePlayerCheck = () => {
 
   // Ankit's code
-  //let amt = 60;
-  let amt = calculateRaiseAmount('RAISE', player5);
+  let amt = 60;
+  //let amt = calculateRaiseAmount('RAISE', player5);
 
   console.log("Press Check");
   setAction5('Check');
@@ -1552,25 +1524,40 @@ function calculatePotSize(myAction, amt) {
 
   function holdPlayerUpdate(player,shuffledDeck,i,j) {
 
-    const bet =  getBets(player);
+    const position = (player.position+5)%6;
+    const cards = shuffledDeck.slice(i, j);
+    const action = getActionText(player,position,cards);
+    const style = player.ptype;
 
-    if(bet>maxAmt){
-      updateMaxAmt(bet)
+    console.log(player.name+" "+action)
+    let bet = 0;
+    if(action=='RAISE'){
+      bet = calculateRaiseAmount(player,position,cards,style)
     }
+      
+      if(bet>maxAmt){
+        updateMaxAmt(bet)
+      }
 
-    let playerx= {name:player.name,position: (player.position+5)%6,ptype: player.ptype,
-        cards:shuffledDeck.slice(i, j), 
+      let playerx2= {name:player.name,position: position, ptype: style,
+        cards:cards, 
         totalAmt:player.totalAmt-bet, 
         currentAmt:player.currentAmt+bet,
         bet:bet,
-        action:player.action, play:true
+        action:action, play:true
       }
     
-    return playerx;
+    return playerx2;
   }
 
-  function flopPlayerUpdate(player, action, bet) {
+  function flopPlayerUpdate(player, action) {
     
+    console.log(player.name+" "+action)
+    let bet = 0;
+    if(action=='RAISE'){
+      bet = calculateRaiseAmount(player,player.position,player.cards,player.ptype)
+    }
+
     let playerx;
     if(action=='FOLD'){
       playerx= {name:player.name,position:player.position,ptype: player.ptype,
@@ -1588,8 +1575,14 @@ function calculatePotSize(myAction, amt) {
     return playerx;
   }
 
-  function riverPlayerUpdate(player, action, bet) {
+  function riverPlayerUpdate(player, action) {
     
+    console.log(player.name+" "+action)
+    let bet = 0;
+    if(action=='RAISE'){
+      bet = calculateRaiseAmount(player,player.position,player.cards,player.ptype)
+    }
+
     let playerx;
     if(action=='FOLD'){
       playerx= {name:player.name,position:player.position,ptype: player.ptype,
@@ -1677,13 +1670,12 @@ function calculatePotSize(myAction, amt) {
     2: 1,
   };
 
-  const calculateRaiseAmount = (action, player) => {
-    
-    if (action === "RAISE") {
-      const raiseMultiplier = raiseMultipliers[player.ptype] || 1;
-      const positionMultiplier = positionMultipliers[getShortPosition(player.position)] || 1;
+  const calculateRaiseAmount = (player,position,cards,style) => {
 
-      const playerHandPoints = calculatePoints(player.cards);
+      const raiseMultiplier = raiseMultipliers[style] || 1;
+      const positionMultiplier = positionMultipliers[getShortPosition(position)] || 1;
+
+      const playerHandPoints = calculatePoints(cards);
       const shouldBetHigh = playerHandPoints > 18;
 
       // Calculate the raise amount based on the purse value and custom rules
@@ -1717,9 +1709,6 @@ function calculatePotSize(myAction, amt) {
       }
 
       return calculatedRaiseAmount;
-    } else {
-      return 0;
-    }
   };
 
   const calculatePoints = (cards) => {
@@ -1792,19 +1781,12 @@ function calculatePotSize(myAction, amt) {
   return (
     <div>
 
-    {/* {printDetails(player0, bet0)}
-    {printDetails(player1, bet1)}
-    {printDetails(player2, bet2)}
-    {printDetails(player3, bet3)}
-    {printDetails(player4, bet4)}
-    {printDetails(player5, bet5)} */}
-
-    {printDetails(player0)}
+    {/* {printDetails(player0)}
     {printDetails(player1)}
     {printDetails(player2)}
     {printDetails(player3)}
     {printDetails(player4)}
-    {printDetails(player5)} 
+    {printDetails(player5)}  */}
 
 
       {flopCard.length!==0 && console.log("Flop : "+flopCard[0].name +" "+flopCard[1].name+" "+flopCard[2].name)}
