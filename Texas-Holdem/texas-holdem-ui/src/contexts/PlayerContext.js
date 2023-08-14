@@ -26,6 +26,8 @@ const PlayerContext = createContext();
     const [turnCard, setTurnCard] = useState([]);
     const [riverCard, setRiverCard] = useState([]);
       
+    const [raiseHistory, setRaiseHistory] = useState([]);
+
     const [potSize, setPotSize] = useState(0);
     const [maxAmt, setMaxAmt] = useState(0);  
 
@@ -92,6 +94,10 @@ const PlayerContext = createContext();
         setPlayerSelectedAmt(newData)
     }
 
+    const updateRaiseHistory=(newData)=>{
+        setRaiseHistory(newData)
+    }
+
     return (
         // the Provider gives access to the context to its children
         <PlayerContext.Provider value = {
@@ -109,7 +115,8 @@ const PlayerContext = createContext();
                 turnCard, updateTurnCard,
                 riverCard, updateRiverCard,
                 potSize, updatePotSize,
-                maxAmt, updateMaxAmt
+                maxAmt, updateMaxAmt,
+                raiseHistory, updateRaiseHistory
             }}>
           {children}
         </PlayerContext.Provider>

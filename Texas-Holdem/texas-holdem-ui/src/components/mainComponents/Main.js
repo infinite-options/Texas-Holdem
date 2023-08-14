@@ -1083,6 +1083,10 @@ function Main(props) {
 
   const [myAction, setMyAction] = useState("");
 
+  //const [hist, setHist] = useState([]);
+
+  let history= [];
+
   function getUser(fetchedData, player_name, player_style, player_position_short) {
     let user = null;
     fetchData.map(data=>{
@@ -1164,6 +1168,10 @@ function Main(props) {
 
       updatePotSize(potSize+ps);
 
+      let playerList = [player0,player1,player2,player3,player4,player5]
+
+      let winner = callWinnerMethod1(playerList, shuffledDeck);
+
       updateDealFlag('flop')
       updateFlopCard([])
       updateTurnCard([])
@@ -1177,12 +1185,12 @@ function Main(props) {
       let flopCards=shuffledDeck.slice(12, 15);
       updateFlopCard(flopCards); 
 
-      updatePlayer0(flopPlayerUpdate(player0,action0));
-      updatePlayer1(flopPlayerUpdate(player1,action1));
-      updatePlayer2(flopPlayerUpdate(player2,action2));
-      updatePlayer3(flopPlayerUpdate(player3,action3));
-      updatePlayer4(flopPlayerUpdate(player4,action4));
-      updatePlayer5(flopPlayerUpdate(player5,''));
+      updatePlayer0(flopPlayerUpdate(player0,action0,'flop'));
+      updatePlayer1(flopPlayerUpdate(player1,action1,'flop'));
+      updatePlayer2(flopPlayerUpdate(player2,action2,'flop'));
+      updatePlayer3(flopPlayerUpdate(player3,action3,'flop'));
+      updatePlayer4(flopPlayerUpdate(player4,action4,'flop'));
+      updatePlayer5(flopPlayerUpdate(player5,'','flop'));
 
       updatePotSize(potSize+ps);
 
@@ -1206,6 +1214,10 @@ function Main(props) {
         const combinedArray5 = fiveCard5.concat(flopCards);
         console.log(player5.name +" "+determineHandRanking(combinedArray5));
 
+        let playerList = [player0,player1,player2,player3,player4,player5]
+
+        let winner = callWinnerMethod2(playerList, flopCards);
+
         updateDealFlag('turn'); 
         updatePlySelect(false)
 
@@ -1215,12 +1227,12 @@ function Main(props) {
 
       ps =0;
 
-      updatePlayer0(flopPlayerUpdate(player0,action0));
-      updatePlayer1(flopPlayerUpdate(player1,action1));
-      updatePlayer2(flopPlayerUpdate(player2,action2));
-      updatePlayer3(flopPlayerUpdate(player3,action3));
-      updatePlayer4(flopPlayerUpdate(player4,action4));
-      updatePlayer5(flopPlayerUpdate(player5,''));
+      updatePlayer0(flopPlayerUpdate(player0,action0,'turn'));
+      updatePlayer1(flopPlayerUpdate(player1,action1,'turn'));
+      updatePlayer2(flopPlayerUpdate(player2,action2,'turn'));
+      updatePlayer3(flopPlayerUpdate(player3,action3,'turn'));
+      updatePlayer4(flopPlayerUpdate(player4,action4,'turn'));
+      updatePlayer5(flopPlayerUpdate(player5,'','turn'));
 
       updatePotSize(potSize+ps);
       
@@ -1250,6 +1262,9 @@ function Main(props) {
         const combinedArray55 = combinedArray5.concat(turnCards);
         console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
+        let playerList = [player0,player1,player2,player3,player4,player5]
+        let winner = callWinnerMethod3(playerList, flopCard, turnCards);
+
         updateDealFlag('river');   
         updatePlySelect(false)
 
@@ -1260,12 +1275,12 @@ function Main(props) {
       
       ps=0;
 
-      updatePlayer0(flopPlayerUpdate(player0,action0));
-      updatePlayer1(flopPlayerUpdate(player1,action1));
-      updatePlayer2(flopPlayerUpdate(player2,action2));
-      updatePlayer3(flopPlayerUpdate(player3,action3));
-      updatePlayer4(flopPlayerUpdate(player4,action4));
-      updatePlayer5(flopPlayerUpdate(player5,'',0));
+      updatePlayer0(flopPlayerUpdate(player0,action0,'river'));
+      updatePlayer1(flopPlayerUpdate(player1,action1,'river'));
+      updatePlayer2(flopPlayerUpdate(player2,action2,'river'));
+      updatePlayer3(flopPlayerUpdate(player3,action3,'river'));
+      updatePlayer4(flopPlayerUpdate(player4,action4,'river'));
+      updatePlayer5(flopPlayerUpdate(player5,'',0,'river'));
 
       updatePotSize(potSize+ps);
       
@@ -1296,6 +1311,9 @@ function Main(props) {
     const combinedArray55 = combinedArray5.concat(turnCard).concat(riverCard);
     console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
+    let playerList = [player0,player1,player2,player3,player4,player5]
+    let winner = callWinnerMethod4(playerList, flopCard, turnCard, riverCards);
+
   }
  
   };
@@ -1321,6 +1339,28 @@ function Main(props) {
       }
     }
     return counts;
+  }
+
+  function callWinnerMethod1(playerList, shuffledDeck){
+
+    let cards0 = shuffledDeck.slice( 0,2);
+    let cards1 = shuffledDeck.slice( 2,4);
+    let cards2 = shuffledDeck.slice( 4,6);
+    let cards3 = shuffledDeck.slice( 6,8);
+    let cards4 = shuffledDeck.slice( 8,10);
+    let cards5 = shuffledDeck.slice( 10,12);
+  }
+
+  function callWinnerMethod2(playerList, flopCards){
+
+  }
+
+  function callWinnerMethod3(playerList, flopCards, turnCards){
+
+  }
+
+  function callWinnerMethod4(playerList, flopCards, turnCards, riverCards){
+
   }
   
   function getActionText(player, position, hand) {  
@@ -1378,16 +1418,18 @@ function Main(props) {
   }, [fetchData, player0, player1, player2, player3, player4, player5]);
 
   const handlePlayerMatch = () => {
+
     let betActionList = [
       {a:action0,pb:player0.bet},{a:action1,pb:player1.bet},
       {a:action2,pb:player2.bet},{a:action3,pb:player3.bet},
       {a:action4,pb:player4.bet},{a:myAction,pb:player5.bet}]
-      let amt =0;
-      betActionList.map(obj=>{
-        if(obj.pb>amt && obj.a!=='FOLD'){
-          amt=obj.pb;
-        }
-      })
+    
+    let amt =0;
+    betActionList.map(obj=>{
+      if(obj.pb>amt && obj.a!=='FOLD'){
+        amt=obj.pb;
+      }
+    })
 
     updateMaxAmt(amt);
 
@@ -1442,9 +1484,7 @@ function Main(props) {
   
   const handlePlayerRaise = () => {
     
-  // let amt = 60;// Ankit's code
-    //let amt = calculateRaiseAmount('RAISE', player5);
-    let amt = calculateRaiseAmount(player5,player5.position,player5.cards,player5.ptype)
+    let amt = 100;
     console.log("Press Raise");
     setAction5('RAISE');
     setMyAction('RAISE')
@@ -1540,8 +1580,8 @@ function calculatePotSize(myAction, amt) {
     if(action=='RAISE'){
       bet = calculateRaiseAmount(player,position,cards,style)
       ps = ps+ bet;
+
     }
-    
       if(bet>maxAmt){
         updateMaxAmt(bet)
       }
@@ -1553,11 +1593,17 @@ function calculatePotSize(myAction, amt) {
         bet:bet,
         action:action, play:true
       }
+
+      if(action=='RAISE'){
+        let histObj = {player: playerx2, status:'hold'}
+        history.push(histObj);
+       // setHist(hist.push(histObj))
+      }
     
     return playerx2;
   }
 
-  function flopPlayerUpdate(player, action) {
+  function flopPlayerUpdate(player, action, status) {
     let bet = 0;
     if(action=='RAISE'){
       bet = calculateRaiseAmount(player,player.position,player.cards,player.ptype)
@@ -1577,6 +1623,12 @@ function calculatePotSize(myAction, amt) {
         totalAmt:player.totalAmt-bet, currentAmt:bet,
         bet:bet,
         action:action, play:true} 
+    }
+
+    if(action=='RAISE'){
+      let histObj = {player: playerx, status:status}
+      history.push(histObj);
+      //setHist(hist.push(histObj))
     }
     return playerx;
 	
@@ -1656,6 +1708,26 @@ function calculatePotSize(myAction, amt) {
   };
 
   const calculateRaiseAmount = (player,position,cards,style) => {
+
+      if(position==1){
+        return 10;
+      }
+      if(position==2){
+        return 20;
+      }
+
+      console.log("-------RAISE HISTORY------")
+      console.log(history)
+     // hist.length>0 && hist.map((histObj) => {
+      history.length>0 && history.map((histObj) => {
+
+        const player = histObj.player;
+        const status = histObj.status;
+
+        console.log(Object.values(player));
+        console.log(status);
+
+      })
 
       const raiseMultiplier = raiseMultipliers[style] || 1;
       const positionMultiplier = positionMultipliers[getShortPosition(position)] || 1;
