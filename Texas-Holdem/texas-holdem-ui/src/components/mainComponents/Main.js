@@ -1521,7 +1521,46 @@ function determineWinner(hands) {
     return winningHands;
 }
 
-  }
+function callWinnerMethod1(playerList, shuffledDeck) {
+    const players = [
+        shuffledDeck.slice(0,2),
+        shuffledDeck.slice(2,4),
+        shuffledDeck.slice(4,6),
+        shuffledDeck.slice(6,8),
+        shuffledDeck.slice(8,10),
+        shuffledDeck.slice(10,12)
+    ];
+
+    const playerHands = players.map(player => determineHandRanking([...player]));
+    const winnerData = determineWinner(playerHands);
+
+    return winnerData;
+}
+
+function callWinnerMethod2(playerList, flopCards) {
+   // const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
+    const winnerData = null;
+    //determineWinner(playerHands);
+
+    return winnerData;
+}
+
+function callWinnerMethod3(playerList, flopCards, turnCards) {
+    const allTableCards = [...flopCards, ...turnCards];
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
+    return winnerData;
+}
+
+function callWinnerMethod4(playerList, flopCards, turnCards, riverCards) {
+    const allTableCards = [...flopCards, ...turnCards, ...riverCards];
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
+    return winnerData;
+}
+
   
   function getActionText(player, position, hand) {  
     
