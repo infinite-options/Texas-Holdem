@@ -1069,7 +1069,8 @@ function Main(props) {
     turnCard, updateTurnCard,
     riverCard, updateRiverCard,
     potSize, updatePotSize,
-    maxAmt, updateMaxAmt
+    maxAmt, updateMaxAmt,
+    raiseHistory, updateRaiseHistory
   } = useContext(PlayerContext);
 
   const navigate = useNavigate();
@@ -1098,6 +1099,7 @@ function Main(props) {
   }
 
   function getHand(draw1, draw2) {
+    
     const rank1 = draw1.name.charAt(0);
     const rank2 = draw2.name.charAt(0);
     const suit = draw1.name.charAt(1) === draw2.name.charAt(1) ? SUIT.SUIT : SUIT.OFFSUIT;
@@ -1154,23 +1156,56 @@ function Main(props) {
   const handleDealClick = () => {
 
     if(dealFlag=='hold'){
+      
       const shuffledDeck = deckOfCards.sort(() => Math.random() - 0.5);
       updateDeck(shuffledDeck)
-  
       updateDealerIndex((dealerIndex+1)%6)
+      let raise_history = raiseHistory;
 
-      updatePlayer0(holdPlayerUpdate(player0,shuffledDeck, 0,2));
-      updatePlayer1(holdPlayerUpdate(player1,shuffledDeck, 2,4));
-      updatePlayer2(holdPlayerUpdate(player2,shuffledDeck, 4,6));
-      updatePlayer3(holdPlayerUpdate(player3,shuffledDeck, 6,8));
-      updatePlayer4(holdPlayerUpdate(player4,shuffledDeck, 8,10));
-      updatePlayer5(holdPlayerUpdate(player5,shuffledDeck, 10,12));
+      let p0=holdPlayerUpdate(player0,shuffledDeck, 0,2,raise_history,'hold');
+      if(p0.action=='RAISE'){
+        raise_history.push({player: p0, status:'hold'})
+        printRaiseHistory(raise_history);
+      }
+      let p1=holdPlayerUpdate(player1,shuffledDeck, 2,4,raise_history,'hold');
+      if(p1.action=='RAISE'){
+        raise_history.push({player: p1, status:'hold'})
+      }
+      printRaiseHistory(raise_history);
+      let p2=holdPlayerUpdate(player2,shuffledDeck, 4,6,raise_history,'hold');
+      if(p2.action=='RAISE'){
+        raise_history.push({player: p2, status:'hold'})
+      }
+      printRaiseHistory(raise_history);
+      let p3=holdPlayerUpdate(player3,shuffledDeck, 6,8,raise_history,'hold');
+      if(p3.action=='RAISE'){
+        raise_history.push({player: p3, status:'hold'})
+      }
+      printRaiseHistory(raise_history);
+      let p4=holdPlayerUpdate(player4,shuffledDeck, 8,10,raise_history,'hold');
+      if(p4.action=='RAISE'){
+        raise_history.push({player: p4, status:'hold'})
+      }
+      printRaiseHistory(raise_history);
+      let p5=holdPlayerUpdate(player5,shuffledDeck, 10,12,raise_history,'hold');
+      if(p5.action=='RAISE'){
+        raise_history.push({player: p5, status:'hold'})
+      }
+      printRaiseHistory(raise_history);
+
+      updatePlayer0(p0);
+      updatePlayer1(p1);
+      updatePlayer2(p2);
+      updatePlayer3(p3);
+      updatePlayer4(p4);
+      updatePlayer5(p5);
 
       updatePotSize(potSize+ps);
+      updateRaiseHistory(raise_history);
 
-      let playerList = [player0,player1,player2,player3,player4,player5]
-
+      let playerList = [p0,p1,p2,p3,p4,p5]
       let winner = callWinnerMethod1(playerList, shuffledDeck);
+      console.log("Winner - Card dealt "+winner)
 
       updateDealFlag('flop')
       updateFlopCard([])
@@ -1185,14 +1220,48 @@ function Main(props) {
       let flopCards=shuffledDeck.slice(12, 15);
       updateFlopCard(flopCards); 
 
-      updatePlayer0(flopPlayerUpdate(player0,action0,'flop'));
-      updatePlayer1(flopPlayerUpdate(player1,action1,'flop'));
-      updatePlayer2(flopPlayerUpdate(player2,action2,'flop'));
-      updatePlayer3(flopPlayerUpdate(player3,action3,'flop'));
-      updatePlayer4(flopPlayerUpdate(player4,action4,'flop'));
-      updatePlayer5(flopPlayerUpdate(player5,'','flop'));
+      let raise_history = raiseHistory;
+
+      let p0 = playerUpdate(player0,action0,raise_history,'flop');
+      if(p0.action=='RAISE'){
+        raise_history.push({player: p0, status:'flop'})
+        printRaiseHistory(raise_history);
+      }
+      let p1= playerUpdate(player1,action1,raise_history,'flop');
+      if(p1.action=='RAISE'){
+        raise_history.push({player: p1, status:'flop'})
+      }
+      printRaiseHistory(raise_history);
+      let p2= playerUpdate(player2,action2,raise_history,'flop');
+      if(p2.action=='RAISE'){
+        raise_history.push({player: p2, status:'flop'})
+      }
+      printRaiseHistory(raise_history);
+      let p3= playerUpdate(player3,action3,raise_history,'flop');
+      if(p3.action=='RAISE'){
+        raise_history.push({player: p3, status:'flop'})
+      }
+      printRaiseHistory(raise_history);
+      let p4= playerUpdate(player4,action4,raise_history,'flop');
+      if(p4.action=='RAISE'){
+        raise_history.push({player: p4, status:'flop'})
+      }
+      printRaiseHistory(raise_history);
+      let p5= playerUpdate(player5,'',raise_history,'flop');
+      if(p5.action=='RAISE'){
+        raise_history.push({player: p5, status:'flop'})
+      }
+      printRaiseHistory(raise_history);
+
+      updatePlayer0(p0);
+      updatePlayer1(p1);
+      updatePlayer2(p2);
+      updatePlayer3(p3);
+      updatePlayer4(p4);
+      updatePlayer5(p5);
 
       updatePotSize(potSize+ps);
+      updateRaiseHistory(raise_history);
 
         console.log("HAND AFTER FLOP CARDS");
         let fiveCard0 = player0.cards;
@@ -1214,9 +1283,9 @@ function Main(props) {
         const combinedArray5 = fiveCard5.concat(flopCards);
         console.log(player5.name +" "+determineHandRanking(combinedArray5));
 
-        let playerList = [player0,player1,player2,player3,player4,player5]
-
+        let playerList = [p0,p1,p2,p3,p4,p5]
         let winner = callWinnerMethod2(playerList, flopCards);
+        console.log("Winner - After Flop "+winner)
 
         updateDealFlag('turn'); 
         updatePlySelect(false)
@@ -1226,16 +1295,48 @@ function Main(props) {
       updateTurnCard(turnCards);
 
       ps =0;
+      let raise_history = raiseHistory;
 
-      updatePlayer0(flopPlayerUpdate(player0,action0,'turn'));
-      updatePlayer1(flopPlayerUpdate(player1,action1,'turn'));
-      updatePlayer2(flopPlayerUpdate(player2,action2,'turn'));
-      updatePlayer3(flopPlayerUpdate(player3,action3,'turn'));
-      updatePlayer4(flopPlayerUpdate(player4,action4,'turn'));
-      updatePlayer5(flopPlayerUpdate(player5,'','turn'));
-
+      let p0 = playerUpdate(player0,action0,raise_history,'turn');
+      if(p0.action=='RAISE'){
+        raise_history.push({player: p0, status:'turn'})
+        printRaiseHistory(raise_history);
+      }
+      let p1= playerUpdate(player1,action1,raise_history,'turn');
+      if(p1.action=='RAISE'){
+        raise_history.push({player: p1, status:'turn'})
+      }
+      printRaiseHistory(raise_history);
+      let p2= playerUpdate(player2,action2,raise_history,'turn');
+      if(p2.action=='RAISE'){
+        raise_history.push({player: p2, status:'turn'})
+      }
+      printRaiseHistory(raise_history);
+      let p3= playerUpdate(player3,action3,raise_history,'turn');
+      if(p3.action=='RAISE'){
+        raise_history.push({player: p3, status:'turn'})
+      }
+      printRaiseHistory(raise_history);
+      let p4= playerUpdate(player4,action4,raise_history,'turn');
+      if(p4.action=='RAISE'){
+        raise_history.push({player: p4, status:'turn'})
+      }
+      printRaiseHistory(raise_history);
+      let p5= playerUpdate(player5,'',raise_history,'turn');
+      if(p5.action=='RAISE'){
+        raise_history.push({player: p5, status:'turn'})
+      }
+      printRaiseHistory(raise_history);
       updatePotSize(potSize+ps);
-      
+      updateRaiseHistory(raise_history);
+
+      updatePlayer0(p0);
+      updatePlayer1(p1);
+      updatePlayer2(p2);
+      updatePlayer3(p3);
+      updatePlayer4(p4);
+      updatePlayer5(p5);
+
         console.log("HAND AFTER TURN CARDS");
         let fiveCard0 = player0.cards;
         const combinedArray0 = fiveCard0.concat(flopCard);
@@ -1262,8 +1363,9 @@ function Main(props) {
         const combinedArray55 = combinedArray5.concat(turnCards);
         console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
-        let playerList = [player0,player1,player2,player3,player4,player5]
+        let playerList = [p0,p1,p2,p3,p4,p5]
         let winner = callWinnerMethod3(playerList, flopCard, turnCards);
+        console.log("Winner - After Turn "+winner)
 
         updateDealFlag('river');   
         updatePlySelect(false)
@@ -1274,15 +1376,50 @@ function Main(props) {
       updateDealFlag('hold'); 
       
       ps=0;
+      let raise_history = raiseHistory;
 
-      updatePlayer0(flopPlayerUpdate(player0,action0,'river'));
-      updatePlayer1(flopPlayerUpdate(player1,action1,'river'));
-      updatePlayer2(flopPlayerUpdate(player2,action2,'river'));
-      updatePlayer3(flopPlayerUpdate(player3,action3,'river'));
-      updatePlayer4(flopPlayerUpdate(player4,action4,'river'));
-      updatePlayer5(flopPlayerUpdate(player5,'',0,'river'));
+      let p0 = playerUpdate(player0,action0,raise_history,'river');
+      if(p0.action=='RAISE'){
+        raise_history.push({player: p0, status:'river'})
+        printRaiseHistory(raise_history);
+      }
+      let p1= playerUpdate(player1,action1,raise_history,'river');
+      if(p1.action=='RAISE'){
+        raise_history.push({player: p1, status:'river'})
+      }
+      printRaiseHistory(raise_history);
+      let p2= playerUpdate(player2,action2,raise_history,'river');
+      if(p2.action=='RAISE'){
+        raise_history.push({player: p2, status:'river'})
+      }
+      printRaiseHistory(raise_history);
+      let p3= playerUpdate(player3,action3,raise_history,'river');
+      if(p3.action=='RAISE'){
+        raise_history.push({player: p3, status:'river'})
+      }
+      printRaiseHistory(raise_history);
+      let p4= playerUpdate(player4,action4,raise_history,'river');
+      if(p4.action=='RAISE'){
+        raise_history.push({player: p4, status:'river'})
+      }
+      printRaiseHistory(raise_history);
+      let p5= playerUpdate(player5,'',raise_history,'river');
+      if(p5.action=='RAISE'){
+        raise_history.push({player: p5, status:'river'})
+      }
+      printRaiseHistory(raise_history);
+      updatePotSize(potSize+ps);
+      updateRaiseHistory(raise_history);
+
+      updatePlayer0(p0);
+      updatePlayer1(p1);
+      updatePlayer2(p2);
+      updatePlayer3(p3);
+      updatePlayer4(p4);
+      updatePlayer5(p5);
 
       updatePotSize(potSize+ps);
+      updateRaiseHistory(raise_history);
       
     console.log("HAND AFTER RIVER CARDS");
 
@@ -1313,9 +1450,10 @@ function Main(props) {
 
     let playerList = [player0,player1,player2,player3,player4,player5]
     let winner = callWinnerMethod4(playerList, flopCard, turnCard, riverCards);
+    console.log("Winner - After River "+winner)
 
   }
- 
+
   };
 
   function playerAfterBet(player, cards, totalAmt, currentAmt, bet_money) {
@@ -1351,23 +1489,86 @@ function Main(props) {
     let cards5 = shuffledDeck.slice( 10,12);
   }
 
-  function callWinnerMethod2(playerList, flopCards){
+  function handRankingValue(hand) {
+    const rankings = [
+        "High Card",
+        "One Pair",
+        "Two Pair",
+        "Three of a Kind",
+        "Straight",
+        "Flush",
+        "Full House",
+        "Four of a Kind",
+        "Straight Flush",
+        "Royal Flush"
+    ];
 
-  }
+    return rankings.indexOf(hand);
+}
 
-  function callWinnerMethod3(playerList, flopCards, turnCards){
+function determineWinner(hands) {
+    const bestRanking = Math.max(...hands.map(handRankingValue));
 
-  }
+    // Filter out the players with the best hands
+    const winningHands = hands.filter(hand => handRankingValue(hand) === bestRanking);
 
-  function callWinnerMethod4(playerList, flopCards, turnCards, riverCards){
+    // If only one winner, return the winner
+    if (winningHands.length === 1) {
+        return winningHands[0];
+    }
 
-  }
+    // For ties, return all winning hands (Further tiebreaker logic may be required)
+    return winningHands;
+}
+
+function callWinnerMethod1(playerList, shuffledDeck) {
+    const players = [
+        shuffledDeck.slice(0,2),
+        shuffledDeck.slice(2,4),
+        shuffledDeck.slice(4,6),
+        shuffledDeck.slice(6,8),
+        shuffledDeck.slice(8,10),
+        shuffledDeck.slice(10,12)
+    ];
+
+    const playerHands = players.map(player => determineHandRanking([...player]));
+    const winnerData = determineWinner(playerHands);
+
+    return winnerData;
+}
+
+function callWinnerMethod2(playerList, flopCards) {
+   // const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
+    const winnerData = null;
+    //determineWinner(playerHands);
+
+    return winnerData;
+}
+
+function callWinnerMethod3(playerList, flopCards, turnCards) {
+    const allTableCards = [...flopCards, ...turnCards];
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
+    return winnerData;
+}
+
+function callWinnerMethod4(playerList, flopCards, turnCards, riverCards) {
+    const allTableCards = [...flopCards, ...turnCards, ...riverCards];
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
+    return winnerData;
+}
+
   
   function getActionText(player, position, hand) {  
     
     if(position==1||position==2){
       return 'RAISE';
     }
+
+    console.log("get action for user "+player.name)
 
     let action = "No saved Table";
     const user = getUser(fetchData, player.name, getType_database(player.ptype), getShortPosition(position));
@@ -1568,19 +1769,19 @@ function calculatePotSize(myAction, amt) {
   return pts;
 }
 
-  function holdPlayerUpdate(player,shuffledDeck,i,j) {
+  function holdPlayerUpdate(player,shuffledDeck,i,j,raise_history, status) {
 
     const position = (player.position+5)%6;
     const cards = shuffledDeck.slice(i, j);
     const action = getActionText(player,position,cards);
     const style = player.ptype;
 
-    console.log(player.name+" "+action)
+//    console.log(player.name+" "+action)
     let bet = 0;
     if(action=='RAISE'){
-      bet = calculateRaiseAmount(player,position,cards,style)
-      ps = ps+ bet;
 
+      bet = calculateRaiseAmount(player,position,cards,style, raise_history)
+      ps = ps+ bet;
     }
       if(bet>maxAmt){
         updateMaxAmt(bet)
@@ -1593,20 +1794,13 @@ function calculatePotSize(myAction, amt) {
         bet:bet,
         action:action, play:true
       }
-
-      if(action=='RAISE'){
-        let histObj = {player: playerx2, status:'hold'}
-        history.push(histObj);
-       // setHist(hist.push(histObj))
-      }
-    
     return playerx2;
   }
 
-  function flopPlayerUpdate(player, action, status) {
+  function playerUpdate(player, action, raise_history,status) {
     let bet = 0;
     if(action=='RAISE'){
-      bet = calculateRaiseAmount(player,player.position,player.cards,player.ptype)
+      bet = calculateRaiseAmount(player,player.position,player.cards,player.ptype,raise_history)
       ps = ps+ bet;
     }
 
@@ -1707,7 +1901,7 @@ function calculatePotSize(myAction, amt) {
     2: 1,
   };
 
-  const calculateRaiseAmount = (player,position,cards,style) => {
+  const calculateRaiseAmount = (player,position,cards,style,raise_history) => {
 
       if(position==1){
         return 10;
@@ -1715,19 +1909,6 @@ function calculatePotSize(myAction, amt) {
       if(position==2){
         return 20;
       }
-
-      console.log("-------RAISE HISTORY------")
-      console.log(history)
-     // hist.length>0 && hist.map((histObj) => {
-      history.length>0 && history.map((histObj) => {
-
-        const player = histObj.player;
-        const status = histObj.status;
-
-        console.log(Object.values(player));
-        console.log(status);
-
-      })
 
       const raiseMultiplier = raiseMultipliers[style] || 1;
       const positionMultiplier = positionMultipliers[getShortPosition(position)] || 1;
@@ -1823,6 +2004,21 @@ function calculatePotSize(myAction, amt) {
     }
     return playerx;
   }
+
+  function printRaiseHistory(raise_history){
+
+    console.log("-------RAISE HISTORY------")
+  
+    raise_history.map((histObj) => {
+
+      const player = histObj.player;
+      const status = histObj.status;
+
+      console.log(Object.values(player));
+      console.log(status);
+    })
+
+  }
   
   function printDetails(player) {
 
@@ -1858,7 +2054,7 @@ function calculatePotSize(myAction, amt) {
       {/* Table  */}
       <Rectangle15 src={Rectangle15Image} loading='lazy' alt={"Rectangle 15"}></Rectangle15>
       {/* Dealer token, timer , Deal */}
-    
+      {console.log(raiseHistory)}
       <Ellipse12 src={Ellipse12Image} loading='lazy' alt={"Ellipse 12"}/>
       <button onClick={handleDealClick}>
         <Ellipse14 src={Ellipse14Image} loading='lazy' alt={"Ellipse 14"}/>
