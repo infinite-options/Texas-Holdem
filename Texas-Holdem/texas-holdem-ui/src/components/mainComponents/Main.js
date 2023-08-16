@@ -1162,11 +1162,6 @@ function Main(props) {
       updateDealerIndex((dealerIndex+1)%6)
       let raise_history = raiseHistory;
 
-      let p0=holdPlayerUpdate(player0,shuffledDeck, 0,2,raise_history,'hold');
-      if(p0.action=='RAISE'){
-        raise_history.push({player: p0, status:'hold'})
-        printRaiseHistory(raise_history);
-      }
       let p1=holdPlayerUpdate(player1,shuffledDeck, 2,4,raise_history,'hold');
       if(p1.action=='RAISE'){
         raise_history.push({player: p1, status:'hold'})
@@ -1192,7 +1187,12 @@ function Main(props) {
         raise_history.push({player: p5, status:'hold'})
       }
       printRaiseHistory(raise_history);
-
+      let p0=holdPlayerUpdate(player0,shuffledDeck, 0,2,raise_history,'hold');
+      if(p0.action=='RAISE'){
+        raise_history.push({player: p0, status:'hold'})
+        printRaiseHistory(raise_history);
+      }
+      printRaiseHistory(raise_history);
       updatePlayer0(p0);
       updatePlayer1(p1);
       updatePlayer2(p2);
@@ -1204,8 +1204,7 @@ function Main(props) {
       updateRaiseHistory(raise_history);
 
       let playerList = [p0,p1,p2,p3,p4,p5]
-      let winner = callWinnerMethod1(playerList, shuffledDeck);
-      console.log("Winner - Card dealt "+winner)
+      let winner = callWinnerMethod1(playerList);
 
       updateDealFlag('flop')
       updateFlopCard([])
@@ -1479,16 +1478,6 @@ function Main(props) {
     return counts;
   }
 
-  function callWinnerMethod1(playerList, shuffledDeck){
-
-    let cards0 = shuffledDeck.slice( 0,2);
-    let cards1 = shuffledDeck.slice( 2,4);
-    let cards2 = shuffledDeck.slice( 4,6);
-    let cards3 = shuffledDeck.slice( 6,8);
-    let cards4 = shuffledDeck.slice( 8,10);
-    let cards5 = shuffledDeck.slice( 10,12);
-  }
-
   function handRankingValue(hand) {
     const rankings = [
         "High Card",
@@ -1506,62 +1495,70 @@ function Main(props) {
     return rankings.indexOf(hand);
 }
 
-function determineWinner(hands) {
-    const bestRanking = Math.max(...hands.map(handRankingValue));
+function determineWinner(playerHandList) {
 
+//    const bestRanking = Math.max(...hands.map(handRankingValue));
+
+    let bestRanking = -1;
+
+    playerHandList.map( playerHand => {
+      let someValue = handRankingValue(playerHand.player_hand)
+      bestRanking = Math.max(someValue,bestRanking)
+    })
     // Filter out the players with the best hands
-    const winningHands = hands.filter(hand => handRankingValue(hand) === bestRanking);
+    const winningHands = playerHandList.filter(playerHand => handRankingValue(playerHand.player_hand) === bestRanking);
 
     // If only one winner, return the winner
     if (winningHands.length === 1) {
         return winningHands[0];
     }
-
     // For ties, return all winning hands (Further tiebreaker logic may be required)
     return winningHands;
 }
 
-function callWinnerMethod1(playerList, shuffledDeck) {
-    const players = [
-        shuffledDeck.slice(0,2),
-        shuffledDeck.slice(2,4),
-        shuffledDeck.slice(4,6),
-        shuffledDeck.slice(6,8),
-        shuffledDeck.slice(8,10),
-        shuffledDeck.slice(10,12)
-    ];
+function callWinnerMethod1(playerList) {
 
-    const playerHands = players.map(player => determineHandRanking([...player]));
-    const winnerData = determineWinner(playerHands);
+    let playerHandList = [];
+
+    playerList.map(player => {
+      let handValue = determineHandRanking(player.cards);
+      playerHandList.push({
+        player: player,
+        player_hand: handValue
+      })
+    })
+
+//    const playerHands = playerList.map(player => determineHandRanking([...player]));
+    const winnerData = determineWinner(playerHandList);
+    
+    console.log("---winner in this round---")
+    winnerData.length> 0 && winnerData.map( winner => {
+      console.log(winner.player.name+" "+winner.player_hand)
+    })
 
     return winnerData;
 }
 
 function callWinnerMethod2(playerList, flopCards) {
-   // const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
-    const winnerData = null;
-    //determineWinner(playerHands);
-
+    const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
+    const winnerData = determineWinner(playerHands);
     return winnerData;
 }
 
 function callWinnerMethod3(playerList, flopCards, turnCards) {
     const allTableCards = [...flopCards, ...turnCards];
-    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
-    // const winnerData = determineWinner(playerHands);
-    const winnerData = null;
+    const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    const winnerData = determineWinner(playerHands);
     return winnerData;
 }
 
 function callWinnerMethod4(playerList, flopCards, turnCards, riverCards) {
     const allTableCards = [...flopCards, ...turnCards, ...riverCards];
-    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
-    // const winnerData = determineWinner(playerHands);
-    const winnerData = null;
+    const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    const winnerData = determineWinner(playerHands);
     return winnerData;
 }
 
-  
   function getActionText(player, position, hand) {  
     
     if(position==1||position==2){
@@ -1578,7 +1575,6 @@ function callWinnerMethod4(playerList, flopCards, turnCards, riverCards) {
     }
     return action;
   }
-
 
   useEffect(()=>{  
     function getActionText(player, position, hand) {  
@@ -2014,8 +2010,8 @@ function calculatePotSize(myAction, amt) {
       const player = histObj.player;
       const status = histObj.status;
 
-      console.log(Object.values(player));
-      console.log(status);
+      //console.log(Object.values(player));
+      console.log(player.name+" "+status);
     })
 
   }
