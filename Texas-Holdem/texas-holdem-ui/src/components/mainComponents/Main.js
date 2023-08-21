@@ -1221,32 +1221,32 @@ function Main(props) {
 
       let raise_history = raiseHistory;
 
-      let p0 = playerUpdate(player0,action0,raise_history,'flop');
+      let p0 = playerUpdate(player0,action0,raise_history,'flop',flopCards);
       if(p0.action=='RAISE'){
         raise_history.push({player: p0, status:'flop'})
         printRaiseHistory(raise_history);
       }
-      let p1= playerUpdate(player1,action1,raise_history,'flop');
+      let p1= playerUpdate(player1,action1,raise_history,'flop',flopCards);
       if(p1.action=='RAISE'){
         raise_history.push({player: p1, status:'flop'})
       }
       printRaiseHistory(raise_history);
-      let p2= playerUpdate(player2,action2,raise_history,'flop');
+      let p2= playerUpdate(player2,action2,raise_history,'flop',flopCards);
       if(p2.action=='RAISE'){
         raise_history.push({player: p2, status:'flop'})
       }
       printRaiseHistory(raise_history);
-      let p3= playerUpdate(player3,action3,raise_history,'flop');
+      let p3= playerUpdate(player3,action3,raise_history,'flop',flopCards);
       if(p3.action=='RAISE'){
         raise_history.push({player: p3, status:'flop'})
       }
       printRaiseHistory(raise_history);
-      let p4= playerUpdate(player4,action4,raise_history,'flop');
+      let p4= playerUpdate(player4,action4,raise_history,'flop',flopCards);
       if(p4.action=='RAISE'){
         raise_history.push({player: p4, status:'flop'})
       }
       printRaiseHistory(raise_history);
-      let p5= playerUpdate(player5,'',raise_history,'flop');
+      let p5= playerUpdate(player5,'',raise_history,'flop',flopCards);
       if(p5.action=='RAISE'){
         raise_history.push({player: p5, status:'flop'})
       }
@@ -1262,25 +1262,25 @@ function Main(props) {
       updatePotSize(potSize+ps);
       updateRaiseHistory(raise_history);
 
-        console.log("HAND AFTER FLOP CARDS");
-        let fiveCard0 = player0.cards;
-        const combinedArray0 = fiveCard0.concat(flopCards);
-        console.log(player0.name +" "+determineHandRanking(combinedArray0));
-        let fiveCard1 = player1.cards;
-        const combinedArray1 = fiveCard1.concat(flopCards);
-        console.log(player1.name +" "+determineHandRanking(combinedArray1));
-        let fiveCard2 = player2.cards;
-        const combinedArray2 = fiveCard2.concat(flopCards);
-        console.log(player2.name +" "+determineHandRanking(combinedArray2));
-        let fiveCard3 = player3.cards;
-        const combinedArray3 = fiveCard3.concat(flopCards);
-        console.log(player3.name +" "+determineHandRanking(combinedArray3));
-        let fiveCard4 = player4.cards;
-        const combinedArray4 = fiveCard4.concat(flopCards);
-        console.log(player4.name +" "+determineHandRanking(combinedArray4));
-        let fiveCard5 = player5.cards;
-        const combinedArray5 = fiveCard5.concat(flopCards);
-        console.log(player5.name +" "+determineHandRanking(combinedArray5));
+        // console.log("HAND AFTER FLOP CARDS");
+        // let fiveCard0 = player0.cards;
+        // const combinedArray0 = fiveCard0.concat(flopCards);
+        // console.log(player0.name +" "+determineHandRanking(combinedArray0));
+        // let fiveCard1 = player1.cards;
+        // const combinedArray1 = fiveCard1.concat(flopCards);
+        // console.log(player1.name +" "+determineHandRanking(combinedArray1));
+        // let fiveCard2 = player2.cards;
+        // const combinedArray2 = fiveCard2.concat(flopCards);
+        // console.log(player2.name +" "+determineHandRanking(combinedArray2));
+        // let fiveCard3 = player3.cards;
+        // const combinedArray3 = fiveCard3.concat(flopCards);
+        // console.log(player3.name +" "+determineHandRanking(combinedArray3));
+        // let fiveCard4 = player4.cards;
+        // const combinedArray4 = fiveCard4.concat(flopCards);
+        // console.log(player4.name +" "+determineHandRanking(combinedArray4));
+        // let fiveCard5 = player5.cards;
+        // const combinedArray5 = fiveCard5.concat(flopCards);
+        // console.log(player5.name +" "+determineHandRanking(combinedArray5));
 
         let playerList = [p0,p1,p2,p3,p4,p5]
         let winner = callWinnerMethod2(playerList, flopCards);
@@ -1293,35 +1293,36 @@ function Main(props) {
       let turnCards=shuffledDeck.slice(15, 16);
       updateTurnCard(turnCards);
 
+      const tableCards = turnCards.concat(flopCard);
       ps =0;
       let raise_history = raiseHistory;
 
-      let p0 = playerUpdate(player0,action0,raise_history,'turn');
+      let p0 = playerUpdate(player0,action0,raise_history,'turn',tableCards);
       if(p0.action=='RAISE'){
         raise_history.push({player: p0, status:'turn'})
         printRaiseHistory(raise_history);
       }
-      let p1= playerUpdate(player1,action1,raise_history,'turn');
+      let p1= playerUpdate(player1,action1,raise_history,'turn',tableCards);
       if(p1.action=='RAISE'){
         raise_history.push({player: p1, status:'turn'})
       }
       printRaiseHistory(raise_history);
-      let p2= playerUpdate(player2,action2,raise_history,'turn');
+      let p2= playerUpdate(player2,action2,raise_history,'turn',tableCards);
       if(p2.action=='RAISE'){
         raise_history.push({player: p2, status:'turn'})
       }
       printRaiseHistory(raise_history);
-      let p3= playerUpdate(player3,action3,raise_history,'turn');
+      let p3= playerUpdate(player3,action3,raise_history,'turn',tableCards);
       if(p3.action=='RAISE'){
         raise_history.push({player: p3, status:'turn'})
       }
       printRaiseHistory(raise_history);
-      let p4= playerUpdate(player4,action4,raise_history,'turn');
+      let p4= playerUpdate(player4,action4,raise_history,'turn',tableCards);
       if(p4.action=='RAISE'){
         raise_history.push({player: p4, status:'turn'})
       }
       printRaiseHistory(raise_history);
-      let p5= playerUpdate(player5,'',raise_history,'turn');
+      let p5= playerUpdate(player5,'',raise_history,'turn',tableCards);
       if(p5.action=='RAISE'){
         raise_history.push({player: p5, status:'turn'})
       }
@@ -1336,31 +1337,31 @@ function Main(props) {
       updatePlayer4(p4);
       updatePlayer5(p5);
 
-        console.log("HAND AFTER TURN CARDS");
-        let fiveCard0 = player0.cards;
-        const combinedArray0 = fiveCard0.concat(flopCard);
-        const combinedArray00 = combinedArray0.concat(turnCards);
-        console.log(player0.name +" "+determineHandRanking(combinedArray00));
-        let fiveCard1 = player1.cards;
-        const combinedArray1 = fiveCard1.concat(flopCard);
-        const combinedArray11 = combinedArray1.concat(turnCards);
-        console.log(player1.name +" "+determineHandRanking(combinedArray11));
-        let fiveCard2 = player2.cards;
-        const combinedArray2 = fiveCard2.concat(flopCard);
-        const combinedArray22 = combinedArray2.concat(turnCards);
-        console.log(player2.name +" "+determineHandRanking(combinedArray22));
-        let fiveCard3 = player3.cards;
-        const combinedArray3 = fiveCard3.concat(flopCard);
-        const combinedArray33 = combinedArray3.concat(turnCards);
-        console.log(player3.name +" "+determineHandRanking(combinedArray33));
-        let fiveCard4 = player4.cards;
-        const combinedArray4 = fiveCard4.concat(flopCard);
-        const combinedArray44 = combinedArray4.concat(turnCards);
-        console.log(player4.name +" "+determineHandRanking(combinedArray44));
-        let fiveCard5 = player5.cards;
-        const combinedArray5 = fiveCard5.concat(flopCard);
-        const combinedArray55 = combinedArray5.concat(turnCards);
-        console.log(player5.name +" "+determineHandRanking(combinedArray55));
+        // console.log("HAND AFTER TURN CARDS");
+        // let fiveCard0 = player0.cards;
+        // const combinedArray0 = fiveCard0.concat(flopCard);
+        // const combinedArray00 = combinedArray0.concat(turnCards);
+        // console.log(player0.name +" "+determineHandRanking(combinedArray00));
+        // let fiveCard1 = player1.cards;
+        // const combinedArray1 = fiveCard1.concat(flopCard);
+        // const combinedArray11 = combinedArray1.concat(turnCards);
+        // console.log(player1.name +" "+determineHandRanking(combinedArray11));
+        // let fiveCard2 = player2.cards;
+        // const combinedArray2 = fiveCard2.concat(flopCard);
+        // const combinedArray22 = combinedArray2.concat(turnCards);
+        // console.log(player2.name +" "+determineHandRanking(combinedArray22));
+        // let fiveCard3 = player3.cards;
+        // const combinedArray3 = fiveCard3.concat(flopCard);
+        // const combinedArray33 = combinedArray3.concat(turnCards);
+        // console.log(player3.name +" "+determineHandRanking(combinedArray33));
+        // let fiveCard4 = player4.cards;
+        // const combinedArray4 = fiveCard4.concat(flopCard);
+        // const combinedArray44 = combinedArray4.concat(turnCards);
+        // console.log(player4.name +" "+determineHandRanking(combinedArray44));
+        // let fiveCard5 = player5.cards;
+        // const combinedArray5 = fiveCard5.concat(flopCard);
+        // const combinedArray55 = combinedArray5.concat(turnCards);
+        // console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
         let playerList = [p0,p1,p2,p3,p4,p5]
         let winner = callWinnerMethod3(playerList, flopCard, turnCards);
@@ -1374,35 +1375,36 @@ function Main(props) {
       updateRiverCard(riverCards);
       updateDealFlag('hold'); 
       
+      const tableCards = turnCard.concat(flopCard).concat(riverCards);
       ps=0;
       let raise_history = raiseHistory;
 
-      let p0 = playerUpdate(player0,action0,raise_history,'river');
+      let p0 = playerUpdate(player0,action0,raise_history,'river',tableCards);
       if(p0.action=='RAISE'){
         raise_history.push({player: p0, status:'river'})
         printRaiseHistory(raise_history);
       }
-      let p1= playerUpdate(player1,action1,raise_history,'river');
+      let p1= playerUpdate(player1,action1,raise_history,'river',tableCards);
       if(p1.action=='RAISE'){
         raise_history.push({player: p1, status:'river'})
       }
       printRaiseHistory(raise_history);
-      let p2= playerUpdate(player2,action2,raise_history,'river');
+      let p2= playerUpdate(player2,action2,raise_history,'river',tableCards);
       if(p2.action=='RAISE'){
         raise_history.push({player: p2, status:'river'})
       }
       printRaiseHistory(raise_history);
-      let p3= playerUpdate(player3,action3,raise_history,'river');
+      let p3= playerUpdate(player3,action3,raise_history,'river',tableCards);
       if(p3.action=='RAISE'){
         raise_history.push({player: p3, status:'river'})
       }
       printRaiseHistory(raise_history);
-      let p4= playerUpdate(player4,action4,raise_history,'river');
+      let p4= playerUpdate(player4,action4,raise_history,'river',tableCards);
       if(p4.action=='RAISE'){
         raise_history.push({player: p4, status:'river'})
       }
       printRaiseHistory(raise_history);
-      let p5= playerUpdate(player5,'',raise_history,'river');
+      let p5= playerUpdate(player5,'',raise_history,'river',tableCards);
       if(p5.action=='RAISE'){
         raise_history.push({player: p5, status:'river'})
       }
@@ -1420,39 +1422,37 @@ function Main(props) {
       updatePotSize(potSize+ps);
       updateRaiseHistory(raise_history);
       
-    console.log("HAND AFTER RIVER CARDS");
-
-    let fiveCard0 = player0.cards;
-    const combinedArray0 = fiveCard0.concat(flopCard);
-    const combinedArray00 = combinedArray0.concat(turnCard).concat(riverCard);
-    console.log(player0.name +" "+determineHandRanking(combinedArray00));
-    let fiveCard1 = player1.cards;
-    const combinedArray1 = fiveCard1.concat(flopCard);
-    const combinedArray11 = combinedArray1.concat(turnCard).concat(riverCard);
-    console.log(player1.name +" "+determineHandRanking(combinedArray11));
-    let fiveCard2 = player2.cards;
-    const combinedArray2 = fiveCard2.concat(flopCard);
-    const combinedArray22 = combinedArray2.concat(turnCard).concat(riverCard);
-    console.log(player2.name +" "+determineHandRanking(combinedArray22));
-    let fiveCard3 = player3.cards;
-    const combinedArray3 = fiveCard3.concat(flopCard);
-    const combinedArray33 = combinedArray3.concat(turnCard).concat(riverCard);
-    console.log(player3.name +" "+determineHandRanking(combinedArray33));
-    let fiveCard4 = player4.cards;
-    const combinedArray4 = fiveCard4.concat(flopCard);
-    const combinedArray44 = combinedArray4.concat(turnCard).concat(riverCard);
-    console.log(player4.name +" "+determineHandRanking(combinedArray44));
-    let fiveCard5 = player5.cards;
-    const combinedArray5 = fiveCard5.concat(flopCard);
-    const combinedArray55 = combinedArray5.concat(turnCard).concat(riverCard);
-    console.log(player5.name +" "+determineHandRanking(combinedArray55));
+    // console.log("HAND AFTER RIVER CARDS");
+    // let fiveCard0 = player0.cards;
+    // const combinedArray0 = fiveCard0.concat(flopCard);
+    // const combinedArray00 = combinedArray0.concat(turnCard).concat(riverCard);
+    // console.log(player0.name +" "+determineHandRanking(combinedArray00));
+    // let fiveCard1 = player1.cards;
+    // const combinedArray1 = fiveCard1.concat(flopCard);
+    // const combinedArray11 = combinedArray1.concat(turnCard).concat(riverCard);
+    // console.log(player1.name +" "+determineHandRanking(combinedArray11));
+    // let fiveCard2 = player2.cards;
+    // const combinedArray2 = fiveCard2.concat(flopCard);
+    // const combinedArray22 = combinedArray2.concat(turnCard).concat(riverCard);
+    // console.log(player2.name +" "+determineHandRanking(combinedArray22));
+    // let fiveCard3 = player3.cards;
+    // const combinedArray3 = fiveCard3.concat(flopCard);
+    // const combinedArray33 = combinedArray3.concat(turnCard).concat(riverCard);
+    // console.log(player3.name +" "+determineHandRanking(combinedArray33));
+    // let fiveCard4 = player4.cards;
+    // const combinedArray4 = fiveCard4.concat(flopCard);
+    // const combinedArray44 = combinedArray4.concat(turnCard).concat(riverCard);
+    // console.log(player4.name +" "+determineHandRanking(combinedArray44));
+    // let fiveCard5 = player5.cards;
+    // const combinedArray5 = fiveCard5.concat(flopCard);
+    // const combinedArray55 = combinedArray5.concat(turnCard).concat(riverCard);
+    // console.log(player5.name +" "+determineHandRanking(combinedArray55));
 
     let playerList = [player0,player1,player2,player3,player4,player5]
     let winner = callWinnerMethod4(playerList, flopCard, turnCard, riverCards);
     console.log("Winner - After River "+winner)
 
   }
-
   };
 
   function playerAfterBet(player, cards, totalAmt, currentAmt, bet_money) {
@@ -1540,22 +1540,25 @@ function callWinnerMethod1(playerList) {
 }
 
 function callWinnerMethod2(playerList, flopCards) {
-    const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
-    const winnerData = determineWinner(playerHands);
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
     return winnerData;
 }
 
 function callWinnerMethod3(playerList, flopCards, turnCards) {
-    const allTableCards = [...flopCards, ...turnCards];
-    const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
-    const winnerData = determineWinner(playerHands);
+    // const allTableCards = [...flopCards, ...turnCards];
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
     return winnerData;
 }
 
 function callWinnerMethod4(playerList, flopCards, turnCards, riverCards) {
-    const allTableCards = [...flopCards, ...turnCards, ...riverCards];
-    const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
-    const winnerData = determineWinner(playerHands);
+    // const allTableCards = [...flopCards, ...turnCards, ...riverCards];
+    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
+    // const winnerData = determineWinner(playerHands);
+    const winnerData = null;
     return winnerData;
 }
 
@@ -1793,10 +1796,10 @@ function calculatePotSize(myAction, amt) {
     return playerx2;
   }
 
-  function playerUpdate(player, action, raise_history,status) {
+  function playerUpdate(player, action, raise_history,status, tableCards) {
     let bet = 0;
     if(action=='RAISE'){
-      bet = calculateRaiseAmount(player,player.position,player.cards,player.ptype,raise_history)
+      bet = handAnalyzer(player,player.position,player.cards,player.ptype,raise_history,tableCards)
       ps = ps+ bet;
     }
 
@@ -1897,7 +1900,12 @@ function calculatePotSize(myAction, amt) {
     2: 1,
   };
 
-  const calculateRaiseAmount = (player,position,cards,style,raise_history) => {
+  const handAnalyzer = (player,position,playerCards,style,raise_history, tableCards) => {
+
+    return 0;
+  };
+
+    const calculateRaiseAmount = (player,position,cards,style,raise_history) => {
 
       if(position==1){
         return 10;
