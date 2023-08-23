@@ -1284,7 +1284,7 @@ function Main(props) {
 
         let playerList = [p0,p1,p2,p3,p4,p5]
         let winner = callWinnerMethod2(playerList, flopCards);
-        console.log("Winner - After Flop "+winner)
+       // console.log("Winner - After Flop "+winner)
 
         updateDealFlag('turn'); 
         updatePlySelect(false)
@@ -1365,7 +1365,7 @@ function Main(props) {
 
         let playerList = [p0,p1,p2,p3,p4,p5]
         let winner = callWinnerMethod3(playerList, flopCard, turnCards);
-        console.log("Winner - After Turn "+winner)
+      //  console.log("Winner - After Turn "+winner)
 
         updateDealFlag('river');   
         updatePlySelect(false)
@@ -1450,7 +1450,7 @@ function Main(props) {
 
     let playerList = [player0,player1,player2,player3,player4,player5]
     let winner = callWinnerMethod4(playerList, flopCard, turnCard, riverCards);
-    console.log("Winner - After River "+winner)
+   // console.log("Winner - After River "+winner)
 
   }
   };
@@ -1497,23 +1497,18 @@ function Main(props) {
 
 function determineWinner(playerHandList) {
 
-//    const bestRanking = Math.max(...hands.map(handRankingValue));
-
-    let bestRanking = -1;
-
-    playerHandList.map( playerHand => {
-      let someValue = handRankingValue(playerHand.player_hand)
-      bestRanking = Math.max(someValue,bestRanking)
-    })
-    // Filter out the players with the best hands
-    const winningHands = playerHandList.filter(playerHand => handRankingValue(playerHand.player_hand) === bestRanking);
-
-    // If only one winner, return the winner
-    if (winningHands.length === 1) {
-        return winningHands[0];
+  let bestRanking = -1;
+    playerHandList.map(playerHand => {
+        let someValue = handRankingValue(playerHand.player_hand);
+        bestRanking = Math.max(someValue, bestRanking);
+    });
+    const potentialWinners = playerHandList.filter(playerHand => handRankingValue(playerHand.player_hand) === bestRanking);
+    if (potentialWinners.length > 1) {
+        const highestCardValue = card => '23456789TJQKA'.indexOf(card);
+        potentialWinners.sort((a, b) => highestCardValue(b.player_hand.highCard) - highestCardValue(a.player_hand.highCard));
+        return [potentialWinners[0]];
     }
-    // For ties, return all winning hands (Further tiebreaker logic may be required)
-    return winningHands;
+    return potentialWinners;
 }
 
 function callWinnerMethod1(playerList) {
@@ -1528,37 +1523,75 @@ function callWinnerMethod1(playerList) {
       })
     })
 
-//    const playerHands = playerList.map(player => determineHandRanking([...player]));
     const winnerData = determineWinner(playerHandList);
-    
-    console.log("---winner in this round---")
-    winnerData.length> 0 && winnerData.map( winner => {
-      console.log(winner.player.name+" "+winner.player_hand)
-    })
-
+    console.log("---winner in this round---hold");
+    printWinner(winnerData);
     return winnerData;
 }
 
+  function printWinner(winnerData) {
+
+    if(winnerData==undefined){
+      console.log("Why winner undefined")
+    }else if (winnerData.length === 1) {
+      console.log(winnerData[0].player.name + " " + winnerData[0].player_hand);
+    }
+  }
+
 function callWinnerMethod2(playerList, flopCards) {
-    // const playerHands = playerList.map(player => determineHandRanking([...player, ...flopCards]));
-    // const winnerData = determineWinner(playerHands);
-    const winnerData = null;
+    let playerHandList = [];
+
+    playerList.map(player => {
+      let table_cards = flopCards.concat(player.cards);
+      let handValue = determineHandRanking(table_cards);
+      playerHandList.push({
+        player: player,
+        player_hand: handValue
+      })
+    })
+
+    const winnerData = determineWinner(playerHandList);
+    
+    console.log("---winner in this round---Flop")
+    printWinner(winnerData);
     return winnerData;
 }
 
 function callWinnerMethod3(playerList, flopCards, turnCards) {
-    // const allTableCards = [...flopCards, ...turnCards];
-    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
-    // const winnerData = determineWinner(playerHands);
-    const winnerData = null;
+  let playerHandList = [];
+
+  playerList.map(player => {
+    let table_cards = flopCards.concat(turnCards.concat(player.cards));
+    let handValue = determineHandRanking(table_cards);
+    playerHandList.push({
+      player: player,
+      player_hand: handValue
+    })
+  })
+
+  const winnerData = determineWinner(playerHandList);
+  
+  console.log("---winner in this round---River")
+  printWinner(winnerData);
     return winnerData;
 }
 
 function callWinnerMethod4(playerList, flopCards, turnCards, riverCards) {
-    // const allTableCards = [...flopCards, ...turnCards, ...riverCards];
-    // const playerHands = playerList.map(player => determineHandRanking([...player, ...allTableCards]));
-    // const winnerData = determineWinner(playerHands);
-    const winnerData = null;
+  let playerHandList = [];
+
+  playerList.map(player => {
+    let table_cards = flopCards.concat(turnCards.concat(riverCards.concat(player.cards)));
+    let handValue = determineHandRanking(table_cards);
+    playerHandList.push({
+      player: player,
+      player_hand: handValue
+    })
+  })
+
+  const winnerData = determineWinner(playerHandList);
+  
+  console.log("---winner in this round---Turn")
+  printWinner(winnerData);
     return winnerData;
 }
 
@@ -2011,7 +2044,7 @@ function calculatePotSize(myAction, amt) {
 
   function printRaiseHistory(raise_history){
 
-    console.log("-------RAISE HISTORY------")
+    //console.log("-------RAISE HISTORY------")
   
     raise_history.map((histObj) => {
 
@@ -2019,7 +2052,7 @@ function calculatePotSize(myAction, amt) {
       const status = histObj.status;
 
       //console.log(Object.values(player));
-      console.log(player.name+" "+status);
+  //    console.log(player.name+" "+status);
     })
 
   }
